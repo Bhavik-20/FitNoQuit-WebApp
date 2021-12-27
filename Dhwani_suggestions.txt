@@ -11,4 +11,4 @@ bf,lunch,snacks,dinner
 
 Output- 
 BMI Weight loss/gain/maintain
-Workout - 50% loss, 
+Workout - 50% loss
