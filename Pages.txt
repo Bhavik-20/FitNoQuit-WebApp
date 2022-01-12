@@ -1,0 +1,25 @@
+Signup - 
+fname
+sname
+email
+password
+
+Login- (Login using Google account)
+email
+password
+
+Profile- Dashboard
+Height
+Weight
+Age
+End goal
+current Exercise
+Food Pref (Veg/Nv/Vegan)
+BMI
+Health Problems - Diabetes, (Thyroid, PCOS, Kidney)
+
+Workout
+
+
+Diet-
+
