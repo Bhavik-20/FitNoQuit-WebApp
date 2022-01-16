@@ -1,3 +1,5 @@
+Welcome page - about us, contact us, your 1 stop destination, explain the app
+
 Signup - 
 fname
 sname
