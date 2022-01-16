@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page in HTML with CSS Code Example</title>
+  <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="box-form">
+	<div class="left_box row">
+		<!-- To resize image -->
+		<div style="width: 75%;"> 
+			<img class="img-fluid" src="{% static 'images/run.png' %}" alt="run image">
+			<h5 class="heading_1">FitNoQuit</h5>
+		</div>
+			
+	</div>
+<div class="right_box">
+		<h5>Sign Up</h5>
+		<br><br>
+		<p>Already have an account? Go to <a href="{% static 'login.html' %}">Login</a></p>
+		<br>
+		<form action="signup" method="POST">
+			{% csrf_token %}
+			<input class="form-control" name="fname" type="text" placeholder="First Name">
+			<br>
+			<input class="form-control" name="lname" type="text" placeholder="Last Name">
+			<br>
+			<input class="form-control" name="email" type="text" placeholder="Email ID">
+			<br>
+			<input class="form-control" name="uname" type="text" placeholder="Username">
+			<br>
+			<input class="form-control" name="pass1" type="password" placeholder="Password">
+			<br>
+			<input class="form-control" name="pass2" type="password" placeholder="Confirm Password">
+			<a class="forgot" href="#">Forgot Password?</a>
+			<br><br>
+			
+			<input type="submit" class="login">
+		</form>
+		
+		
+
+		<div>
+			{% for message in messages %}
+			<h3> {{message}} </h3>
+			{% endfor %}		
+		</div>
+</div>
+	
+</div>
+  
+</body>
+</html>
