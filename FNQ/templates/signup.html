@@ -24,24 +24,23 @@
 <div class="right_box">
 		<h5>Sign Up</h5>
 		<br><br>
-		<p>Already have an account? Go to <a href="{% static 'login.html' %}">Login</a></p>
+		<p>Already have an account? Go to <a href="login">Login</a></p>
 		<br>
 		<form action="signup" method="POST">
 			{% csrf_token %}
-			<input class="form-control" name="fname" type="text" placeholder="First Name">
+			<input class="form-control" name="fname" type="text" placeholder="First Name *">
 			<br>
-			<input class="form-control" name="lname" type="text" placeholder="Last Name">
+			<input class="form-control" name="lname" type="text" placeholder="Last Name *">
 			<br>
-			<input class="form-control" name="email" type="text" placeholder="Email ID">
+			<input class="form-control" name="email" type="text" placeholder="Email ID *">
 			<br>
-			<input class="form-control" name="uname" type="text" placeholder="Username">
+			<input class="form-control" name="uname" type="text" placeholder="Username *">
 			<br>
-			<input class="form-control" name="pass1" type="password" placeholder="Password">
+			<input class="form-control" name="pass1" type="password" placeholder="Password *">
 			<br>
-			<input class="form-control" name="pass2" type="password" placeholder="Confirm Password">
+			<input class="form-control" name="pass2" type="password" placeholder="Confirm Password *">
 			<a class="forgot" href="#">Forgot Password?</a>
 			<br><br>
-			
 			<input type="submit" class="login">
 		</form>
 		
