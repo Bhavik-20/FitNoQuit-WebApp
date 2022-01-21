@@ -33,14 +33,14 @@
                     <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
 
                         {% if user.is_authenticated %}
-                        <li class="nav-item">Hello, {{user.first_name}}!</li>
+                        <li class="nav-item"><p class="no-hover">Hello, {{user.first_name}}!</p></li>
                         <li class="nav-item"><a class="nav-link" href="logout"> Log out </a></li>
                         {% else %}
                         <li class="nav-item"><a class="nav-link" href="login">Login</a></li>
                         <li class="nav-item"><a class="nav-link" href="signup">Sign Up</a></li>
                         {% endif %}
 
-                        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
                         <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>                       
 
                     </ul>
@@ -109,7 +109,7 @@
         <section class="page-section" id="about">
             <div class="container">
                 <div class="text-center">
-                    <h2 class="section-heading text-uppercase">About</h2>
+                    <h2 class="section-heading text-uppercase">About Us</h2>
                     <h3 class="section-subheading text-muted">
                         FitNoQuit is a fitness assistant developed by four curious students of K. J. Somaiya College of Engineering as a part 
                         of their Final Year Project. It aims to recommend a personalized and preference-based diet to it's users that is
