@@ -29,22 +29,41 @@
 		<form action="login" method="POST">
 			{% csrf_token %}
 			<input class="form-control" name="uname" type="text" placeholder="User name *">
+			{{uname}}
+			<!-- {% if messages %}
+				{% for message in messages %}
+					{% if message.tags == "empty_uname info" %}
+					<p>{{ message }}</p>
+					{% endif %}
+        		{% endfor %}
+    		{% endif %} -->
 			<br>
 			<input class="form-control" name="pass1" type="password" placeholder="Password *">
+			{{pass}}
+			<!-- {% if messages %}
+				{% for message in messages %}
+					{% if message.tags == "empty_pass info" %}
+					<p>{{ message }}</p>
+					{% endif %}
+        		{% endfor %}
+    		{% endif %} -->
+			<br>
 			<a class="forgot" href="#">Forgot Password?</a>
 			<br><br>
 			<input type="submit" class="login">
 			<a href="/" class="back-to-home">Back to Home</a>
+			<br><br>
+			<center>{{final}}</center>
 		</form>
 		
 		
 		<!-- <br><br>
 		<button class="login">Login</button> -->
-		<div>
+		<!-- <div>
 			{% for message in messages %}
-			<h3> {{message}} </h3>
+			<h3> {{message.tags}} </h3>
 			{% endfor %}		
-		</div>
+		</div> -->
 </div>
 	
 </div>

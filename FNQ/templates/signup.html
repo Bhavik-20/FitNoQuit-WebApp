@@ -29,26 +29,32 @@
 		<form action="signup" method="POST">
 			{% csrf_token %}
 			<input class="form-control" name="fname" type="text" placeholder="First Name *">
+			{{fname}}
 			<br>
 			<input class="form-control" name="lname" type="text" placeholder="Last Name *">
+			{{lname}}
 			<br>
 			<input class="form-control" name="email" type="text" placeholder="Email ID *">
+			{{email}}
 			<br>
 			<input class="form-control" name="uname" type="text" placeholder="Username *">
+			{{uname}}
 			<br>
 			<input class="form-control" name="pass1" type="password" placeholder="Password *">
 			<br>
 			<input class="form-control" name="pass2" type="password" placeholder="Confirm Password *">
+			{{pass}}
+			<br>
 			<a class="forgot" href="#">Forgot Password?</a>
 			<br><br>
 			<input type="submit" class="login">
 			<a href="/" class="back-to-home">Back to Home</a>
 		</form>
-		<div>
+		<!-- <div>
 			{% for message in messages %}
 			<h3> {{message}} </h3>
 			{% endfor %}		
-		</div>
+		</div> -->
 </div>
 	
 </div>
