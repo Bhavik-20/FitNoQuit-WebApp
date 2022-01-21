@@ -29,7 +29,7 @@
 		<form action="login" method="POST">
 			{% csrf_token %}
 			<input class="form-control" name="uname" type="text" placeholder="User name *">
-			{{uname}}
+			<p style="color: red;">{{uname}}</p>
 			<!-- {% if messages %}
 				{% for message in messages %}
 					{% if message.tags == "empty_uname info" %}
@@ -39,7 +39,7 @@
     		{% endif %} -->
 			<br>
 			<input class="form-control" name="pass1" type="password" placeholder="Password *">
-			{{pass}}
+			<p style="color: red;">{{pass}}</p>
 			<!-- {% if messages %}
 				{% for message in messages %}
 					{% if message.tags == "empty_pass info" %}
@@ -53,9 +53,9 @@
 			<input type="submit" class="login">
 			<a href="/" class="back-to-home">Back to Home</a>
 			<br><br>
-			<center>{{final}}</center>
+			
 		</form>
-		
+		<center><p style="color: red;">{{final}}</p></center>
 		
 		<!-- <br><br>
 		<button class="login">Login</button> -->
