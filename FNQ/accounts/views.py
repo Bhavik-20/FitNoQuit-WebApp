@@ -1,8 +1,13 @@
 # from sys import last_traceback
+from pickle import FALSE, NONE
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.test import tag
+import re
+
+email_regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+
 
 
 def signup(request):
@@ -24,10 +29,10 @@ def signup(request):
             # return redirect("signup")
             context = { "fname" : "", "lname" : "Please enter your Last name", "email": "", "uname": "", "pass": ""}
             return render(request, "signup.html", context)
-        elif email == "":
+        elif email == "" or re.fullmatch(email_regex, email) == None:
             # messages.info(request, "Please enter your Email id")
             # return redirect("signup") 
-            context = { "fname" : "", "lname" : "", "email": "Please enter your Email id", "uname": "", "pass": ""}
+            context = { "fname" : "", "lname" : "", "email": "Please enter valid Email id", "uname": "", "pass": ""}
             return render(request, "signup.html", context)
         elif uname == "":
             # messages.info(request, "Please enter a Username")
