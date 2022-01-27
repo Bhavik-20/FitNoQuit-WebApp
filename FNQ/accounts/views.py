@@ -1,4 +1,5 @@
 # from sys import last_traceback
+from cProfile import Profile
 from pickle import FALSE, NONE
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
@@ -7,6 +8,7 @@ from django.test import tag
 import re
 
 email_regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+phone_regex = r'^[0-9]{10}$'
 
 
 
@@ -107,3 +109,28 @@ def home(request):
 def logout(request):
     auth.logout(request)
     return redirect("/")
+
+def profile(request):
+    if request.method == "POST":
+        fname = request.POST['fname']
+        lname = request.POST['lname']
+        email = request.POST['email']
+        contact = request.POST['contact']
+        height = request.POST['height']
+        weight = request.POSt['weight']
+        age = request.POST['age']
+        gender = request.POST['gender']
+        fitness_goal = request.POST['fitness_goal']
+        curr_exc = request.POST['curr_exc']
+        food_pref = request.POST['food_pref']
+        health_issues = request.POST['health_issues'] #multiple input
+        
+        #fetch name from database and paste in fname, lname and email
+
+        if contact == "" or re.fullmatch(phone_regex, contact) == None:
+            # messages.info(request, "Please enter your User Name", extra_tags = "empty_uname")
+            # return redirect("login") 
+            context = { "contact" : "Please enter valid Contact Number" }
+            return render(request, "profile.html", context)
+        else:
+            return render(request, "profile.html")
