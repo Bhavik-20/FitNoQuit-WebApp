@@ -233,3 +233,11 @@ select:focus {
 .chips__filter .chip.chip--active .chip--check {
     display: block;
 }
+
+.non-edit{
+  pointer-events: none;
+}
+
+.non-edit:hover{
+  display: none;
+}

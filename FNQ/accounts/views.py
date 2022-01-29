@@ -6,6 +6,7 @@ from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.test import tag
 import re
+from .models import Profile
 
 email_regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 phone_regex = r'^[0-9]{10}$'
@@ -61,6 +62,10 @@ def signup(request):
                 else:
                     user = User.objects.create_user(username = uname, email = email, first_name = fname, last_name = lname, password = pass1)
                     user.save();
+                    user_profile = Profile.objects.create(uid = user, age=0, gender="----", height= 0.0, weight = 0.0, 
+                                        bmi = 0.0, fitness_goal="----", curr_exercise=0, food_pref="----", health_issues="----", 
+                                        fname= user.first_name, lname=user.last_name, email=user.email)
+                    # user_profile.save();
                     print("Registration completed")
                     return redirect("login")
             else:
@@ -112,10 +117,9 @@ def logout(request):
 
 def profile(request):
     if request.method == "POST":
-        fname = request.POST['fname']
-        lname = request.POST['lname']
-        email = request.POST['email']
-        contact = request.POST['contact']
+        # fname = request.POST['fname']
+        # lname = request.POST['lname']
+        # email = request.POST['email']
         height = request.POST['height']
         weight = request.POSt['weight']
         age = request.POST['age']
@@ -125,12 +129,23 @@ def profile(request):
         food_pref = request.POST['food_pref']
         health_issues = request.POST['health_issues'] #multiple input
         
-        #fetch name from database and paste in fname, lname and email
+        #validate all input fields
+        # user_profile = Profile.objects.get(uid = request.user)
+        # validate and thebn ->user_profile.age = age
+        #only at end user_profile.save()
 
         if contact == "" or re.fullmatch(phone_regex, contact) == None:
             # messages.info(request, "Please enter your User Name", extra_tags = "empty_uname")
             # return redirect("login") 
-            context = { "contact" : "Please enter valid Contact Number" }
+            context = { "contact" : "Please enter valid Contact Number" } #add all fields
             return render(request, "profile.html", context)
         else:
             return render(request, "profile.html")
+
+    else:
+        user_profile = Profile.objects.get(uid = request.user)
+        # fname = user_profile.fname
+        # lname = user_profile.lname
+        # email = user_profile.email
+
+        return render(request, "profile.html",{'user_profile':user_profile} )

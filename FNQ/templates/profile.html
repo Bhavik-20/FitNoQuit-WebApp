@@ -48,14 +48,15 @@
                 </div>
             </div> -->
             <form action="profile" method="get">
+                {% csrf_token %}
             <div class="py-2">
                 <div class="row py-2">
-                    <div class="col-md-6"> <label for="firstname">First Name</label> <input type="text" class="bg-light form-control" name="fname" placeholder="Steve"> </div>
-                    <div class="col-md-6 pt-md-0 pt-3"> <label for="lastname">Last Name</label> <input type="text" class="bg-light form-control" name="lname" placeholder="Smith"> </div>
+                    <div class="col"> <label for="firstname">First Name</label> <input type="text" class="bg-light non-edit form-control" name="fname" value="{{user_profile.fname}}" readonly> </div>
+                    <div class="col"> <label for="lastname">Last Name</label> <input type="text" class="bg-light non-edit form-control" name="lname" value="{{user_profile.lname}}" readonly> </div>
                 </div>
                 <div class="row py-2">
-                    <div class="col-md-6"> <label for="email">Email Address</label> <input type="text" class="bg-light form-control" name="email" placeholder="example@email.com"> </div>
-                    <div class="col-md-6 pt-md-0 pt-3"> <label for="phone">Phone Number</label> <input type="tel" class="bg-light form-control" name="contact" placeholder="9876543210"> </div>
+                    <div class="col"> <label for="email">Email Address</label> <input type="text" class="bg-light form-control non-edit" name="email" value="{{user_profile.email}}" readonly> </div>
+                    <!-- <div class="col-md-6 pt-md-0 pt-3"> <label for="phone">Phone Number</label> <input type="tel" class="bg-light form-control" name="contact" placeholder="9876543210"> </div> -->
                 </div>
                 <div class="row py-2">
                     <div class="col"> <label for="height">Height (in cm)</label> <input type="number" name ="height" class="bg-light form-control" placeholder="172" min="0" max="200"></div>
