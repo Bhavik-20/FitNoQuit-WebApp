@@ -47,7 +47,7 @@
                     <button class="btn button border">Upload</button>
                 </div>
             </div> -->
-            <form action="profile" method="get">
+            <form action="profile" method="post">
                 {% csrf_token %}
             <div class="py-2">
                 <div class="row py-2">
@@ -59,38 +59,88 @@
                     <!-- <div class="col-md-6 pt-md-0 pt-3"> <label for="phone">Phone Number</label> <input type="tel" class="bg-light form-control" name="contact" placeholder="9876543210"> </div> -->
                 </div>
                 <div class="row py-2">
-                    <div class="col"> <label for="height">Height (in cm)</label> <input type="number" name ="height" class="bg-light form-control" placeholder="172" min="0" max="200"></div>
-                    <div class="col"> <label for="weight">Weight (in kg)</label> <input type="number" name = "weight" class="bg-light form-control" placeholder="70" min="0"></div>
-                    <div class="col"> <label for="age">Age (in years)</label> <input type="number" name="age" class="bg-light form-control" placeholder="20"></div>
-                    <div class="col"> <label for="gender">Gender</label> <select name="gender" id="gender" name="gender" class="bg-light">
-                        <option value="----" selected>----</option>
-                        <option value="female">Female</option>
-                        <option value="male">Male</option>
-                        <option value="other">Other</option>
-                    </select> </div>
+                    <div class="col"> <label for="height">Height (in cm)</label> <input type="number" name ="height" class="bg-light form-control" value="{{user_profile.height}}" step=0.1 min=0 max=200><p style="color: red; font-size: 12px;">{{height}}</p></div>
+                    <div class="col"> <label for="weight">Weight (in kg)</label> <input type="number" name = "weight" class="bg-light form-control" value="{{user_profile.weight}}" step=0.01 min=0><p style="color: red; font-size: 12px;">{{weight}}</p></div>
+                    <div class="col"> <label for="age">Age (in years)</label> <input type="number" name="age" class="bg-light form-control" value="{{user_profile.age}}" min=0><p style="color: red; font-size: 12px;">{{age}}</p></div>
+                    <!-- gender - can also try with Javascript -->
+                    <div class="col"> <label for="gender">Gender</label> <select name="gender" id="gender" class="bg-light">
+                        {% if user_profile.gender == "other" %}
+                            <option value="----">----</option>
+                            <option value="female">Female</option>
+                            <option value="male">Male</option>
+                            <option value="other" selected>Other</option>
+                        {% elif user_profile.gender == "female" %}
+                            <option value="----">----</option>
+                            <option value="female" selected>Female</option>
+                            <option value="male">Male</option>
+                            <option value="other">Other</option>
+                        {% elif user_profile.gender == "male" %} 
+                            <option value="----">----</option>
+                            <option value="female">Female</option>
+                            <option value="male" selected>Male</option>
+                            <option value="other">Other</option>
+                        {% else %}
+                            <option value="----" selected>----</option>
+                            <option value="female">Female</option>
+                            <option value="male">Male</option>
+                            <option value="other">Other</option>
+                        {% endif%}
+                    </select><p style="color: red; font-size: 12px;">{{gender}}</p> </div>
                 </div>
                 <div class="row py-2">
-                    <div class="col"> <label for="exc-min">What is your fitness goal?</label> <select name="fitness_goal" id="fitness_goal" class="bg-light">
-                        <option value="----" selected>----</option>
-                        <option value="veg">Maintain Health</option>
-                        <option value="non-veg">Weight Loss</option>
-                        <option value="vegan">Weight Gain</option>
+                    <div class="col"> <label for="fitness_goal">What is your fitness goal?</label> <select name="fitness_goal" id="fitness_goal" class="bg-light">
+                        {% if user_profile.fitness_goal == "maintain-health" %}
+                            <option value="----" >----</option>
+                            <option value="maintain-health" selected>Maintain Health</option>
+                            <option value="weight-loss">Weight Loss</option>
+                            <option value="weight-gain">Weight Gain</option>
+                        {% elif user_profile.fitness_goal == "weight-loss" %}
+                            <option value="----" >----</option>
+                            <option value="maintain-health">Maintain Health</option>
+                            <option value="weight-loss" selected>Weight Loss</option>
+                            <option value="weight-gain">Weight Gain</option>
+                        {% elif user_profile.fitness_goal == "weight-gain" %} 
+                            <option value="----" >----</option>
+                            <option value="maintain-health">Maintain Health</option>
+                            <option value="weight-loss">Weight Loss</option>
+                            <option value="weight-gain" selected>Weight Gain</option>
+                        {% else %}
+                            <option value="----" selected>----</option>
+                            <option value="maintain-health">Maintain Health</option>
+                            <option value="weight-loss">Weight Loss</option>
+                            <option value="weight-gain">Weight Gain</option>
+                        {% endif%}
                     </select>
+                    <p style="color: red; font-size: 12px;">{{fitness_goal}}</p>
                     </div>
-                    <div class="col"> <label for="exc-min">For how long do you exercise in a week? </label> 
-                        <input type="number" name= "curr_exc" class="bg-light form-control" placeholder="180 (in mins)">
+                    <div class="col"> <label for="curr_exc">Your exercise per week (in mins): </label> 
+                        <input type="number" name= "curr_exc" class="bg-light form-control" value="{{user_profile.curr_exercise}}" min=0>
                     </div>
-                    <div class="col"> <label for="food">Please select your food Preferences: </label> <select name="country" name="food_pref" id="country" class="bg-light">
-                        <option value="----" selected>----</option>
-                        <option value="veg">Vegeterian</option>
-                        <option value="non-veg">Non-Vegetarian</option>
-                        <option value="vegan">Vegan</option>
-                    </select></div>
+                    <div class="col"> <label for="food">Please select your food Preferences: </label> <select name="food_pref" id="food_pref" class="bg-light">
+                        {% if user_profile.food_pref == "veg" %}
+                            <option value="----" >----</option>
+                            <option value="veg" selected>Vegeterian</option>
+                            <option value="non-veg">Non-Vegetarian</option>
+                            <option value="vegan">Vegan</option>
+                        {% elif user_profile.fitness_goal == "non-veg" %}
+                            <option value="----">----</option>
+                            <option value="veg">Vegeterian</option>
+                            <option value="non-veg" selected>Non-Vegetarian</option>
+                            <option value="vegan">Vegan</option>
+                        {% elif user_profile.fitness_goal == "vegan" %} 
+                            <option value="----">----</option>
+                            <option value="veg">Vegeterian</option>
+                            <option value="non-veg">Non-Vegetarian</option>
+                            <option value="vegan" selected>Vegan</option>
+                        {% else %}
+                            <option value="----" selected>----</option>
+                            <option value="veg">Vegeterian</option>
+                            <option value="non-veg">Non-Vegetarian</option>
+                            <option value="vegan">Vegan</option>
+                        {% endif%}
+                    </select><p style="color: red; font-size: 12px;">{{food_pref}}</p></div>
                 </div>
-                
-
-                <div class="row py-2">
-                	
+            <div class="row py-2">   	
             <label for="health">Exixting Health Conditions</label>
             <div class="chips__filter">
                 <div class="chip">
@@ -119,7 +169,7 @@
             </div>
         </div>
 	</div>
-<div class="py-3 pb-4 border-bottom"> <button class="btn btn-primary mr-3">Save Changes</button> <button class="btn border button">Cancel</button> </div>
+<div class="py-3 pb-4 border-bottom"> <button class="btn btn-primary mr-3" type="submit">Save Changes</button> <button class="btn border button">Cancel</button> </div>
 </form>
                 <div class="d-sm-flex align-items-center pt-3" id="deactivate">
                     <div> <b>Deactivate your account</b>

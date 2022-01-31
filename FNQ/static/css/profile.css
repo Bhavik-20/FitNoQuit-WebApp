@@ -241,3 +241,7 @@ select:focus {
 .non-edit:hover{
   display: none;
 }
+
+.form p{
+  font-size: 10px;
+}

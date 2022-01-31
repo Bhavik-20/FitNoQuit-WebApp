@@ -1,15 +1,18 @@
 # from sys import last_traceback
 from cProfile import Profile
+from distutils.command.build_scripts import first_line_re
 from pickle import FALSE, NONE
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.test import tag
 import re
+
+from matplotlib.style import use
 from .models import Profile
 
 email_regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
-phone_regex = r'^[0-9]{10}$'
+# phone_regex = r'^[0-9]{10}$'
 
 
 
@@ -117,31 +120,53 @@ def logout(request):
 
 def profile(request):
     if request.method == "POST":
-        # fname = request.POST['fname']
-        # lname = request.POST['lname']
-        # email = request.POST['email']
+        user_profile = Profile.objects.get(uid = request.user)
         height = request.POST['height']
-        weight = request.POSt['weight']
+        weight = request.POST['weight']
         age = request.POST['age']
         gender = request.POST['gender']
         fitness_goal = request.POST['fitness_goal']
         curr_exc = request.POST['curr_exc']
-        food_pref = request.POST['food_pref']
-        health_issues = request.POST['health_issues'] #multiple input
-        
-        #validate all input fields
-        # user_profile = Profile.objects.get(uid = request.user)
-        # validate and thebn ->user_profile.age = age
-        #only at end user_profile.save()
+        food_pref = request.POST.get('food_pref',"----")
+        health_issues = request.POST.get('health_issues',"----") #multiple input
 
-        if contact == "" or re.fullmatch(phone_regex, contact) == None:
-            # messages.info(request, "Please enter your User Name", extra_tags = "empty_uname")
-            # return redirect("login") 
-            context = { "contact" : "Please enter valid Contact Number" } #add all fields
+        if height == "0.0":
+            context = {"height":"Please enter valid Height in cms.","weight":"","age":"","gender":"",
+            "fitness_goal":"", "curr_exc":"", "food_pref":"", "health_issues":"", "user_profile": user_profile}
+            return render(request, "profile.html", context)
+        elif weight == "0.00":
+            context = {"height":"","weight":"Please enter valid Weight in kgs.","age":"","gender":"",
+            "fitness_goal":"", "curr_exc":"", "food_pref":"", "health_issues":"", "user_profile": user_profile}
+            return render(request, "profile.html", context)
+        elif age == "0":
+            context = {"height":"","weight":"","age":"Please enter valid Age in years.", "gender":"",
+            "fitness_goal":"", "curr_exc":"", "food_pref":"", "health_issues":"", "user_profile": user_profile}
+            return render(request, "profile.html", context)
+        elif gender == "----":
+            context = {"height":"","weight":"","age":"","gender":"Please select your Gender.",
+            "fitness_goal":"", "curr_exc":"", "food_pref":"", "health_issues":"", "user_profile": user_profile}
+            return render(request, "profile.html", context)
+        elif fitness_goal == "----":
+            context = {"height":"","weight":"","age":"","gender":"","fitness_goal":"Please select your fitness goal.", 
+            "curr_exc":"", "food_pref":"", "health_issues":"", "user_profile": user_profile}
+            return render(request, "profile.html", context)
+        elif food_pref == "----":
+            context = {"height":"","weight":"","age":"","gender":"", "fitness_goal":"", "curr_exc":"", 
+            "food_pref":"Please select your food preference.", "health_issues":"", "user_profile": user_profile}
             return render(request, "profile.html", context)
         else:
-            return render(request, "profile.html")
-
+            user_profile = Profile.objects.get(uid = request.user)
+            user_profile.height = height
+            user_profile.weight = weight
+            user_profile.age = age
+            user_profile.gender = gender
+            user_profile.fitness_goal = fitness_goal
+            user_profile.curr_exercise = curr_exc
+            user_profile.food_pref = food_pref
+            user_profile.health_issues = health_issues
+            user_profile.save()
+            context ={  "user_profile": user_profile }
+            return render(request, "profile.html", context)
     else:
         user_profile = Profile.objects.get(uid = request.user)
         # fname = user_profile.fname
