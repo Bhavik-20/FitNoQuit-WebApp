@@ -14,8 +14,6 @@ from .models import Profile
 email_regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 # phone_regex = r'^[0-9]{10}$'
 
-
-
 def signup(request):
     if request.method == "POST":
         fname = request.POST['fname']
