@@ -8,7 +8,6 @@ from django.contrib import messages
 from django.test import tag
 import re
 
-from matplotlib.style import use
 from .models import Profile
 
 email_regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
@@ -64,8 +63,8 @@ def signup(request):
                     user = User.objects.create_user(username = uname, email = email, first_name = fname, last_name = lname, password = pass1)
                     user.save();
                     user_profile = Profile.objects.create(uid = user, age=0, gender="----", height= 0.0, weight = 0.0, 
-                                        bmi = 0.0, fitness_goal="----", curr_exercise=0, food_pref="----", health_issues="----", 
-                                        fname= user.first_name, lname=user.last_name, email=user.email)
+                                        bmi = 0.0, fitness_goal="----", curr_exercise=0, food_pref="----", diabetes=False, kidney=False, 
+                                        lactose=False, pcos=False, thyroid=False, fname= user.first_name, lname=user.last_name, email=user.email)
                     # user_profile.save();
                     print("Registration completed")
                     return redirect("login")
@@ -175,6 +174,7 @@ def profile(request):
             user_profile.kidney = kidney
             user_profile.lactose = lactose
             user_profile.save()
+            user_profile = Profile.objects.get(uid = request.user)
             context ={"user_profile": user_profile}
             return render(request, "profile.html", context)
     else:
