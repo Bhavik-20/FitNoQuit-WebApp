@@ -126,8 +126,12 @@ def profile(request):
         fitness_goal = request.POST['fitness_goal']
         curr_exc = request.POST['curr_exc']
         food_pref = request.POST.get('food_pref',"----")
-        health_issues = request.POST.get('health_issues',"----") #multiple input
-
+        diabetes = request.POST['diabetes']
+        thyroid = request.POST['thyroid']
+        pcos = request.POST['pcos']
+        kidney = request.POST['kidney']
+        lactose = request.POST['lactose']
+        
         if height == "0.0":
             context = {"height":"Please enter valid Height in cms.","weight":"","age":"","gender":"",
             "fitness_goal":"", "curr_exc":"", "food_pref":"", "health_issues":"", "user_profile": user_profile}
@@ -148,6 +152,10 @@ def profile(request):
             context = {"height":"","weight":"","age":"","gender":"","fitness_goal":"Please select your fitness goal.", 
             "curr_exc":"", "food_pref":"", "health_issues":"", "user_profile": user_profile}
             return render(request, "profile.html", context)
+        elif curr_exc == "----":
+            context = {"height":"","weight":"","age":"","gender":"","fitness_goal":"", 
+            "curr_exc":"Please select your current excercise level.", "food_pref":"", "health_issues":"", "user_profile": user_profile}
+            return render(request, "profile.html", context)
         elif food_pref == "----":
             context = {"height":"","weight":"","age":"","gender":"", "fitness_goal":"", "curr_exc":"", 
             "food_pref":"Please select your food preference.", "health_issues":"", "user_profile": user_profile}
@@ -161,9 +169,13 @@ def profile(request):
             user_profile.fitness_goal = fitness_goal
             user_profile.curr_exercise = curr_exc
             user_profile.food_pref = food_pref
-            user_profile.health_issues = health_issues
+            user_profile.diabetes = diabetes
+            user_profile.thyroid = thyroid
+            user_profile.pcos = pcos
+            user_profile.kidney = kidney
+            user_profile.lactose = lactose
             user_profile.save()
-            context ={  "user_profile": user_profile }
+            context ={"user_profile": user_profile}
             return render(request, "profile.html", context)
     else:
         user_profile = Profile.objects.get(uid = request.user)

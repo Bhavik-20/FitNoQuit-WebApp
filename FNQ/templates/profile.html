@@ -113,10 +113,8 @@
                     </select>
                     <p style="color: red; font-size: 12px;">{{fitness_goal}}</p>
                     </div>
-                    <div class="col"> <label for="curr_exc">Your exercise per week (in mins): </label> 
-                        <input type="number" name= "curr_exc" class="bg-light form-control" value="{{user_profile.curr_exercise}}" min=0>
-                    </div>
-                    <div class="col"> <label for="food">Please select your food Preferences: </label> <select name="food_pref" id="food_pref" class="bg-light">
+    
+                    <div class="col"> <label for="food">Select your food Preferences: </label> <select name="food_pref" id="food_pref" class="bg-light">
                         {% if user_profile.food_pref == "veg" %}
                             <option value="----" >----</option>
                             <option value="veg" selected>Vegeterian</option>
@@ -140,38 +138,111 @@
                         {% endif%}
                     </select><p style="color: red; font-size: 12px;">{{food_pref}}</p></div>
                 </div>
+            <div class="row py-2">
+                <div class="col"> <label for="curr_exc">Select your Excercise Activity Level: </label>
+                    <select name="curr_exc" id="curr_exc" class="bg-light">
+                    {% if user_profile.curr_exercise == "sedentary" %}
+                        <option value="----" >----</option>
+                        <option value="sedentary" selected>Sedentary (little or no exercise)</option>
+                        <option value="lightly">Lightly active (light exercise/sports 1-3 days/week)</option>
+                        <option value="moderately">Moderately active (moderate exercise/sports 3-5 days/week)</option>
+                        <option value="very-active">Very active (hard exercise/sports 6-7 days a week)</option>
+                        <option value="extra-active">Extra active (very hard exercise/sports & a physical job)</option>
+                    {% elif user_profile.curr_exercise == "lightly" %}
+                        <option value="----" >----</option>
+                        <option value="sedentary">Sedentary (little or no exercise)</option>
+                        <option value="lightly" selected>Lightly active (light exercise/sports 1-3 days/week)</option>
+                        <option value="moderately">Moderately active (moderate exercise/sports 3-5 days/week)</option>
+                        <option value="very-active">Very active (hard exercise/sports 6-7 days a week)</option>
+                        <option value="extra-active">Extra active (very hard exercise/sports & a physical job)</option>
+                    {% elif user_profile.curr_exercise == "moderately" %} 
+                        <option value="----" >----</option>
+                        <option value="sedentary">Sedentary (little or no exercise)</option>
+                        <option value="lightly">Lightly active (light exercise/sports 1-3 days/week)</option>
+                        <option value="moderately" selected>Moderately active (moderate exercise/sports 3-5 days/week)</option>
+                        <option value="very-active">Very active (hard exercise/sports 6-7 days a week)</option>
+                        <option value="extra-active">Extra active (very hard exercise/sports & a physical job)</option>
+                    {% elif user_profile.curr_exercise == "very-active" %} 
+                        <option value="----" >----</option>
+                        <option value="sedentary">Sedentary (little or no exercise)</option>
+                        <option value="lightly">Lightly active (light exercise/sports 1-3 days/week)</option>
+                        <option value="moderately">Moderately active (moderate exercise/sports 3-5 days/week)</option>
+                        <option value="very-active" selected>Very active (hard exercise/sports 6-7 days a week)</option>
+                        <option value="extra-active">Extra active (very hard exercise/sports & a physical job)</option>
+                    {% elif user_profile.curr_exercise == "extra-active" %} 
+                        <option value="----" >----</option>
+                        <option value="sedentary">Sedentary (little or no exercise)</option>
+                        <option value="lightly">Lightly active (light exercise/sports 1-3 days/week)</option>
+                        <option value="moderately">Moderately active (moderate exercise/sports 3-5 days/week)</option>
+                        <option value="very-active">Very active (hard exercise/sports 6-7 days a week)</option>
+                        <option value="extra-active" selected>Extra active (very hard exercise/sports & a physical job)</option>
+                    {% else %}
+                        <option value="----" selected>----</option>
+                        <option value="sedentary">Sedentary (little or no exercise)</option>
+                        <option value="lightly">Lightly active (light exercise/sports 1-3 days/week)</option>
+                        <option value="moderately">Moderately active (moderate exercise/sports 3-5 days/week)</option>
+                        <option value="very-active">Very active (hard exercise/sports 6-7 days a week)</option>
+                        <option value="extra-active">Extra active (very hard exercise/sports & a physical job)</option>
+                    {% endif%}
+                </select><p style="color: red; font-size: 12px;">{{curr_exc}}</p>
+                </div>
+            </div>
             <div class="row py-2">   	
             <label for="health">Exixting Health Conditions</label>
             <div class="chips__filter">
-                <div class="chip">
+            {% if user_profile.diabetes == True %}
+            <div class="chip diabetes chip--active">
+            {% else %}
+            <div class="chip diabetes">
+            {% endif %}
                 <span class="icon icon--leadind chip--check">
                     <i class="fas fa-check"></i>
                 </span>
-                <span><option value="1">Diabetes</option></span> 
+                <span><input type="hidden" id="diabetes" name="diabetes" value="{{user_profile.diabetes}}">Diabetes</input></span> 
             </div>
-                <div class="chip">
+            <!-- ----------- -->
+            {% if user_profile.thyroid == True %}
+            <div class="chip thyroid chip--active">
+            {% else %}
+            <div class="chip thyroid">
+            {% endif %}
                 <span class="icon icon--leadind chip--check">
                     <i class="fas fa-check"></i>
                 </span>
-                Thyroid
+                <span><input type="hidden" id="thyroid" name="thyroid" value="{{user_profile.thyroid}}">Thyroid</input></span> 
             </div>
-                <div class="chip">
+            <!-- ------------------ -->
+            {% if user_profile.pcos == True %}
+            <div class="chip pcos chip--active">
+            {% else %}
+            <div class="chip pcos">
+            {% endif %}
                 <span class="icon icon--leadind chip--check">
                     <i class="fas fa-check"></i>
                 </span>
-                PCOS
+                <span><input type="hidden" id="pcos" name="pcos" value="{{user_profile.pcos}}">PCOS</input></span> 
             </div>
-                <div class="chip">
+            <!-- ------------ -->
+            {% if user_profile.kidney == True %}
+            <div class="chip kidney chip--active">
+            {% else %}
+            <div class="chip kidney">
+            {% endif %}
                 <span class="icon icon--leadind chip--check">
                     <i class="fas fa-check"></i>
                 </span>
-                Kidney Issues
+                <span><input type="hidden" id="kidney" name="kidney" value="{{user_profile.kidney}}">Kidney Issues</input></span> 
             </div>
-            <div class="chip">
+            <!-- -------------- -->
+            {% if user_profile.lactose == True %}
+            <div class="chip lactose chip--active">
+            {% else %}
+            <div class="chip lactose">
+            {% endif %}
                 <span class="icon icon--leadind chip--check">
                     <i class="fas fa-check"></i>
                 </span>
-                Lactose Intolerant
+                <span><input type="hidden" id="lactose" name="lactose" value="{{user_profile.lactose}}">Lactose Intolerant</input></span> 
             </div>
         </div>
 	</div>
@@ -188,10 +259,76 @@
         
         <script>
             $(function () {
-                $('.chips__filter .chip').on("click", function () {
-                    $(this).toggleClass("chip--active");
+                $(".chips__filter .chip.diabetes").click(function(event) 
+                {
+                    // $(this).toggleClass("chip--active");
+                    if ($(this).hasClass('chip--active')) {
+                        $(this).removeClass( 'chip--active');
+                        $('#diabetes').val("False");
+                    } else {
+                        $(this).addClass('chip--active');
+                        $('#diabetes').val("True");
+                    }
                 });
             });
+
+            $(function () {
+                $(".chips__filter .chip.thyroid").click(function(event) 
+                {
+                    // $(this).toggleClass("chip--active");
+                    if ($(this).hasClass('chip--active')) {
+                        $(this).removeClass( 'chip--active');
+                        $('#thyroid').val("False");
+                    } else {
+                        $(this).addClass('chip--active');
+                        $('#thyroid').val("True");
+                    }
+                });
+            });
+
+            $(function () {
+                $(".chips__filter .chip.pcos").click(function(event) 
+                {
+                    // $(this).toggleClass("chip--active");
+                    if ($(this).hasClass('chip--active')) {
+                        $(this).removeClass( 'chip--active');
+                        $('#pcos').val("False");
+                    } else {
+                        $(this).addClass('chip--active');
+                        $('#pcos').val("True");
+                    }
+                });
+            });
+
+            $(function () {
+                $(".chips__filter .chip.kidney").click(function(event) 
+                {
+                    // $(this).toggleClass("chip--active");
+                    if ($(this).hasClass('chip--active')) {
+                        $(this).removeClass( 'chip--active');
+                        $('#kidney').val("False");
+                    } else {
+                        $(this).addClass('chip--active');
+                        $('#kidney').val("True");
+                    }
+                });
+            });
+
+            $(function () {
+                $(".chips__filter .chip.lactose").click(function(event) 
+                {
+                    // $(this).toggleClass("chip--active");
+                    if ($(this).hasClass('chip--active')) {
+                        $(this).removeClass( 'chip--active');
+                        $('#lactose').val("False");
+                    } else {
+                        $(this).addClass('chip--active');
+                        $('#lactose').val("True");
+                    }
+                });
+            });
+
+           
         </script>
         <!-- Footer-->
         <footer class="footer py-4">

@@ -14,7 +14,12 @@ class Profile(models.Model):
     weight = models.DecimalField(max_digits=5, decimal_places=2)
     bmi = models.DecimalField(max_digits=4, decimal_places=2, default=0)
     fitness_goal = models.CharField(max_length=20)
-    curr_exercise = models.PositiveIntegerField()
+    curr_exercise = models.CharField(max_length=50)
     food_pref = models.CharField(max_length=10)
-    health_issues = models.CharField(max_length=100)
+    diabetes = models.BooleanField(default=False)
+    thyroid = models.BooleanField(default=False)
+    pcos = models.BooleanField(default=False)
+    kidney = models.BooleanField(default=False)
+    lactose = models.BooleanField(default=False)
+
 
