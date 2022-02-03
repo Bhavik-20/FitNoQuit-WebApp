@@ -25,10 +25,9 @@
 		<h5>Login</h5>
 		<br><br>
 		<p>Don't have an account? <a href="signup">Create Your Account</a> it takes less than a minute</p>
-		<br>
 		<form action="login" method="POST">
 			{% csrf_token %}
-			<input class="form-control" name="uname" type="text" placeholder="User name *">
+			<label for="uname">User Name*</label><input class="form-control" name="uname" type="text" value="{{uname1}}">
 			<p style="color: red;">{{uname}}</p>
 			<!-- {% if messages %}
 				{% for message in messages %}
@@ -38,7 +37,7 @@
         		{% endfor %}
     		{% endif %} -->
 			<br>
-			<input class="form-control" name="pass1" type="password" placeholder="Password *">
+			<label for="pass1">Password*</label><input class="form-control" name="pass1" type="password" value="{{pass1}}">
 			<p style="color: red;">{{pass}}</p>
 			<!-- {% if messages %}
 				{% for message in messages %}
@@ -47,7 +46,7 @@
 					{% endif %}
         		{% endfor %}
     		{% endif %} -->
-			<br>
+			
 			<a class="forgot" href="#">Forgot Password?</a>
 			<br><br>
 			<input type="submit" class="login">
