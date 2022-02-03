@@ -28,23 +28,26 @@
 		<br>
 		<form action="signup" method="POST">
 			{% csrf_token %}
-			<input class="form-control" name="fname" type="text" placeholder="First Name *">
-			<p style="color: red;">{{fname}}</p>
-			<br>
-			<input class="form-control" name="lname" type="text" placeholder="Last Name *">
-			<p style="color: red;">{{lname}}</p>
-			<br>
-			<input class="form-control" name="email" type="text" placeholder="Email ID *">
+			<div class="row">
+				<div class="col"><label for="fname">First Name*</label><input class="form-control" name="fname" type="text" value="{{fname1}}">
+				<p style="color: red;">{{fname}}</p></div>
+		
+				<div class="col"><label for="lname">Last Name*</label><input class="form-control" name="lname" type="text" value="{{lname1}}">
+				<p style="color: red;">{{lname}}</p></div>
+			</div>
+
+			<label for="email">Email ID*</label><input class="form-control" name="email" type="text"value="{{email1}}">
 			<p style="color: red;">{{email}}</p>
-			<br>
-			<input class="form-control" name="uname" type="text" placeholder="Username *">
+			
+			<label for="uname">User Name*</label><input class="form-control" name="uname" type="text" value="{{uname1}}">
 			<p style="color: red;">{{uname}}</p>
-			<br>
-			<input class="form-control" name="pass1" type="password" placeholder="Password *">
-			<br>
-			<input class="form-control" name="pass2" type="password" placeholder="Confirm Password *">
-			<p style="color: red;">{{pass}}</p>
-			<br>
+			
+			<div class="row">
+				<div class="col"><label for="pass1">Password*</label><input class="form-control" name="pass1" type="password" value="{{pass1}}"></div>
+				<br>
+				<div class="col"><label for="pass2">Confirm Password*</label><input class="form-control" name="pass2" type="password">
+				<p style="color: red;">{{pass}}</p></div>
+			</div>
 			<a class="forgot" href="#">Forgot Password?</a>
 			<br><br>
 			<input type="submit" class="login">
