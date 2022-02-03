@@ -65,9 +65,11 @@ def signup(request):
                     user_profile = Profile.objects.create(uid = user, age=0, gender="----", height= 0.0, weight = 0.0, 
                                         bmi = 0.0, fitness_goal="----", curr_exercise=0, food_pref="----", diabetes=False, kidney=False, 
                                         lactose=False, pcos=False, thyroid=False, fname= user.first_name, lname=user.last_name, email=user.email)
-                    # user_profile.save();
+                    user_profile.save();
                     print("Registration completed")
-                    return redirect("login")
+                    # return redirect("login")
+                    context = {"dest": "login"}
+                    return render(request, "loading.html", context)
             else:
                 # messages.info(request,"Passwords dont match. Please try again")
                 # return redirect("signup")
@@ -95,7 +97,10 @@ def login(request):
             user = auth.authenticate(username = uname, password = pass1)
             if user is not None:
                 auth.login(request, user)
-                return redirect("/")
+                # return redirect("/")
+                context = {"dest": "home"}
+                return render(request, "loading.html", context)
+                
             else:
                 # messages.info(request, "Invalid Credentials! Please try again.", extra_tags = "invalid_creds")
                 # return redirect("login")
@@ -113,7 +118,10 @@ def home(request):
 
 def logout(request):
     auth.logout(request)
-    return redirect("/")
+    context = {"dest": "home"}
+    return render(request, "loading.html", context)
+    
+    # return redirect("/")
 
 def profile(request):
     if request.method == "POST":
@@ -179,8 +187,4 @@ def profile(request):
             return render(request, "profile.html", context)
     else:
         user_profile = Profile.objects.get(uid = request.user)
-        # fname = user_profile.fname
-        # lname = user_profile.lname
-        # email = user_profile.email
-
         return render(request, "profile.html",{'user_profile':user_profile} )
