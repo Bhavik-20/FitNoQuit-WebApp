@@ -1,4 +1,4 @@
-<!-- {% load static %} -->
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,7 +44,19 @@
     <div style="display: flex;">
         <div class="loading"></div>
     </div>
-    
+    {% if dest == "login" %}
+    <script>
+        setTimeout(function(){
+            window.location.href = 'login';
+         }, 2000);
+    </script>
+    {% elif dest == "home" %}
+    <script>
+        setTimeout(function(){
+            window.location.href = '/';
+         }, 2000);
+    </script>
+    {% endif %}
 </body>
 </html>
 
