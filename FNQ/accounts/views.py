@@ -169,6 +169,10 @@ def profile(request):
             return render(request, "profile.html", context)
         else:
             user_profile = Profile.objects.get(uid = request.user)
+            height_cm = float(height) 
+            height_cm = height_cm / 100
+            weight_kg = float(weight)
+            bmi = weight_kg / (height_cm * height_cm)
             user_profile.height = height
             user_profile.weight = weight
             user_profile.age = age
@@ -181,6 +185,7 @@ def profile(request):
             user_profile.pcos = pcos
             user_profile.kidney = kidney
             user_profile.lactose = lactose
+            user_profile.bmi = bmi
             user_profile.save()
             user_profile = Profile.objects.get(uid = request.user)
             context ={"user_profile": user_profile}
