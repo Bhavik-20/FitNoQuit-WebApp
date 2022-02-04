@@ -106,8 +106,10 @@ def login(request):
             if user is not None:
                 auth.login(request, user)
                 # return redirect("/")
-                context = {"dest": "home"}
-                return render(request, "loading.html", context)
+                # user_profile = Profile.objects.get(uid = request.user)
+                # context ={"user_profile": user_profile}
+                context = {"dest": "dashboard"}
+                return render(request, "loading.html",context)
                 
             else:
                 # messages.info(request, "Invalid Credentials! Please try again.", extra_tags = "invalid_creds")
@@ -200,3 +202,9 @@ def profile(request):
     else:
         user_profile = Profile.objects.get(uid = request.user)
         return render(request, "profile.html",{'user_profile':user_profile} )
+
+def dashboard(request):
+    if request.method == "GET":
+        user_profile = Profile.objects.get(uid = request.user)
+        context = {'user_profile': user_profile}
+        return render(request, "dashboard.html",context)

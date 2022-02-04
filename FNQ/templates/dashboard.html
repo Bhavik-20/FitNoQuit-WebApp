@@ -37,9 +37,14 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                <li class="nav-item"><a class="nav-link" href="#about">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                {% if user.is_authenticated %}
+                <li class="nav-item"><p class="no-hover">Hello, {{user.first_name}}!</p></li>
+                <li class="nav-item"><a class="nav-link" href="profile">Profile</a></li>                 
+                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="logout"> Log out </a></li>
+                {% endif %}
+                <!-- <li class="nav-item"><a class="nav-link" href="/">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="/">Contact</a></li> -->
             </ul>
         </div>
     </div>
@@ -102,7 +107,7 @@
                                                 <i class="fas fa-ruler-vertical"></i>
                                             </div>
                                             <div class="column text">
-                                                <h2>170 cms</h2>
+                                                <h2>{{user_profile.height}} cm</h2>
                                                 <span>Height</span>
                                             </div>
                                         </div>
@@ -120,7 +125,7 @@
                                             <div class="row">
                                             <div class="column icon"><i class="fas fa-weight"></i></div>
                                             <div class="column text">
-                                                <h2>65 kg</h2>
+                                                <h2>{{user_profile.weight}} kg</h2>
                                                 <span>Weight</span>
                                             </div>
                                         </div>
@@ -139,7 +144,7 @@
                                             <div class="row">
                                             <div class="column icon"><i class="fas fa-hourglass-start"></i></div>
                                             <div class="column text">
-                                                <h2>21 years</h2>
+                                                <h2>{{user_profile.age}} years</h2>
                                                 <span>Age</span>
                                             </div>
                                         </div>
@@ -159,7 +164,7 @@
                                                 <i class="fas fa-clipboard"></i>
                                             </div>
                                             <div class="column text">
-                                                <h2>50</h2>
+                                                <h2>{{user_profile.bmi}}</h2>
                                                 <span>BMI</span>
                                             </div>
                                         </div>
