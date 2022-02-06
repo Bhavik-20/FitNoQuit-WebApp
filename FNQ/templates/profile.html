@@ -31,14 +31,20 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
                         {% if user.is_authenticated %}
-                        <li class="nav-item"><p class="no-hover">Hello, {{user.first_name}}!</p></li>
-                        <li class="nav-item"><a class="nav-link" href="dashboard">Dashboard</a></li>                         
-                        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="logout"> Log out </a></li>
+                        <li class="nav-item"><p class="no-hover">Hello, {{user.first_name}}!</p></li> 
+                        <li class="nav-item"><a class="nav-link" href="dashboard">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/#about">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/#contact">Contact</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-user-circle" style="font-size: 20px"></i>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="profile">Edit Profile</a>
+                            <a class="dropdown-item" href="logout">Log out</a>
+                            </div>
+                        </li>
                         {% endif %}
-                        <!-- <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/#about">About</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/#contact">Contact</a></li> -->
                     </ul>
                 </div>
             </div>
@@ -95,26 +101,26 @@
                 </div>
                 <div class="row py-2">
                     <div class="col"> <label for="fitness_goal">What is your fitness goal?</label> <select name="fitness_goal" id="fitness_goal" class="bg-light">
-                        {% if user_profile.fitness_goal == "maintain-health" %}
+                        {% if user_profile.fitness_goal == "Maintain Health" %}
                             <option value="----" >----</option>
-                            <option value="maintain-health" selected>Maintain Health</option>
-                            <option value="weight-loss">Weight Loss</option>
-                            <option value="weight-gain">Weight Gain</option>
-                        {% elif user_profile.fitness_goal == "weight-loss" %}
+                            <option value="Maintain Health" selected>Maintain Health</option>
+                            <option value="Weight Loss">Weight Loss</option>
+                            <option value="Weight Gain">Weight Gain</option>
+                        {% elif user_profile.fitness_goal == "Weight Loss" %}
                             <option value="----" >----</option>
-                            <option value="maintain-health">Maintain Health</option>
-                            <option value="weight-loss" selected>Weight Loss</option>
-                            <option value="weight-gain">Weight Gain</option>
-                        {% elif user_profile.fitness_goal == "weight-gain" %} 
+                            <option value="Maintain Health">Maintain Health</option>
+                            <option value="Weight Loss" selected>Weight Loss</option>
+                            <option value="Weight Gain">Weight Gain</option>
+                        {% elif user_profile.fitness_goal == "Weight Gain" %} 
                             <option value="----" >----</option>
-                            <option value="maintain-health">Maintain Health</option>
-                            <option value="weight-loss">Weight Loss</option>
-                            <option value="weight-gain" selected>Weight Gain</option>
+                            <option value="Maintain Health">Maintain Health</option>
+                            <option value="Weight Loss">Weight Loss</option>
+                            <option value="Weight Gain" selected>Weight Gain</option>
                         {% else %}
                             <option value="----" selected>----</option>
-                            <option value="maintain-health">Maintain Health</option>
-                            <option value="weight-loss">Weight Loss</option>
-                            <option value="weight-gain">Weight Gain</option>
+                            <option value="Maintain Health">Maintain Health</option>
+                            <option value="Weight Loss">Weight Loss</option>
+                            <option value="Weight Gain">Weight Gain</option>
                         {% endif%}
                     </select>
                     <p style="color: red; font-size: 12px;">{{fitness_goal}}</p>
