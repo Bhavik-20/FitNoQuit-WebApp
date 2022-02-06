@@ -22,7 +22,7 @@
     </head>
     <body id="page-top">
         <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light" id="mainNav">
+        <!-- <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light" id="mainNav">
             <div class="container">
                 <a class="navbar-brand" href="#page-top"><h4>FitNoQuit</h4></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,7 +45,40 @@
                             <a class="dropdown-item" href="profile">Edit Profile</a>
                             <a class="dropdown-item" href="logout">Log out</a>
                             </div>
-                        </li>
+                        </li>     
+                        {% else %}
+                        <li class="nav-item"><a class="nav-link" href="login">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="signup">Sign Up</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li> 
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav> -->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand" href="/"><h4>FitNoQuit</h4></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars ms-1"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                        {% if user.is_authenticated %}
+                        <li class="nav-item"><p class="no-hover">Hello, {{user.first_name}}!</p></li> 
+                        <li class="nav-item"><a class="nav-link" href="dashboard">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/#about">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/#contact">Contact</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-user-circle" style="font-size: 20px"></i>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                              <a class="dropdown-item" href="profile">Edit Profile</a>
+                              <a class="dropdown-item" href="logout">Log out</a>
+                            </div>
+                          </li>
                         {% else %}
                         <li class="nav-item"><a class="nav-link" href="login">Login</a></li>
                         <li class="nav-item"><a class="nav-link" href="signup">Sign Up</a></li>
@@ -261,10 +294,10 @@
                 </div>
             </div>
         </footer>
-        <!-- Bootstrap core JS-->
+        <!-- Bootstrap core JS
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <!-- <script src="js/scripts.js"></script> -->
-        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+        Core theme JS
+        <script src="js/scripts.js"></script>
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script> -->
     </body>
 </html>
