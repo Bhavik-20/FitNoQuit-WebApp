@@ -15,13 +15,13 @@
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
 
+    <!-- Main CSS-->
+    <link href="{% static 'css/dashboard.css'%}" rel="stylesheet" media="all">
+
     <!-- Bootstrap CSS-->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
-    <!-- Main CSS-->
-    <link href="{% static 'css/dashboard.css'%}" rel="stylesheet" media="all">
 
     <!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
@@ -218,62 +218,63 @@
                         {% endif %}
                         <br>
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="column" style="margin-top: 10px; width:30%">
                                 <div class="au-card recent-report">
                                     <div class="au-card-inner">
-                                        <h3 class="title-2">recent reports</h3>
-                                        <div class="chart-info">
-                                            <div class="chart-info__left">
-                                                <div class="chart-note">
-                                                    <span class="dot dot--blue"></span>
-                                                    <span>products</span>
-                                                </div>
-                                                <div class="chart-note mr-0">
-                                                    <span class="dot dot--green"></span>
-                                                    <span>services</span>
-                                                </div>
-                                            </div>
-                                            <div class="chart-info__right">
-                                                <div class="chart-statis">
-                                                    <span class="index incre">
-                                                        <i class="zmdi zmdi-long-arrow-up"></i>25%</span>
-                                                    <span class="label">products</span>
-                                                </div>
-                                                <div class="chart-statis mr-0">
-                                                    <span class="index decre">
-                                                        <i class="zmdi zmdi-long-arrow-down"></i>10%</span>
-                                                    <span class="label">services</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="recent-report__chart">
-                                            <canvas id="recent-rep-chart"></canvas>
-                                        </div>
+                                        <h3 class="title-2">Diet Module</h3>
+                                        <img src="{% static 'images/diet-module.png' %}" width="100%">
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="column" style="margin-top: 10px; width:30%">
+                                <div class="au-card recent-report">
+                                    <div class="au-card-inner">
+                                        <h3 class="title-2">Workout Module</h3>
+                                        <img src="{% static 'images/workout-module.png' %}" width="100%">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- progress bar -->
+                            <div class="column" style="margin-top: 10px; width: 40%">
                                 <div class="au-card chart-percent-card">
                                     <div class="au-card-inner">
-                                        <h3 class="title-2 tm-b-5">char by %</h3>
-                                        <div class="row no-gutters">
-                                            <div class="col-xl-6">
-                                                <div class="chart-note-wrap">
-                                                    <div class="chart-note mr-0 d-block">
-                                                        <span class="dot dot--blue"></span>
-                                                        <span>products</span>
+                                        <h3 class="title-2" style="margin-bottom: 15px;">Track your Progress</h3>
+                                        <div class="row">
+                                            <div>
+                                                    <div>
+                                                        <span class="dot dot--grey"></span>
+                                                        <span> Start Weight = <span id="start-wt"></span> kg</span>
                                                     </div>
-                                                    <div class="chart-note mr-0 d-block">
-                                                        <span class="dot dot--red"></span>
-                                                        <span>services</span>
+                                                    <div>
+                                                        <span class="dot dot--grey"></span>
+                                                        <span> Current Weight = <span id="current-wt"></span> kg</span>
                                                     </div>
-                                                </div>
+                                                    <div>
+                                                        <span class="dot dot--grey"></span>
+                                                        <span> Target Weight = <span id="target-wt"></span> kg</span>
+                                                    </div>
                                             </div>
+                                            <center>
                                             <div class="col-xl-6">
-                                                <div class="percent-chart">
-                                                    <canvas id="percent-chart"></canvas>
+                                                <div class="circular">
+                                                    <div class="inner"></div>
+                                                    <div class="number">100%</div>
+                                                    <div class="circle">
+                                                      <div class="bar left" id="left">
+                                                        <div class="progress"></div>
+                                                      </div>
+                                                      <div class="bar right" id = "right">
+                                                        <div class="progress"></div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                  <br>
                                                 </div>
-                                            </div>
+                                                <div class="chart-note mr-0 d-block">
+                                                    <span class="dot dot--blue"></span>
+                                                    <span> Your Progress = You are <span id="percentage"></span> % there !</span>
+                                                </div>  
+                                            </center>
                                         </div>
                                     </div>
                                 </div>
@@ -289,6 +290,68 @@
     </div>
 
 </body>
+
+<script>
+ const numb = document.querySelector(".number");
+let counter = 0;
+start_wt = 70
+current_wt = 77
+target_wt = 80
+document.getElementById("start-wt").innerHTML = start_wt;
+document.getElementById("current-wt").innerHTML = current_wt;
+document.getElementById("target-wt").innerHTML = target_wt;
+perc = Math.abs((start_wt - current_wt)/(start_wt - target_wt)) * 100
+document.getElementById("percentage").innerHTML = perc;
+if(perc<50)
+{
+    x = 2*180*perc/100
+    keyframes = document.styleSheets[0];
+    keyframes.insertRule(`
+    @keyframes left{
+    100%{
+      transform: rotate(`+x+`deg); 
+        }
+    }
+    `, keyframes.cssRules.length);
+
+    keyframes.insertRule(`
+    @keyframes right{
+    100%{
+      transform: rotate(0deg); 
+        }
+    }
+    `, keyframes.cssRules.length);
+} 
+else {
+
+    x = 2*180*(perc-50)/100
+    keyframes = document.styleSheets[0];
+    keyframes.insertRule(`
+    @keyframes left{
+    100%{
+      transform: rotate(180deg); 
+        }
+    }
+    `, keyframes.cssRules.length);
+
+    keyframes.insertRule(`
+    @keyframes right{
+    100%{
+      transform: rotate(`+x+`deg); 
+        }
+    }
+    `, keyframes.cssRules.length);
+
+}
+setInterval(() => {
+  if(counter == perc){
+    clearInterval();
+  }else{
+    counter+=1;
+    numb.textContent = counter + "%";
+  }
+}, 80);
+</script>
 
 </html>
 <!-- end document-->
