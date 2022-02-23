@@ -256,9 +256,9 @@
                                             </div>
                                             <center>
                                             <div class="col-xl-6">
-                                                <div class="circular">
-                                                    <div class="inner"></div>
-                                                    <div class="number">100%</div>
+                                                <div class="circular" >
+                                                    <div class="inner" id="circ"></div>
+                                                    <div class="number" id="circ2">100%</div>
                                                     <div class="circle">
                                                       <div class="bar left" id="left">
                                                         <div class="progress"></div>
@@ -272,7 +272,8 @@
                                                 </div>
                                                 <div class="chart-note mr-0 d-block">
                                                     <span class="dot dot--blue"></span>
-                                                    <span> Your Progress = You are <span id="percentage"></span> % there !</span>
+                                                    <span> <strong> Progress: <span id="percentage"></span> </strong>
+                                                    </span>
                                                 </div>  
                                             </center>
                                         </div>
@@ -292,18 +293,25 @@
 </body>
 
 <script>
- const numb = document.querySelector(".number");
+const numb = document.querySelector(".number");
 let counter = 0;
-start_wt = 70
-current_wt = 77
-target_wt = 80
+start_wt = "{{user_profile.start_wt}}"
+current_wt = 81 
+target_wt = 75
 document.getElementById("start-wt").innerHTML = start_wt;
 document.getElementById("current-wt").innerHTML = current_wt;
 document.getElementById("target-wt").innerHTML = target_wt;
-perc = Math.abs((start_wt - current_wt)/(start_wt - target_wt)) * 100
-document.getElementById("percentage").innerHTML = perc;
-if(perc<50)
+perc = (start_wt - current_wt)/(start_wt - target_wt) * 100
+
+if (perc<0)
 {
+    document.getElementById("percentage").innerHTML = "You Are Not On Track !";
+    document.getElementsById("circ").style.display = none;
+    document.getElementsById("circ2").style.display = none;
+}
+else if(perc<50)
+{
+    document.getElementById("percentage").innerHTML = "You are " + perc + "% there !";
     x = 2*180*perc/100
     keyframes = document.styleSheets[0];
     keyframes.insertRule(`
@@ -321,9 +329,10 @@ if(perc<50)
         }
     }
     `, keyframes.cssRules.length);
+    
 } 
 else {
-
+    document.getElementById("percentage").innerHTML = "You are " + perc + "% there !";
     x = 2*180*(perc-50)/100
     keyframes = document.styleSheets[0];
     keyframes.insertRule(`
@@ -341,7 +350,7 @@ else {
         }
     }
     `, keyframes.cssRules.length);
-
+    
 }
 setInterval(() => {
   if(counter == perc){
