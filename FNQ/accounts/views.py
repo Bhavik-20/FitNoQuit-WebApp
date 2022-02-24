@@ -7,7 +7,7 @@ from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.test import tag
 import re
-
+import math
 from .models import Profile
 
 email_regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
@@ -69,7 +69,7 @@ def signup(request):
                 else:
                     user = User.objects.create_user(username = uname, email = email, first_name = fname, last_name = lname, password = pass1)
                     user.save();
-                    user_profile = Profile.objects.create(uid = user, age=0, gender="----", height= 0.0, weight = 0.0, start_wt = 0.0, 
+                    user_profile = Profile.objects.create(uid = user, age=0, gender="----", height= 0.0, weight = 0.0, start_wt = 0.0, target_wt = 0.0,
                                         bmi = 0.0, fitness_goal="----", curr_exercise=0, food_pref="----", diabetes=False, kidney=False, 
                                         lactose=False, pcos=False, thyroid=False, fname= user.first_name, lname=user.last_name, email=user.email)
                     user_profile.save();
@@ -206,7 +206,22 @@ def profile(request):
         return render(request, "profile.html",{'user_profile':user_profile} )
 
 def dashboard(request):
+    user_profile = Profile.objects.get(uid = request.user)
+    curr_bmi = user_profile.bmi
+    
+    curr_ht = user_profile.height
+    curr_ht = float(curr_ht) 
+    curr_ht = curr_ht / 100
+    
+    r1 = math.floor(24.99 * (curr_ht * curr_ht))
+    r2 = math.ceil(18.5 * (curr_ht * curr_ht))
     if request.method == "GET":
+        context = {'user_profile': user_profile, 'r1':r1, 'r2': r2}
+        return render(request, "dashboard.html",context)
+    else:
+        ent_target = request.POST['target_wt']
+        user_profile.target_wt = ent_target
+        user_profile.save()
         user_profile = Profile.objects.get(uid = request.user)
-        context = {'user_profile': user_profile}
+        context = {'user_profile': user_profile, 'r1':r1, 'r2': r2}
         return render(request, "dashboard.html",context)

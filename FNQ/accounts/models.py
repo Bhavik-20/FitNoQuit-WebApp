@@ -13,6 +13,7 @@ class Profile(models.Model):
     height = models.DecimalField(max_digits=4, decimal_places=1)
     weight = models.DecimalField(max_digits=5, decimal_places=2)
     start_wt = models.DecimalField(max_digits=5, decimal_places=2)
+    target_wt = models.DecimalField(max_digits=5, decimal_places=2)
     bmi = models.DecimalField(max_digits=4, decimal_places=2, default=0)
     fitness_goal = models.CharField(max_length=20)
     curr_exercise = models.CharField(max_length=50)
