@@ -27,6 +27,9 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
 
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 </head>
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light" id="mainNav">
@@ -251,12 +254,24 @@
                                                     </div>
                                                     <div>
                                                         {% if user_profile.fitness_goal == "Maintain Health" %}
-                                                            {% if user_profile.start_wt < user_profile.weight %}
-                                                            You have gained weight!
+                                                            {% if user_profile.start_wt < user_profile.weight %}                                                            
+                                                            <div>
+                                                                <span class="dot dot--blue"></span>
+                                                                <span> <strong> Progress: You have gained weight ! </strong>
+                                                                </span>
+                                                            </div> 
                                                             {% elif user_profile.start_wt > user_profile.weight %}
-                                                            You have lost weight!
+                                                            <div>
+                                                                <span class="dot dot--blue"></span>
+                                                                <span> <strong> Progress: You have lost weight ! </strong>
+                                                                </span>
+                                                            </div> 
                                                             {% else %}
-                                                            You are on track!
+                                                            <div>
+                                                                <span class="dot dot--blue"></span>
+                                                                <span> <strong> Progress: You are on track ! </strong>
+                                                                </span>
+                                                            </div> 
                                                             {% endif %}
                                                         {% else %}
                                                         <form action="dashboard" method="post">
@@ -270,28 +285,30 @@
                                                         {% endif %}
                                                     </div>
                                             </div>
-                                            <center>
-                                            <div class="col-xl-6">
-                                                <div class="circular" >
-                                                    <div class="inner" id="circ"></div>
-                                                    <div class="number" id="circ2">100%</div>
-                                                    <div class="circle">
-                                                      <div class="bar left" id="left">
-                                                        <div class="progress"></div>
-                                                      </div>
-                                                      <div class="bar right" id = "right">
-                                                        <div class="progress"></div>
-                                                      </div>
+                                            {% if user_profile.fitness_goal != "Maintain Health" %}
+                                            <center>                                            
+                                                <div class="col-xl-6" >
+                                                    <div class="circular" >
+                                                        <div class="inner" ></div>
+                                                        <div class="number" >100%</div>
+                                                        <div class="circle" >
+                                                        <div class="bar left" id="left">
+                                                            <div class="progress" ></div>
+                                                        </div>
+                                                        <div class="bar right" id = "right">
+                                                            <div class="progress" ></div>
+                                                        </div>
+                                                        </div>
                                                     </div>
-                                                  </div>
-                                                  <br>
+                                                    <br>
                                                 </div>
-                                                <div class="chart-note mr-0 d-block">
+                                                <div>
                                                     <span class="dot dot--blue"></span>
                                                     <span> <strong> Progress: <span id="percentage"></span> </strong>
                                                     </span>
-                                                </div>  
+                                                </div> 
                                             </center>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
@@ -311,19 +328,16 @@
 <script>
 const numb = document.querySelector(".number");
 let counter = 0;
-start_wt = "{{user_profile.start_wt}}"
-current_wt = "{{user_profile.weight}}" 
-target_wt = 75
+start_wt = "{{user_profile.start_wt}}" 
+current_wt = "{{user_profile.weight}}"  
+target_wt = "{{user_profile.target_wt}}" 
 document.getElementById("start-wt").innerHTML = start_wt;
 document.getElementById("current-wt").innerHTML = current_wt;
-document.getElementById("target-wt").innerHTML = target_wt;
-perc = (start_wt - current_wt)/(start_wt - target_wt) * 100
-
+perc = (start_wt - current_wt)/(start_wt - target_wt) * 100;
+  
 if (perc<0)
 {
     document.getElementById("percentage").innerHTML = "You Are Not On Track !";
-    document.getElementsById("circ").style.display = none;
-    document.getElementsById("circ2").style.display = none;
 }
 else if(perc<50)
 {
@@ -333,7 +347,7 @@ else if(perc<50)
     keyframes.insertRule(`
     @keyframes left{
     100%{
-      transform: rotate(`+x+`deg); 
+    transform: rotate(`+x+`deg); 
         }
     }
     `, keyframes.cssRules.length);
@@ -341,7 +355,7 @@ else if(perc<50)
     keyframes.insertRule(`
     @keyframes right{
     100%{
-      transform: rotate(0deg); 
+    transform: rotate(0deg); 
         }
     }
     `, keyframes.cssRules.length);
@@ -354,7 +368,7 @@ else {
     keyframes.insertRule(`
     @keyframes left{
     100%{
-      transform: rotate(180deg); 
+    transform: rotate(180deg); 
         }
     }
     `, keyframes.cssRules.length);
@@ -362,12 +376,14 @@ else {
     keyframes.insertRule(`
     @keyframes right{
     100%{
-      transform: rotate(`+x+`deg); 
+    transform: rotate(`+x+`deg); 
         }
     }
     `, keyframes.cssRules.length);
     
 }
+
+
 setInterval(() => {
   if(counter == perc){
     clearInterval();
