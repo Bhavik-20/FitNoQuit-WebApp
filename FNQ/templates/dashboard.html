@@ -251,6 +251,7 @@
                                                     <div>
                                                         <span class="dot dot--grey"></span>
                                                         <span> Current Weight = <span id="current-wt"></span> kg</span>
+                                                        <span style="font-size: 13px;"><em> Update it in <a href="profile">Profile.</a></em></span>
                                                     </div>
                                                     <div>
                                                         {% if user_profile.fitness_goal == "Maintain Health" %}
@@ -277,15 +278,16 @@
                                                         <form action="dashboard" method="post">
                                                         {% csrf_token %}
                                                         <span class="dot dot--grey"></span>
-                                                        <span> Target Weight = <input type="number" name ="target_wt" class="bg-light" value = {{user_profile.target_wt}} min={{r2}} max={{r1}}>kg</span>
-                                                        <button type="submit">Submit </button>
-                                                        <br>
+                                                        <span> Target Weight = <input type="number" name ="target_wt" class="target-wt" value = {{user_profile.target_wt}} min={{r2}} max={{r1}}>kg</span>
+                                                        <button type="submit" class="set-btn">Set </button>
+                                                        <div style="margin: 10px;">
                                                         <span style="font-size:12.5px;"><em>To be in the Healthy BMI range your target weight should be between {{r2}} - {{r1}} kg.</em></span>
-                                                        </form>
+                                                        </div>
+                                                    </form>
                                                         {% endif %}
                                                     </div>
                                             </div>
-                                            {% if user_profile.fitness_goal != "Maintain Health" %}
+                                            {% if user_profile.fitness_goal != "Maintain Health" or user_profile.target_wt != 0.00 %}
                                             <center>                                            
                                                 <div class="col-xl-6" >
                                                     <div class="circular" >

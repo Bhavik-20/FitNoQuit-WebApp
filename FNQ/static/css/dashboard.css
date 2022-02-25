@@ -564,6 +564,20 @@ section {
   .dot--blue{
     background-color: #4158d0;
   }
+
+  .target-wt{
+    width:fit-content;
+    border: 1px solid #C0C0C0;
+    border-radius: 5px;
+  }
+
+  .set-btn{
+    background-color: #4a87ce;
+    padding: 1px 10px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+  }
   /* progress bar */
   
   .circular{
@@ -626,3 +640,5 @@ section {
     animation: right 4s linear both;
     animation-delay:4s;
   }
+
+
