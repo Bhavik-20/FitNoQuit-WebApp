@@ -147,7 +147,10 @@ def profile(request):
         pcos = request.POST['pcos']
         kidney = request.POST['kidney']
         lactose = request.POST['lactose']
-        
+        height_cm = float(height) 
+        height_cm = height_cm / 100
+        weight_kg = float(weight)
+        bmi = weight_kg / (height_cm * height_cm)
         if height == "0.0":
             context = {"height":"Please enter valid Height in cms.","weight":"","age":"","gender":"",
             "fitness_goal":"", "curr_exc":"", "food_pref":"", "health_issues":"", "user_profile": user_profile}
@@ -176,19 +179,36 @@ def profile(request):
             context = {"height":"","weight":"","age":"","gender":"", "fitness_goal":"", "curr_exc":"", 
             "food_pref":"Please select your food preference.", "health_issues":"", "user_profile": user_profile}
             return render(request, "profile.html", context)
+        elif bmi < 18.5 and fitness_goal == "Weight Loss":
+            context = {"height":"","weight":"","age":"","gender":"", "fitness_goal":"You are under weight! Please Select Weight Gain.", 
+            "curr_exc":"", "food_pref":"", "health_issues":"", "user_profile": user_profile}
+            return render(request, "profile.html", context)
+        elif bmi > 25 and fitness_goal == "Weight Gain":
+            context = {"height":"","weight":"","age":"","gender":"", "fitness_goal":"You are over weight! Please Select Weight Loss.", 
+            "curr_exc":"", "food_pref":"", "health_issues":"", "user_profile": user_profile}
+            return render(request, "profile.html", context)
         else:
             user_profile = Profile.objects.get(uid = request.user)
-            height_cm = float(height) 
-            height_cm = height_cm / 100
-            weight_kg = float(weight)
-            bmi = weight_kg / (height_cm * height_cm)
+           
             if user_profile.start_wt == 0.0:
                 user_profile.start_wt = weight
-            user_profile.height = height
-            user_profile.weight = weight
+            if user_profile.fitness_goal != fitness_goal:
+                user_profile.start_wt = weight
+                if fitness_goal == "Weight Loss":
+                    user_profile.target_wt = float(weight) - 1
+                elif fitness_goal == "Weight Gain":
+                    user_profile.target_wt = float(weight) + 1
+            
+            elif fitness_goal == "Weight Loss" and user_profile.start_wt != 0.0 and user_profile.start_wt > float(weight):
+                user_profile.start_wt = weight
+                user_profile.target_wt = float(weight) - 1
+            elif fitness_goal == "Weight Gain" and user_profile.start_wt != 0.0 and user_profile.start_wt < float(weight):
+                user_profile.start_wt = weight
+                user_profile.target_wt = float(weight) + 1
+
+            user_profile.height = height            
             user_profile.age = age
-            user_profile.gender = gender
-            user_profile.fitness_goal = fitness_goal
+            user_profile.gender = gender            
             user_profile.curr_exercise = curr_exc
             user_profile.food_pref = food_pref
             user_profile.diabetes = diabetes
@@ -197,9 +217,12 @@ def profile(request):
             user_profile.kidney = kidney
             user_profile.lactose = lactose
             user_profile.bmi = bmi
+            user_profile.weight = weight
+            user_profile.fitness_goal = fitness_goal
+            
             user_profile.save()
             user_profile = Profile.objects.get(uid = request.user)
-            context ={"user_profile": user_profile}
+            context ={"user_profile": user_profile, "res": "Saved Successfully!"}
             return render(request, "profile.html", context)
     else:
         user_profile = Profile.objects.get(uid = request.user)

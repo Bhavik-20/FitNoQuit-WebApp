@@ -243,7 +243,12 @@
                                     <div class="au-card-inner">
                                         <h3 class="title-2" style="margin-bottom: 15px;">Track your Progress</h3>
                                         <div class="row">
+                                            {% if user_profile.age != 0 %} <!-- IF USER IS NOT NEW -->
                                             <div>
+                                                    <div>
+                                                        <span class="dot dot--grey"></span>
+                                                        <span> Goal = {{user_profile.fitness_goal}}</span>
+                                                    </div>
                                                     <div>
                                                         <span class="dot dot--grey"></span>
                                                         <span> Start Weight = <span id="start-wt"></span> kg</span>
@@ -251,7 +256,7 @@
                                                     <div>
                                                         <span class="dot dot--grey"></span>
                                                         <span> Current Weight = <span id="current-wt"></span> kg</span>
-                                                        <span style="font-size: 13px;"><em> Update it in <a href="profile">Profile.</a></em></span>
+                                                        <span style="font-size: 13px;"><em>  (Update it in <a href="profile">Profile</a>)</em></span>
                                                     </div>
                                                     <div>
                                                         {% if user_profile.fitness_goal == "Maintain Health" %}
@@ -278,7 +283,14 @@
                                                         <form action="dashboard" method="post">
                                                         {% csrf_token %}
                                                         <span class="dot dot--grey"></span>
-                                                        <span> Target Weight = <input type="number" name ="target_wt" class="target-wt" value = {{user_profile.target_wt}} min={{r2}} max={{r1}}>kg</span>
+
+                                                        {% if user_profile.fitness_goal == "Weight Loss" %} 
+                                                        <span> Target Weight = <input type="number" name ="target_wt" class="target-wt" value = {{user_profile.target_wt}} min={{r2}} max={{user_profile.target_wt}}>kg</span>
+                                                        {% endif %}
+                                                        {% if user_profile.fitness_goal == "Weight Gain" %} 
+                                                        <span> Target Weight = <input type="number" name ="target_wt" class="target-wt" value = {{user_profile.target_wt}} min={{user_profile.target_wt}} max={{r1}}>kg</span>
+                                                        {% endif %}
+
                                                         <button type="submit" class="set-btn">Set </button>
                                                         <div style="margin: 10px;">
                                                         <span style="font-size:12.5px;"><em>To be in the Healthy BMI range your target weight should be between {{r2}} - {{r1}} kg.</em></span>
@@ -286,13 +298,13 @@
                                                     </form>
                                                         {% endif %}
                                                     </div>
-                                            </div>
-                                            {% if user_profile.fitness_goal != "Maintain Health" or user_profile.target_wt != 0.00 %}
+                                            </div>                            
+<!-- no progress bar if maintain health-->{% if user_profile.fitness_goal != "Maintain Health" or user_profile.target_wt != 0 %}                                            
                                             <center>                                            
                                                 <div class="col-xl-6" >
                                                     <div class="circular" >
                                                         <div class="inner" ></div>
-                                                        <div class="number" >100%</div>
+                                                        <div class="number">0%</div>
                                                         <div class="circle" >
                                                         <div class="bar left" id="left">
                                                             <div class="progress" ></div>
@@ -310,7 +322,85 @@
                                                     </span>
                                                 </div> 
                                             </center>
+                                            <script>
+                                                const numb = document.querySelector(".number");
+                                                let counter = 0;
+                                                
+                                                start_wt = "{{user_profile.start_wt}}" 
+                                                current_wt = "{{user_profile.weight}}"  
+                                                document.getElementById("start-wt").innerHTML = start_wt;
+                                                document.getElementById("current-wt").innerHTML = current_wt;
+                                                
+                                                target_wt = "{{user_profile.target_wt}}" 
+                                                
+                                                perc = (start_wt - current_wt)/(start_wt - target_wt) * 100;
+                                                console.log(perc)
+                                                if (perc<0)
+                                                {
+                                                    perc = 0
+                                                    document.getElementById("percentage").innerHTML = "You Are Not On Track !";
+                                                }
+                                                else if(perc<50)
+                                                {   
+                                                    perc = Math.ceil(perc)
+                                                    document.getElementById("percentage").innerHTML = "You are " + perc + "% there !";
+                                                    x = 2*180*perc/100
+                                                    keyframes = document.styleSheets[0];
+                                                    keyframes.insertRule(`
+                                                    @keyframes left{
+                                                    100%{
+                                                    transform: rotate(`+x+`deg); 
+                                                        }
+                                                    }
+                                                    `, keyframes.cssRules.length);
+                                                
+                                                    keyframes.insertRule(`
+                                                    @keyframes right{
+                                                    100%{
+                                                    transform: rotate(0deg); 
+                                                        }
+                                                    }
+                                                    `, keyframes.cssRules.length);
+                                                    
+                                                } 
+                                                else {
+                                                    perc = Math.ceil(perc)
+                                                    document.getElementById("percentage").innerHTML = "You are " + perc + "% there !";
+                                                    x = 2*180*(perc-50)/100
+                                                    keyframes = document.styleSheets[0];
+                                                    keyframes.insertRule(`
+                                                    @keyframes left{
+                                                    100%{
+                                                    transform: rotate(180deg); 
+                                                        }
+                                                    }
+                                                    `, keyframes.cssRules.length);
+                                                
+                                                    keyframes.insertRule(`
+                                                    @keyframes right{
+                                                    100%{
+                                                    transform: rotate(`+x+`deg); 
+                                                        }
+                                                    }
+                                                    `, keyframes.cssRules.length);
+                                                    
+                                                }
+                                                
+                                                
+                                                setInterval(() => {
+                                                  if(counter == perc){
+                                                    clearInterval();
+                                                  }else{
+                                                    counter+=1;
+                                                    numb.textContent = counter + "%";
+                                                  }
+                                                }, 80);
+                                                </script>
                                             {% endif %}
+                                            {% else %} <!-- IF USER IS NEW -->                                            
+                                            <span style="font-size: 13px;"> To Track your progess, Please Enter Your Details in the <a href="profile">Profile</a> Section.</span>                                                    
+                                            {% endif %}
+                    
                                         </div>
                                     </div>
                                 </div>
@@ -327,16 +417,19 @@
 
 </body>
 
-<script>
+<!-- <script>
 const numb = document.querySelector(".number");
 let counter = 0;
+
 start_wt = "{{user_profile.start_wt}}" 
 current_wt = "{{user_profile.weight}}"  
-target_wt = "{{user_profile.target_wt}}" 
 document.getElementById("start-wt").innerHTML = start_wt;
 document.getElementById("current-wt").innerHTML = current_wt;
+
+target_wt = "{{user_profile.target_wt}}" 
+
 perc = (start_wt - current_wt)/(start_wt - target_wt) * 100;
-  
+console.log(perc)
 if (perc<0)
 {
     document.getElementById("percentage").innerHTML = "You Are Not On Track !";
@@ -394,7 +487,7 @@ setInterval(() => {
     numb.textContent = counter + "%";
   }
 }, 80);
-</script>
+</script> -->
 
 </html>
 <!-- end document-->
