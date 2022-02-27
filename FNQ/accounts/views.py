@@ -198,13 +198,11 @@ def profile(request):
                     user_profile.target_wt = float(weight) - 1
                 elif fitness_goal == "Weight Gain":
                     user_profile.target_wt = float(weight) + 1
-            
-            elif fitness_goal == "Weight Loss" and user_profile.start_wt != 0.0 and user_profile.start_wt > float(weight):
-                user_profile.start_wt = weight
-                user_profile.target_wt = float(weight) - 1
-            elif fitness_goal == "Weight Gain" and user_profile.start_wt != 0.0 and user_profile.start_wt < float(weight):
-                user_profile.start_wt = weight
-                user_profile.target_wt = float(weight) + 1
+            elif user_profile.fitness_goal == fitness_goal:
+                if fitness_goal == "Weight Loss" and float(weight)<user_profile.target_wt:
+                    user_profile.target_wt = weight
+                elif fitness_goal == "Weight Gain" and float(weight)>user_profile.target_wt:
+                    user_profile.target_wt = weight
 
             user_profile.height = height            
             user_profile.age = age
@@ -238,13 +236,20 @@ def dashboard(request):
     
     r1 = math.floor(24.99 * (curr_ht * curr_ht))
     r2 = math.ceil(18.5 * (curr_ht * curr_ht))
+    wl = user_profile.start_wt - 1
+    wg = user_profile.start_wt + 1
     if request.method == "GET":
-        context = {'user_profile': user_profile, 'r1':r1, 'r2': r2}
+        context = {'user_profile': user_profile, 'r1':r1, 'r2': r2, 'wl': wl, "wg": wg}
         return render(request, "dashboard.html",context)
     else:
         ent_target = request.POST['target_wt']
         user_profile.target_wt = ent_target
+        
+        if user_profile.fitness_goal == "Weight Loss" and user_profile.weight < float(user_profile.target_wt):
+            user_profile.target_wt = user_profile.weight
+        elif user_profile.fitness_goal == "Weight Gain" and user_profile.weight > float(user_profile.target_wt):
+            user_profile.target_wt = user_profile.weight
         user_profile.save()
         user_profile = Profile.objects.get(uid = request.user)
-        context = {'user_profile': user_profile, 'r1':r1, 'r2': r2}
+        context = {'user_profile': user_profile, 'r1':r1, 'r2': r2, 'wl': wl, "wg": wg}
         return render(request, "dashboard.html",context)

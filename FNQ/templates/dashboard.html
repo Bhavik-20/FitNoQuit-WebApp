@@ -291,10 +291,10 @@
                                                             <span class="dot dot--grey"></span>
 
                                                             {% if user_profile.fitness_goal == "Weight Loss" %} 
-                                                            <span> Target Weight = <input type="number" name ="target_wt" class="target-wt" value = {{user_profile.target_wt}} min={{r2}} max={{user_profile.target_wt}}>kg</span>
+                                                            <span> Target Weight = <input type="number" name ="target_wt" class="target-wt" value = {{user_profile.target_wt}} min={{r2}} max={{wl}}>kg</span>
                                                             {% endif %}
                                                             {% if user_profile.fitness_goal == "Weight Gain" %} 
-                                                            <span> Target Weight = <input type="number" name ="target_wt" class="target-wt" value = {{user_profile.target_wt}} min={{user_profile.target_wt}} max={{r1}}>kg</span>
+                                                            <span> Target Weight = <input type="number" name ="target_wt" class="target-wt" value = {{user_profile.target_wt}} min={{wg}} max={{r1}}>kg</span>
                                                             {% endif %}
 
                                                             <button type="submit" class="set-btn">Set </button>
