@@ -260,6 +260,12 @@
                                                     </div>
                                                     <div>
                                                         {% if user_profile.fitness_goal == "Maintain Health" %}
+                                                            <script>
+                                                                start_wt = "{{user_profile.start_wt}}" 
+                                                                current_wt = "{{user_profile.weight}}"  
+                                                                document.getElementById("start-wt").innerHTML = start_wt;
+                                                                document.getElementById("current-wt").innerHTML = current_wt;
+                                                            </script>
                                                             {% if user_profile.start_wt < user_profile.weight %}                                                            
                                                             <div>
                                                                 <span class="dot dot--blue"></span>
@@ -281,21 +287,21 @@
                                                             {% endif %}
                                                         {% else %}
                                                         <form action="dashboard" method="post">
-                                                        {% csrf_token %}
-                                                        <span class="dot dot--grey"></span>
+                                                            {% csrf_token %}
+                                                            <span class="dot dot--grey"></span>
 
-                                                        {% if user_profile.fitness_goal == "Weight Loss" %} 
-                                                        <span> Target Weight = <input type="number" name ="target_wt" class="target-wt" value = {{user_profile.target_wt}} min={{r2}} max={{user_profile.target_wt}}>kg</span>
-                                                        {% endif %}
-                                                        {% if user_profile.fitness_goal == "Weight Gain" %} 
-                                                        <span> Target Weight = <input type="number" name ="target_wt" class="target-wt" value = {{user_profile.target_wt}} min={{user_profile.target_wt}} max={{r1}}>kg</span>
-                                                        {% endif %}
+                                                            {% if user_profile.fitness_goal == "Weight Loss" %} 
+                                                            <span> Target Weight = <input type="number" name ="target_wt" class="target-wt" value = {{user_profile.target_wt}} min={{r2}} max={{user_profile.target_wt}}>kg</span>
+                                                            {% endif %}
+                                                            {% if user_profile.fitness_goal == "Weight Gain" %} 
+                                                            <span> Target Weight = <input type="number" name ="target_wt" class="target-wt" value = {{user_profile.target_wt}} min={{user_profile.target_wt}} max={{r1}}>kg</span>
+                                                            {% endif %}
 
-                                                        <button type="submit" class="set-btn">Set </button>
-                                                        <div style="margin: 10px;">
-                                                        <span style="font-size:12.5px;"><em>To be in the Healthy BMI range your target weight should be between {{r2}} - {{r1}} kg.</em></span>
-                                                        </div>
-                                                    </form>
+                                                            <button type="submit" class="set-btn">Set </button>
+                                                            <div style="margin: 10px;">
+                                                            <span style="font-size:12.5px;"><em>To be in the Healthy BMI range your target weight should be between {{r2}} - {{r1}} kg.</em></span>
+                                                            </div>
+                                                        </form>
                                                         {% endif %}
                                                     </div>
                                             </div>                            

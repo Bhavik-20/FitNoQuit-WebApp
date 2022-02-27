@@ -163,7 +163,7 @@
                             <option value="veg" selected>Vegeterian</option>
                             <option value="non-veg">Non-Vegetarian</option>
                             
-                        {% elif user_profile.fitness_goal == "non-veg" %}
+                        {% elif user_profile.food_pref == "non-veg" %}
                             <option value="----">----</option>
                             <option value="veg">Vegeterian</option>
                             <option value="non-veg" selected>Non-Vegetarian</option>                            
@@ -172,7 +172,7 @@
                             <option value="----" selected>----</option>
                             <option value="veg">Vegeterian</option>
                             <option value="non-veg">Non-Vegetarian</option>
-                            <option value="vegan">Vegan</option>
+                            
                         {% endif%}
                     </select><p style="color: red; font-size: 12px;">{{food_pref}}</p></div>
                 </div>
