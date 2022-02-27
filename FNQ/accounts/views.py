@@ -179,11 +179,11 @@ def profile(request):
             context = {"height":"","weight":"","age":"","gender":"", "fitness_goal":"", "curr_exc":"", 
             "food_pref":"Please select your food preference.", "health_issues":"", "user_profile": user_profile}
             return render(request, "profile.html", context)
-        elif bmi < 18.5 and fitness_goal == "Weight Loss":
+        elif bmi < 18.5 and fitness_goal == "Weight Loss" or bmi < 18.5 and fitness_goal == "Maintain Health":
             context = {"height":"","weight":"","age":"","gender":"", "fitness_goal":"You are under weight! Please Select Weight Gain.", 
             "curr_exc":"", "food_pref":"", "health_issues":"", "user_profile": user_profile}
             return render(request, "profile.html", context)
-        elif bmi > 25 and fitness_goal == "Weight Gain":
+        elif bmi > 25 and fitness_goal == "Weight Gain" or bmi > 25 and fitness_goal == "Maintain Health":
             context = {"height":"","weight":"","age":"","gender":"", "fitness_goal":"You are over weight! Please Select Weight Loss.", 
             "curr_exc":"", "food_pref":"", "health_issues":"", "user_profile": user_profile}
             return render(request, "profile.html", context)
