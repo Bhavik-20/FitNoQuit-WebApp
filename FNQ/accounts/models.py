@@ -24,4 +24,13 @@ class Profile(models.Model):
     kidney = models.BooleanField(default=False)
     lactose = models.BooleanField(default=False)
 
-
+class Diet(models.Model):
+    uid = models.ForeignKey(User, on_delete=models.CASCADE, primary_key= True, db_column='uid')
+    diet_calories = models.PositiveBigIntegerField()
+    plan_exists =  models.BooleanField(default=False)
+    is_vegan = models.BooleanField(default=False)
+    like_milk = models.BooleanField(default=True)
+    like_seeds_nuts = models.BooleanField(default=True)
+    like_sweets = models.BooleanField(default=True)
+    like_fruits = models.BooleanField(default=True)
+    like_salads = models.BooleanField(default=True)
