@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.test import tag
 import re
 import math
-from .models import Profile
+from .models import Profile, Diet
 
 email_regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 # phone_regex = r'^[0-9]{10}$'
@@ -253,3 +253,25 @@ def dashboard(request):
         user_profile = Profile.objects.get(uid = request.user)
         context = {'user_profile': user_profile, 'r1':r1, 'r2': r2, 'wl': wl, "wg": wg}
         return render(request, "dashboard.html",context)
+
+def diet(request):
+    if request.method == "POST":
+        is_vegan = request.POST['vegan']
+        like_milk = request.POST['milk']
+        like_seeds_nuts = request.POST['seeds']
+        like_sweet = request.POST['sweet']
+        like_fruits = request.POST['fruits']
+        like_salads =request.POST['salads']
+
+        user_diet = Diet.objects.get(uid = request.user)
+        user_diet.is_vegan = is_vegan
+        user_diet.like_milk = like_milk
+        user_diet.like_seeds_nuts = like_seeds_nuts
+        user_diet.like_sweet = like_sweet
+        user_diet.like_fruits = like_fruits
+        user_diet.like_salads = like_salads
+        user_diet.save()
+        user_diet = Diet.objects.get(uid = request.user)
+        return render(request, "dashboard.html")
+    else:
+        return render(request, 'diet-qn.html')
