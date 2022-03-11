@@ -73,6 +73,10 @@ def signup(request):
                                         bmi = 0.0, fitness_goal="----", curr_exercise=0, food_pref="----", diabetes=False, kidney=False, 
                                         lactose=False, pcos=False, thyroid=False, fname= user.first_name, lname=user.last_name, email=user.email)
                     user_profile.save();
+                    user_diet = Diet.objects.create(uid = user, diet_calories=0, plan_exists = False, is_vegan = False,
+                                                    like_milk = True, like_seeds_nuts = True, like_sweets = True, 
+                                                    like_fruits = True, like_salads = True)
+                    user_diet.save();
                     print("Registration completed")
                     # return redirect("login")
                     context = {"dest": "login"}
