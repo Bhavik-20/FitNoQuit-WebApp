@@ -276,6 +276,8 @@ def diet(request):
         user_diet.like_salads = like_salads
         user_diet.save()
         user_diet = Diet.objects.get(uid = request.user)
-        return render(request, "dashboard.html")
+        context = {"dest": "dashboard"}
+        return render(request, "loading.html",context)
+        # return render(request, "dashboard.html")
     else:
         return render(request, 'diet-qn.html')

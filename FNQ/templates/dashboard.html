@@ -220,7 +220,9 @@
                         <em><p style="font-size: 14px; text-align: center;">Your BMI Suggests that you are healthy, thus we would recommend you to select Maintain Health as your Fitness Goal in your <a href="profile">Profile</a>. You have currently selected {{user_profile.fitness_goal}}. </p></em>
                         {% endif %}
                         <br>
+                        
                         <div class="row">
+                            {% if user_profile.age != 0 %} <!-- IF USER IS HAS NOT ENTERED PROFILE INFO -->
                             <div class="column" style="margin-top: 10px; width:30%">
                                 <div class="au-card recent-report">
                                     <div class="au-card-inner">
@@ -237,6 +239,7 @@
                                     </div>
                                 </div>
                             </div>
+                            {% endif %}
                             <!-- progress bar -->
                             <div class="column" style="margin-top: 10px; width: 40%">
                                 <div class="au-card chart-percent-card">
