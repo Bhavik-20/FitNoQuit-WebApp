@@ -299,7 +299,7 @@ def wo_api(request):
     import math
     # from sklearn.metrics import mean_squared_error
 
-    df = pd.read_csv('E:/DataStore/Desktop/Projects-Django/Django-flutter/API-DJANGO/todolist/wo_data.csv')
+    df = pd.read_csv('accounts/wo_data.csv')
 
     wt1 = []
     wt2 = []
