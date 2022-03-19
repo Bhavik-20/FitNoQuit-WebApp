@@ -75,7 +75,7 @@ def signup(request):
                     user_profile.save();
                     user_diet = Diet.objects.create(uid = user, diet_calories=0, plan_exists = False, is_vegan = False,
                                                     like_milk = True, like_seeds_nuts = True, like_sweets = True, 
-                                                    like_fruits = True, like_salads = True)
+                                                    like_fruits = True, like_salads = True, like_north = True, like_south = True)
                     user_diet.save();
                     print("Registration completed")
                     # return redirect("login")
@@ -232,6 +232,7 @@ def profile(request):
 
 def dashboard(request):
     user_profile = Profile.objects.get(uid = request.user)
+    user_diet = Diet.objects.get(uid = request.user)
     curr_bmi = user_profile.bmi
     
     curr_ht = user_profile.height
@@ -243,7 +244,7 @@ def dashboard(request):
     wl = user_profile.start_wt - 1
     wg = user_profile.start_wt + 1
     if request.method == "GET":
-        context = {'user_profile': user_profile, 'r1':r1, 'r2': r2, 'wl': wl, "wg": wg}
+        context = {'user_profile': user_profile, 'r1':r1, 'r2': r2, 'wl': wl, "wg": wg, 'user_diet':user_diet}
         return render(request, "dashboard.html",context)
     else:
         ent_target = request.POST['target_wt']
@@ -255,7 +256,7 @@ def dashboard(request):
             user_profile.target_wt = user_profile.weight
         user_profile.save()
         user_profile = Profile.objects.get(uid = request.user)
-        context = {'user_profile': user_profile, 'r1':r1, 'r2': r2, 'wl': wl, "wg": wg}
+        context = {'user_profile': user_profile, 'r1':r1, 'r2': r2, 'wl': wl, "wg": wg, 'user_diet':user_diet}
         return render(request, "dashboard.html",context)
 
 def diet(request):
@@ -263,21 +264,28 @@ def diet(request):
         is_vegan = request.POST['vegan']
         like_milk = request.POST['milk']
         like_seeds_nuts = request.POST['seeds']
-        like_sweet = request.POST['sweet']
+        like_sweets = request.POST['sweet']
         like_fruits = request.POST['fruits']
         like_salads =request.POST['salads']
+        like_north = request.POST['n-cuisine']
+        like_south = request.POST['s-cuisine']
 
         user_diet = Diet.objects.get(uid = request.user)
         user_diet.is_vegan = is_vegan
         user_diet.like_milk = like_milk
         user_diet.like_seeds_nuts = like_seeds_nuts
-        user_diet.like_sweet = like_sweet
+        user_diet.like_sweets = like_sweets
         user_diet.like_fruits = like_fruits
         user_diet.like_salads = like_salads
+        user_diet.like_north = like_north
+        user_diet.like_south = like_south
+        user_diet.plan_exists = True
         user_diet.save()
         user_diet = Diet.objects.get(uid = request.user)
-        context = {"dest": "dashboard"}
+        context = {"dest": "dashboard", "user_diet":user_diet}
         return render(request, "loading.html",context)
         # return render(request, "dashboard.html")
     else:
-        return render(request, 'diet-qn.html')
+        user_diet = Diet.objects.get(uid = request.user)
+        context = {"user_diet":user_diet}
+        return render(request, 'diet-qn.html', context)

@@ -94,7 +94,7 @@
                                     </div>
                                     <div class="swiper-slide">
                                     <div class="timestamp"><span class="above"><i class="fas fa-utensils"></i></span></div>
-                                    <div class="status"><span>2. Generate Diet</span></div>
+                                    <div class="status" id="step_diet"><span>2. Generate Diet</span></div>
                                     </div>
                                     <div class="swiper-slide">
                                     <div class="timestamp"><span class="above"><i class="fas fa-dumbbell"></i></span></div>
@@ -120,7 +120,13 @@
                                     element.classList.remove("status");
                                     element.classList.add("complete");
                                 }
-                                
+
+                                element2 = document.getElementById("step_diet")
+                                if("{{user_diet.plan_exists}}" == "True"){
+                                    console.log("{{user_diet.plan_exists}}");
+                                    element2.classList.remove("status");
+                                    element2.classList.add("complete");
+                                }                                
                              }
                          </script>
                          <br>
@@ -226,9 +232,13 @@
                             <div class="column" style="margin-top: 10px; width:30%">
                                 <div class="au-card recent-report">
                                     <div class="au-card-inner">
-                                        <h3 class="title-2"><a href="diet">Diet Module</a> </h3>
-                                        <img src="{% static 'images/diet-module.png' %}" width="100%">
+                                        <h3 class="title-2">Diet Module</h3>
+                                        <a href="diet"><img src="{% static 'images/diet-module.png' %}" width="100%"></a>
                                     </div>
+                                    <div><center>
+                                    <a href=""><button class="custom-btn">Generate Diet</button></a>
+                                    <a href=""><button class="custom-btn">View Your Diet</button></a>
+                                    </center></div>
                                 </div>
                             </div>
                             <div class="column" style="margin-top: 10px; width:30%">
@@ -241,12 +251,12 @@
                             </div>
                             {% endif %}
                             <!-- progress bar -->
+                            {% if user_profile.age != 0 %} <!-- IF USER IS NOT NEW -->
                             <div class="column" style="margin-top: 10px; width: 40%">
                                 <div class="au-card chart-percent-card">
                                     <div class="au-card-inner">
                                         <h3 class="title-2" style="margin-bottom: 15px;">Track your Progress</h3>
                                         <div class="row">
-                                            {% if user_profile.age != 0 %} <!-- IF USER IS NOT NEW -->
                                             <div>
                                                     <div>
                                                         <span class="dot dot--grey"></span>
@@ -405,8 +415,10 @@
                                                 }, 80);
                                                 </script>
                                             {% endif %}
-                                            {% else %} <!-- IF USER IS NEW -->                                            
+                                            {% else %} <!-- IF USER IS NEW -->      
+                                            <center>                                      
                                             <span style="font-size: 13px;"> To Track your progess, Please Enter Your Details in the <a href="profile">Profile</a> Section.</span>                                                    
+                                            </center>
                                             {% endif %}
                     
                                         </div>
@@ -422,6 +434,19 @@
         </div>
 
     </div>
+
+    <!-- Footer-->
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col text-lg-start">Copyright &copy; FitNoQuit 2022</div>
+                <div class="col text-lg-end">
+                    <a class="link-dark text-decoration-none me-3" href="#!">Privacy Policy</a>
+                    <a class="link-dark text-decoration-none" href="#!">Terms of Use</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
 </body>
 

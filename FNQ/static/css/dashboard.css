@@ -641,4 +641,14 @@ section {
     animation-delay:4s;
   }
 
-
+  .custom-btn{
+    margin: 4px;
+    padding: 2px;
+    background: #bad8f198;
+    color: #536DFE;
+    width: 100%;
+    cursor: pointer;  
+    border: 1px solid #536DFE;
+    width: 100px;
+    border-radius: 10px;
+  }
