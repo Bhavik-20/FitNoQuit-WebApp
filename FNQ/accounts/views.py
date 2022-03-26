@@ -269,7 +269,7 @@ def wo_api(request):
     import math
     from sklearn.metrics import mean_squared_error
 
-    df = pd.read_csv('wo_data.csv')
+    df = pd.read_csv('accounts/wo_data.csv')
 
     wt1 = []
     wt2 = []
@@ -304,14 +304,21 @@ def wo_api(request):
     time = [0.5]
     w = 70
     l = []
+    wn = []
+    wot =[]
+    wc = []
     for i in range(0, len(df)):
         if df['Type'][i] == "Run_Walk":
             cpk = df['CPK'][i]*w + c 
             for t in time:
                 if cpk * t <= calories+20 and cpk * t >= calories-20:
+                    wn.append(df['Activity, Exercise or Sport (1 hour)'][i])
+                    wot.append(t)
+                    wc.append(math.ceil(cpk * t))
                     l.append((df['Activity, Exercise or Sport (1 hour)'][i], t, math.ceil(cpk * t)))    
     print(l)
-    obj= json.dumps(l)
-    context = {'wo': obj}
+    
+    # obj= json.dumps(l)
+    context = {'wn': wn, 'wot': wot, 'wc': wc}
     return render(request, "wo_disp.html",context)
     # return HttpResponse(obj,content_type="application/json")
