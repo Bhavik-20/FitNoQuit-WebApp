@@ -262,6 +262,7 @@ def diet(request):
         context = {"user_diet":user_diet}
         return render(request, 'diet-qn.html', context)
 
+
 def wo_api(request):
 
     import pandas as pd

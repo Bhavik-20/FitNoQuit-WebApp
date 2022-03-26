@@ -36,3 +36,12 @@ class Diet(models.Model):
     like_salads = models.BooleanField(default=True)
     like_north = models.BooleanField(default=True)
     like_south = models.BooleanField(default=True)
+
+class Workout(models.Model):
+    uid = models.ForeignKey(User, on_delete=models.CASCADE, primary_key= True, db_column='uid')
+    wo_exists =  models.BooleanField(default=False)
+    wo_calories = models.PositiveBigIntegerField()
+    time = models.CharField(max_length=500)
+    wo_type = models.CharField(max_length=500)
+    wo_plan = models.TextField()
+    
