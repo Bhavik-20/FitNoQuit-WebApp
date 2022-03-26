@@ -1,4 +1,4 @@
-# from sys import last_traceback
+
 from cProfile import Profile
 from distutils.command.build_scripts import first_line_re
 from pickle import FALSE, NONE
@@ -13,7 +13,6 @@ import json
 
 
 email_regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
-# phone_regex = r'^[0-9]{10}$'
 
 def signup(request):
     if request.method == "POST":
@@ -25,46 +24,32 @@ def signup(request):
         pass2 = request.POST['pass2']
         
         if fname == "":
-            # messages.info(request, "Please enter your First name")
-            # return redirect("signup")
             context = { "fname" : "Please enter your First name", "lname" : "", "email": "", "uname": "", "pass": "",
             "fname1":fname,"lname1" : lname, "email1": email, "uname1": uname, "pass1": pass1}
             return render(request, "signup.html", context)
         elif lname == "":
-            # messages.info(request, "Please enter your Last name")
-            # return redirect("signup")
             context = { "fname" : "", "lname" : "Please enter your Last name", "email": "", "uname": "", "pass": "",
             "fname1":fname,"lname1" : lname, "email1": email, "uname1": uname, "pass1": pass1}
             return render(request, "signup.html", context)
         elif email == "" or re.fullmatch(email_regex, email) == None:
-            # messages.info(request, "Please enter your Email id")
-            # return redirect("signup") 
             context = { "fname" : "", "lname" : "", "email": "Please enter valid Email id", "uname": "", "pass": "",
             "fname1":fname,"lname1" : lname, "email1": email, "uname1": uname, "pass1": pass1}
             return render(request, "signup.html", context)
         elif uname == "":
-            # messages.info(request, "Please enter a Username")
-            # return redirect("signup") 
             context = { "fname" : "", "lname" : "", "email": "", "uname": "Please enter a Username", "pass": "",
             "fname1":fname,"lname1" : lname, "email1": email, "uname1": uname, "pass1": pass1}
             return render(request, "signup.html", context)
-        elif pass1 == "" or pass2 == "":
-            # messages.info(request, "Please enter both the password fields.")
-            # return redirect("signup") 
+        elif pass1 == "" or pass2 == "": 
             context = { "fname" : "", "lname" : "", "email": "", "uname": "", "pass": "Please enter both the password fields.",
             "fname1":fname,"lname1" : lname, "email1": email, "uname1": uname, "pass1": pass1} 
             return render(request, "signup.html", context)
         else:
             if pass1 == pass2:
                 if User.objects.filter(email = email).exists():
-                    # messages.info(request,"User with this Email already exists")
-                    # return redirect("signup")
                     context = { "fname" : "", "lname" : "", "email": "User with this Email already exists", "uname": "", "pass": "",
                     "fname1":fname,"lname1" : lname, "email1": email, "uname1": uname, "pass1": pass1}
                     return render(request, "signup.html", context)
                 elif User.objects.filter(username = uname).exists():
-                    # messages.info(request,"User with this Username already exists")
-                    # return redirect("signup")
                     context = { "fname" : "", "lname" : "", "email": "", "uname": "User with this Username already exists", "pass": "",
                     "fname1":fname,"lname1" : lname, "email1": email, "uname1": uname, "pass1": pass1}
                     return render(request, "signup.html", context)
@@ -80,12 +65,9 @@ def signup(request):
                                                     like_fruits = True, like_salads = True, like_north = True, like_south = True)
                     user_diet.save();
                     print("Registration completed")
-                    # return redirect("login")
                     context = {"dest": "login"}
                     return render(request, "loading.html", context)
             else:
-                # messages.info(request,"Passwords dont match. Please try again")
-                # return redirect("signup")
                 context = { "fname" : "", "lname" : "", "email": "", "uname": "", "pass": "Passwords dont match. Please try again",
                 "fname1":fname,"lname1" : lname, "email1": email, "uname1": uname, "pass1": pass1} 
                 return render(request, "signup.html", context)
@@ -98,28 +80,19 @@ def login(request):
         uname = request.POST['uname']
         pass1 = request.POST['pass1']
         if uname == "":
-            # messages.info(request, "Please enter your User Name", extra_tags = "empty_uname")
-            # return redirect("login") 
             context = { "uname" : "Please enter your User Name", "pass" : "", "final": "", "uname1":uname, "pass1":pass1 }
             return render(request, "login.html", context)
         elif pass1 == "":
-            # messages.info(request, "Please enter the Password", extra_tags = "empty_pass")
-            # return redirect("login")
             context = { "uname" : "", "pass" : "Please enter your Password", "final": "", "uname1":uname, "pass1":pass1 }
             return render(request, "login.html", context)
         else:
             user = auth.authenticate(username = uname, password = pass1)
             if user is not None:
                 auth.login(request, user)
-                # return redirect("/")
-                # user_profile = Profile.objects.get(uid = request.user)
-                # context ={"user_profile": user_profile}
                 context = {"dest": "dashboard"}
                 return render(request, "loading.html",context)
                 
             else:
-                # messages.info(request, "Invalid Credentials! Please try again.", extra_tags = "invalid_creds")
-                # return redirect("login")
                 context = { "uname" : "", "pass" : "", "final": "Invalid Credentials! Please try again.", "uname1":uname, "pass1":pass1 }
                 return render(request, "login.html", context)
     else:
@@ -135,8 +108,6 @@ def logout(request):
     auth.logout(request)
     context = {"dest": "home"}
     return render(request, "loading.html", context)
-    
-    # return redirect("/")
 
 def profile(request):
     if request.method == "POST":
@@ -286,7 +257,6 @@ def diet(request):
         user_diet = Diet.objects.get(uid = request.user)
         context = {"dest": "dashboard", "user_diet":user_diet}
         return render(request, "loading.html",context)
-        # return render(request, "dashboard.html")
     else:
         user_diet = Diet.objects.get(uid = request.user)
         context = {"user_diet":user_diet}
@@ -297,19 +267,19 @@ def wo_api(request):
     import pandas as pd
     import numpy as np
     import math
-    # from sklearn.metrics import mean_squared_error
+    from sklearn.metrics import mean_squared_error
 
-    df = pd.read_csv('accounts/wo_data.csv')
+    df = pd.read_csv('wo_data.csv')
 
     wt1 = []
     wt2 = []
     wt3 = []
     wt4 = []
     for i in range(0, len(df['130 lb'])):
-            wt1.append(130)
-            wt2.append(155)
-            wt3.append(180)
-            wt4.append(205)
+        wt1.append(130)
+        wt2.append(155)
+        wt3.append(180)
+        wt4.append(205)
     df['weight1'] = wt1
     df['weight2'] = wt2
     df['weight3'] = wt3
@@ -317,28 +287,29 @@ def wo_api(request):
 
     c = []
     for i in range(0,len(df['130 lb'])):
-            cf = 0
-            c1 = df.loc[i][1] - (df['CPK'][i] * 60) 
-            c2 = df.loc[i][2] - (df['CPK'][i] * 70) 
-            c3 = df.loc[i][3] - (df['CPK'][i] * 82) 
-            c4 = df.loc[i][4] - (df['CPK'][i] * 93)
-            cf = (c1+c2+c3+c4)/4
-            c.append(cf)
+        cf = 0
+        c1 = df.loc[i][1] - (df['CPK'][i] * 60) 
+        c2 = df.loc[i][2] - (df['CPK'][i] * 70) 
+        c3 = df.loc[i][3] - (df['CPK'][i] * 82) 
+        c4 = df.loc[i][4] - (df['CPK'][i] * 93)
+        cf = (c1+c2+c3+c4)/4
+        c.append(cf)
     c = sum(c) / len(c)
 
     #################### Take from Database ##########################
-    calories = 200 
+    calories = 100 
     #################### Take from Database ##########################
 
-    time = [0.5, 0.75, 1] #30 mins, 45 mins, 1hr
+    # time = [0.5, 0.75, 1] #30 mins, 45 mins, 1hr
+    time = [0.5]
     w = 70
     l = []
     for i in range(0, len(df)):
-            # cpk = df['CPK'][i] * w
+        if df['Type'][i] == "Run_Walk":
             cpk = df['CPK'][i]*w + c 
             for t in time:
-                    if cpk * t <= 220 and cpk * t >= 180:
-                            l.append((df['Activity, Exercise or Sport (1 hour)'][i], t, math.ceil(cpk * t)))
+                if cpk * t <= calories+20 and cpk * t >= calories-20:
+                    l.append((df['Activity, Exercise or Sport (1 hour)'][i], t, math.ceil(cpk * t)))    
     print(l)
     obj= json.dumps(l)
     context = {'wo': obj}

@@ -31,16 +31,18 @@ for i in range(0,len(df['130 lb'])):
 c = sum(c) / len(c)
 
 #################### Take from Database ##########################
-calories = 200 
+calories = 100 
 #################### Take from Database ##########################
 
-time = [0.5, 0.75, 1] #30 mins, 45 mins, 1hr
+# time = [0.5, 0.75, 1] #30 mins, 45 mins, 1hr
+time = [0.5]
 w = 70
 l = []
 for i in range(0, len(df)):
     # cpk = df['CPK'][i] * w
+    # if df['Type'][i] == "Run_Walk":
     cpk = df['CPK'][i]*w + c 
     for t in time:
-        if cpk * t <= 220 and cpk * t >= 180:
+        if cpk * t <= calories+20 and cpk * t >= calories-20:
             l.append((df['Activity, Exercise or Sport (1 hour)'][i], t, math.ceil(cpk * t)))
 print(l)
