@@ -62,6 +62,18 @@
             window.location.href = 'dashboard';
          }, 2000);
     </script>
+    {% elif dest == "wo_api" %}
+    <script>
+        setTimeout(function(){
+            window.location.href = 'wo_api';
+         }, 2000);
+    </script>
+    {% elif dest == "wo_disp" %}
+    <script>
+        setTimeout(function(){
+            window.location.href = 'view_workout';
+         }, 2000);
+    </script>
     {% endif %}
 </body>
 </html>

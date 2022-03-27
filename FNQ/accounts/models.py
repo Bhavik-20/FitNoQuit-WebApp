@@ -43,5 +43,8 @@ class Workout(models.Model):
     wo_calories = models.PositiveBigIntegerField()
     time = models.CharField(max_length=500)
     wo_type = models.CharField(max_length=500)
-    wo_plan = models.TextField()
-    
+    sug_wo_name = models.TextField() 
+    sug_wo_categories = models.TextField() 
+    sug_wo_time = models.TextField()  
+    sug_wo_cal = models.TextField()     
+    weight = models.DecimalField(max_digits=5, decimal_places=2)

@@ -1,4 +1,5 @@
 
+from asyncio.windows_events import NULL
 from cProfile import Profile
 from distutils.command.build_scripts import first_line_re
 from pickle import FALSE, NONE
@@ -8,7 +9,7 @@ from django.contrib import messages
 from django.test import tag
 import re
 import math
-from .models import Profile, Diet
+from .models import Profile, Diet, Workout
 import json
 
 
@@ -63,8 +64,9 @@ def signup(request):
                     user_diet = Diet.objects.create(uid = user, diet_calories=0, plan_exists = False, is_vegan = False,
                                                     like_milk = True, like_seeds_nuts = True, like_sweets = True, 
                                                     like_fruits = True, like_salads = True, like_north = True, like_south = True)
+                    user_wo = Workout.objects.create(uid = user, wo_exists = False, wo_calories = 200, time = NULL, wo_type = NULL, 
+                                                        wo_plan = NULL)
                     user_diet.save();
-                    print("Registration completed")
                     context = {"dest": "login"}
                     return render(request, "loading.html", context)
             else:
@@ -262,13 +264,36 @@ def diet(request):
         context = {"user_diet":user_diet}
         return render(request, 'diet-qn.html', context)
 
+def workout(request):
+    if request.method=="POST":
+        time = request.POST.getlist("time")
+        wo_type = request.POST.getlist("type_exc")
+        if time == "":
+            pass # MUSSKAAAANNNNNN
+        elif wo_type == "":
+            pass
+        user_wo = Workout.objects.get(uid = request.user)
+        time = json.dumps(time)
+        wo_type = json.dumps(wo_type)
+        user_wo.time = time
+        user_wo.wo_type = wo_type
+        user_wo.save()
+        context = {'dest': "wo_api"}
+        return render(request, "loading.html",context)
+    else:
+        user_wo = Workout.objects.get(uid = request.user)
+        context = {"user_wo": user_wo}
+        return render(request, 'workout.html', context)
+
+def view_workout(request):
+    user_wo = Workout.objects.get(uid = request.user)
+    context = {'user_wo': user_wo}
+    return render(request, "wo_disp.html",context)
 
 def wo_api(request):
-
     import pandas as pd
     import numpy as np
     import math
-    from sklearn.metrics import mean_squared_error
 
     df = pd.read_csv('accounts/wo_data.csv')
 
@@ -297,29 +322,45 @@ def wo_api(request):
         c.append(cf)
     c = sum(c) / len(c)
 
+    user_wo = Workout.objects.get(uid = request.user)
     #################### Take from Database ##########################
-    calories = 100 
+    calories = user_wo.wo_calories
+
+    time = json.loads(user_wo.time)
+    time = [float(t) for t in time]
+    
+    wo_type = json.loads(user_wo.wo_type)
+    
+    
     #################### Take from Database ##########################
 
-    # time = [0.5, 0.75, 1] #30 mins, 45 mins, 1hr
-    time = [0.5]
-    w = 70
-    l = []
+    w = float(user_wo.weight)
     wn = []
     wot =[]
     wc = []
+    dicts = {"Run_Walk": 0, "Sport_Recreation": 0, "Gym": 0}
+    wtype = []
     for i in range(0, len(df)):
-        if df['Type'][i] == "Run_Walk":
+        if df['Type'][i] in wo_type:
             cpk = df['CPK'][i]*w + c 
             for t in time:
                 if cpk * t <= calories+20 and cpk * t >= calories-20:
-                    wn.append(df['Activity, Exercise or Sport (1 hour)'][i])
-                    wot.append(t)
-                    wc.append(math.ceil(cpk * t))
-                    l.append((df['Activity, Exercise or Sport (1 hour)'][i], t, math.ceil(cpk * t)))    
-    print(l)
-    
-    # obj= json.dumps(l)
-    context = {'wn': wn, 'wot': wot, 'wc': wc}
-    return render(request, "wo_disp.html",context)
-    # return HttpResponse(obj,content_type="application/json")
+                        print("1: ", df['Type'][i],dicts[df['Type'][i]],dicts.get(df['Type'][i]))
+                        if dicts.get(df['Type'][i]) < 3:
+                            dicts[df['Type'][i]] = dicts.get(df['Type'][i]) + 1
+                            print("2: ", df['Type'][i], dicts[df['Type'][i]], dicts.get(df['Type'][i]))
+                            wtype.append(df['Type'][i])
+                            wn.append(df['Activity, Exercise or Sport (1 hour)'][i])
+                            wot.append(t)
+                            wc.append(math.ceil(cpk * t))
+                       
+    user_wo = Workout.objects.get(uid = request.user)
+    user_wo.sug_wo_name = json.dumps(wn)
+    user_wo.sug_wo_time = json.dumps(wot)
+    user_wo.sug_wo_cal = json.dumps(wc)
+    user_wo.sug_wo_categories = json.dumps(wtype)
+    user_wo.wo_exists = True
+    user_wo.save()
+    context = {'dest': "wo_disp"}
+    return render(request, "loading.html",context)
+
