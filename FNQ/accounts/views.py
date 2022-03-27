@@ -65,7 +65,8 @@ def signup(request):
                                                     like_milk = True, like_seeds_nuts = True, like_sweets = True, 
                                                     like_fruits = True, like_salads = True, like_north = True, like_south = True)
                     user_wo = Workout.objects.create(uid = user, wo_exists = False, wo_calories = 200, time = NULL, wo_type = NULL, 
-                                                        wo_plan = NULL)
+                                                        sug_wo_cal = NULL, weight = 0.0, sug_wo_categories= NULL, sug_wo_name = NULL,
+                                                         sug_wo_time = NULL)
                     user_diet.save();
                     context = {"dest": "login"}
                     return render(request, "loading.html", context)
@@ -199,6 +200,11 @@ def profile(request):
             
             user_profile.save()
             user_profile = Profile.objects.get(uid = request.user)
+
+            user_wo = Workout.objects.get(uid = request.user)
+            user_wo.weight = weight
+            user_wo.save()
+
             context ={"user_profile": user_profile, "res": "Saved Successfully!"}
             return render(request, "profile.html", context)
     else:
