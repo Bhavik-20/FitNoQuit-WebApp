@@ -1,4 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+.no-hover{
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 0.95rem;
+  color: #536DFE;
+  letter-spacing: 0.0625em;
+  padding-top: 5px;
+}
+
 #mainNav {
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -82,7 +91,7 @@ header{
 
 .box{
   width: 250px;
-  height: 250px;
+  height: 300px;
   background: #F8F9FA;
   color: #536DFE;
   padding: 10px;

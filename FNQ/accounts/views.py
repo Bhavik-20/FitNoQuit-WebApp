@@ -293,7 +293,16 @@ def workout(request):
 
 def view_workout(request):
     user_wo = Workout.objects.get(uid = request.user)
-    context = {'user_wo': user_wo}
+    wn = json.loads(user_wo.sug_wo_name)
+    wot = json.loads(user_wo.sug_wo_time)
+    wc = json.loads(user_wo.sug_wo_cal)
+    wtype = json.loads(user_wo.sug_wo_categories)
+    lens = []
+    dicts = zip(wn, wot)
+    for i in range(len(wn)):
+        lens.append(i)
+    print(type(lens[0]))
+    context = {'user_wo': user_wo, 'wn':wn, 'wot':wot, 'wc':wc, 'wtype':wtype, "lens": lens, 'dicts': dicts}
     return render(request, "wo_disp.html",context)
 
 def wo_api(request):
