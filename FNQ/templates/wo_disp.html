@@ -56,23 +56,30 @@
       <header>
         <h3 class="subheading">Let's Get It</h3>
         <p>Here are a few workout options we believe you might like and they will help you reach your Fitness goal.</p>
-        Calories Burnt: {{ user_wo.sug_wo_cal }}
-        <br>
-        Workout Time: {{user_wo.sug_wo_time}}
-        <br>
-        Workout Type: {{user_wo.sug_wo_categories}}
-        <br>
-        Workout Name: {{user_wo.sug_wo_name}} 
-      
+             
       </header>
       <div class="row position">
-        {% for i,j in dicts %}
+        {% for i in dicts %}
           <div class="column box"> 
-              <img src="{% static 'images/run_walk.png' %}" width="100%"/>
-              <strong>Workout:</strong> {{  i }} <br>
-              <strong>Category:</strong> {{ j }}<br>
-              <!-- <strong>Duration:</strong> {{ wot.i }}<br>
-              <strong>Burn Calories:</strong> {{ wc.i }}<br> -->
+            {% if i.1 == "Run_Walk" %}
+            <img src="{% static 'images/run_walk.png' %}" width="100%"/>
+              <strong>Workout:</strong> {{ i.0 }} <br>
+              <strong>Category:</strong> Run/Walk <br>
+              <strong>Duration:</strong> {{ i.2 }} mins<br>
+              <strong>Burn Calories:</strong> {{ i.3 }} calories<br>
+            {% elif i.1 == "Sport_Recreation" %}
+            <img src="{% static 'images/sports_recreation.png' %}" width="100%"/>
+              <strong>Workout:</strong> {{ i.0 }} <br>
+              <strong>Category:</strong> Sports/Recreation <br>
+              <strong>Duration:</strong> {{ i.2 }} mins<br>
+              <strong>Burn Calories:</strong> {{ i.3 }} calories<br>
+            {% elif i.1 == "Gym" %}
+            <img src="{% static 'images/gym.png' %}" width="100%"/>
+              <strong>Workout:</strong> {{ i.0 }} <br>
+              <strong>Category:</strong> Gym/Excercise <br>
+              <strong>Duration:</strong> {{ i.2 }} mins<br>
+              <strong>Burn Calories:</strong> {{ i.3 }} calories<br>
+              {% endif %}
           </div>
           {% endfor %}
       </div>

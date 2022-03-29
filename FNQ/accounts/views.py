@@ -297,12 +297,11 @@ def view_workout(request):
     wot = json.loads(user_wo.sug_wo_time)
     wc = json.loads(user_wo.sug_wo_cal)
     wtype = json.loads(user_wo.sug_wo_categories)
-    lens = []
-    dicts = zip(wn, wot)
-    for i in range(len(wn)):
-        lens.append(i)
-    print(type(lens[0]))
-    context = {'user_wo': user_wo, 'wn':wn, 'wot':wot, 'wc':wc, 'wtype':wtype, "lens": lens, 'dicts': dicts}
+       
+    for i in range(len(wot)):
+        wot[i] *= 60
+    dicts = zip(wn,wtype, wot, wc)
+    context = {'user_wo': user_wo, 'dicts': dicts}
     return render(request, "wo_disp.html",context)
 
 def wo_api(request):
