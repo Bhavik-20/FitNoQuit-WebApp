@@ -214,6 +214,7 @@ def profile(request):
 def dashboard(request):
     user_profile = Profile.objects.get(uid = request.user)
     user_diet = Diet.objects.get(uid = request.user)
+    user_workout = Workout.objects.get(uid = request.user)
     curr_bmi = user_profile.bmi
     
     curr_ht = user_profile.height
@@ -225,7 +226,7 @@ def dashboard(request):
     wl = user_profile.start_wt - 1
     wg = user_profile.start_wt + 1
     if request.method == "GET":
-        context = {'user_profile': user_profile, 'r1':r1, 'r2': r2, 'wl': wl, "wg": wg, 'user_diet':user_diet}
+        context = {'user_profile': user_profile, 'r1':r1, 'r2': r2, 'wl': wl, "wg": wg, 'user_diet':user_diet, 'user_workout':user_workout}
         return render(request, "dashboard.html",context)
     else:
         ent_target = request.POST['target_wt']
@@ -237,7 +238,7 @@ def dashboard(request):
             user_profile.target_wt = user_profile.weight
         user_profile.save()
         user_profile = Profile.objects.get(uid = request.user)
-        context = {'user_profile': user_profile, 'r1':r1, 'r2': r2, 'wl': wl, "wg": wg, 'user_diet':user_diet}
+        context = {'user_profile': user_profile, 'r1':r1, 'r2': r2, 'wl': wl, "wg": wg, 'user_diet':user_diet, 'user_workout':user_workout}
         return render(request, "dashboard.html",context)
 
 def diet(request):
@@ -274,17 +275,27 @@ def workout(request):
     if request.method=="POST":
         time = request.POST.getlist("time")
         wo_type = request.POST.getlist("type_exc")
-        if time == "":
-            pass # MUSSKAAAANNNNNN
-        elif wo_type == "":
-            pass
+        diet_plan = Diet.objects.get(uid = request.user).plan_exists
+        msg=""
+        if len(time)==0:
+            msg = "Please select atleast one duration of time for workout."    
+            context = {'msg':msg} 
+            return render(request, "workout.html",context)
+        elif len(wo_type) == 0:
+            msg = "Please select atleast one type of movement you would like."
+            context = {'msg':msg} 
+            return render(request, "workout.html",context)
+        elif diet_plan == False:
+            msg = "Please start with the diet plan before generating a workout plan."
+            context = {'msg':msg} 
+            return render(request, "workout.html",context)
         user_wo = Workout.objects.get(uid = request.user)
         time = json.dumps(time)
         wo_type = json.dumps(wo_type)
         user_wo.time = time
         user_wo.wo_type = wo_type
         user_wo.save()
-        context = {'dest': "wo_api"}
+        context = {'dest': "wo_api",'msg': msg}
         return render(request, "loading.html",context)
     else:
         user_wo = Workout.objects.get(uid = request.user)

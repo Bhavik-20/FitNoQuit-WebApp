@@ -51,10 +51,15 @@
         </div>
     </div>
 </nav>
-        
         <!--  -->
         <header>
             <h3 class="subheading">Welcome to the Workout Recommmender</h3>
+            {% if msg %}
+            <div class="alert" role="alert" style="display: inline-block">
+                <span><i class="fas fa-exclamation-triangle" style="margin-right:5px;"></i></span>{{msg}}
+              </div>
+              {% endif %}
+
     <form action="workout" method="POST">
         {% csrf_token %}
             <p>1. Please select the amount of time that you will be able to dedicate for workout per day: &nbsp; 

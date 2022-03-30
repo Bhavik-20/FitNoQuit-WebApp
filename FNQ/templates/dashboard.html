@@ -98,7 +98,7 @@
                                     </div>
                                     <div class="swiper-slide">
                                     <div class="timestamp"><span class="above"><i class="fas fa-dumbbell"></i></span></div>
-                                    <div class="status"><span>3. Generate Workout Recommendation</span></div>
+                                    <div class="status" id="step_workout"><span>3. Generate Workout Recommendation</span></div>
                                     </div>
                                     <div class="swiper-slide">
                                     <div class="timestamp"><span class="above"><i class="fas fa-spinner"></i></span></div>
@@ -126,7 +126,14 @@
                                     console.log("{{user_diet.plan_exists}}");
                                     element2.classList.remove("status");
                                     element2.classList.add("complete");
-                                }                                
+                                }      
+
+                                element3 = document.getElementById("step_workout")
+                                if("{{user_workout.wo_exists}}" == "True"){
+                                    console.log("{{user_workout.wo_exists}}");
+                                    element3.classList.remove("status");
+                                    element3.classList.add("complete");
+                                }        
                              }
                          </script>
                          <br>
