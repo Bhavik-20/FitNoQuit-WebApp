@@ -11,6 +11,7 @@ import re
 import math
 from .models import Profile, Diet, Workout
 import json
+import random
 
 
 email_regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
@@ -365,12 +366,26 @@ def wo_api(request):
     wc = []
     dicts = {"Run_Walk": 0, "Sport_Recreation": 0, "Gym": 0}
     wtype = []
-    for i in range(0, len(df)):
-        if df['Type'][i] in wo_type:
-            cpk = df['CPK'][i]*w + c 
-            for t in time:
-                if cpk * t <= calories+20 and cpk * t >= calories-20:
+
+    count = len(df)
+    vis = []
+    while count > 0:
+        i = random.randint(0,len(df)- 1)
+        if i not in vis:
+            vis.append(i)
+            if df['Type'][i] in wo_type:
+                cpk = df['CPK'][i]*w + c 
+                for t in time:
+                    if cpk * t <= calories+20 and cpk * t >= calories-20:
                         print("1: ", df['Type'][i],dicts[df['Type'][i]],dicts.get(df['Type'][i]))
+                        if len(wo_type) == 1:
+                            if dicts.get(df['Type'][i]) < 5:
+                                dicts[df['Type'][i]] = dicts.get(df['Type'][i]) + 1
+                                print("2: ", df['Type'][i], dicts[df['Type'][i]], dicts.get(df['Type'][i]))
+                                wtype.append(df['Type'][i])
+                                wn.append(df['Activity, Exercise or Sport (1 hour)'][i])
+                                wot.append(t)
+                                wc.append(math.ceil(cpk * t))
                         if dicts.get(df['Type'][i]) < 3:
                             dicts[df['Type'][i]] = dicts.get(df['Type'][i]) + 1
                             print("2: ", df['Type'][i], dicts[df['Type'][i]], dicts.get(df['Type'][i]))
@@ -378,6 +393,22 @@ def wo_api(request):
                             wn.append(df['Activity, Exercise or Sport (1 hour)'][i])
                             wot.append(t)
                             wc.append(math.ceil(cpk * t))
+            count -= 1
+    
+
+    # for i in range(0, len(df)):
+    #     if df['Type'][i] in wo_type:
+    #         cpk = df['CPK'][i]*w + c 
+    #         for t in time:
+    #             if cpk * t <= calories+20 and cpk * t >= calories-20:
+    #                     print("1: ", df['Type'][i],dicts[df['Type'][i]],dicts.get(df['Type'][i]))
+    #                     if dicts.get(df['Type'][i]) < 3:
+    #                         dicts[df['Type'][i]] = dicts.get(df['Type'][i]) + 1
+    #                         print("2: ", df['Type'][i], dicts[df['Type'][i]], dicts.get(df['Type'][i]))
+    #                         wtype.append(df['Type'][i])
+    #                         wn.append(df['Activity, Exercise or Sport (1 hour)'][i])
+    #                         wot.append(t)
+    #                         wc.append(math.ceil(cpk * t))
                        
     user_wo = Workout.objects.get(uid = request.user)
     user_wo.sug_wo_name = json.dumps(wn)
