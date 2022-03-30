@@ -367,6 +367,14 @@ def wo_api(request):
                 for t in time:
                     if cpk * t <= calories+20 and cpk * t >= calories-20:
                         print("1: ", df['Type'][i],dicts[df['Type'][i]],dicts.get(df['Type'][i]))
+                        if len(wo_type) == 1:
+                            if dicts.get(df['Type'][i]) < 5:
+                                dicts[df['Type'][i]] = dicts.get(df['Type'][i]) + 1
+                                print("2: ", df['Type'][i], dicts[df['Type'][i]], dicts.get(df['Type'][i]))
+                                wtype.append(df['Type'][i])
+                                wn.append(df['Activity, Exercise or Sport (1 hour)'][i])
+                                wot.append(t)
+                                wc.append(math.ceil(cpk * t))
                         if dicts.get(df['Type'][i]) < 3:
                             dicts[df['Type'][i]] = dicts.get(df['Type'][i]) + 1
                             print("2: ", df['Type'][i], dicts[df['Type'][i]], dicts.get(df['Type'][i]))
