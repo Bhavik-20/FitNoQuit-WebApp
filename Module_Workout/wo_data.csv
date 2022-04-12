@@ -1,0 +1,88 @@
+"Activity, Exercise or Sport (1 hour)",130 lb,155 lb,180 lb,205 lb,CPK,weight1,weight2,weight3,weight4,Type
+"Cycling, <10 mph, leisure bicycling",236,281,327,372,3,130,155,180,205,Sport_Recreation
+"Cycling, >20 mph, racing",944,1126,1308,1489,15,130,155,180,205,Sport_Recreation
+"Cycling, 10-11.9 mph, light",354,422,490,558,5,130,155,180,205,Sport_Recreation
+"Cycling, 12-13.9 mph, moderate",472,563,654,745,7,130,155,180,205,Sport_Recreation
+"Cycling, 14-15.9 mph, vigorous",590,704,817,931,9,130,155,180,205,Sport_Recreation
+"Cycling, 16-19 mph, very fast, racing",708,844,981,1117,11,130,155,180,205,Sport_Recreation
+"Stationary cycling, very light",177,211,245,279,2,130,155,180,205,Gym
+"Stationary cycling, light",325,387,449,512,5,130,155,180,205,Gym
+"Stationary cycling, moderate",413,493,572,651,6,130,155,180,205,Gym
+"Stationary cycling, vigorous",620,739,858,977,10,130,155,180,205,Gym
+"Stationary cycling, very vigorous",738,880,1022,1163,12,130,155,180,205,Gym
+"Weight lifting, body building, vigorous",354,422,490,558,5,130,155,180,205,Gym
+"Weight lifting, light workout",177,211,245,279,2,130,155,180,205,Gym
+Stair machine,531,633,735,838,8,130,155,180,205,Gym
+"Rowing machine, light",207,246,286,326,3,130,155,180,205,Gym
+"Rowing machine, moderate",413,493,572,651,6,130,155,180,205,Gym
+"Rowing machine, vigorous",502,598,695,791,8,130,155,180,205,Gym
+"Rowing machine, very vigorous",708,844,981,1117,11,130,155,180,205,Gym
+"Ballet, twist, jazz, tap",266,317,368,419,4,130,155,180,205,Sport_Recreation
+"Ballroom dancing, slow",177,211,245,279,2,130,155,180,205,Sport_Recreation
+"Ballroom dancing, fast",325,387,449,512,5,130,155,180,205,Sport_Recreation
+"Running, 5 mph (12 minute mile)",472,563,654,745,7,130,155,180,205,Run_Walk
+"Running, 5.2 mph (11.5 minute mile)",531,633,735,838,8,130,155,180,205,Run_Walk
+"Running, 6 mph (10 min mile)",590,704,817,931,9,130,155,180,205,Run_Walk
+"Running, 6.7 mph (9 min mile)",649,774,899,1024,10,130,155,180,205,Run_Walk
+"Running, 7 mph (8.5 min mile)",679,809,940,1070,11,130,155,180,205,Run_Walk
+"Running, 7.5mph (8 min mile)",738,880,1022,1163,12,130,155,180,205,Run_Walk
+"Running, 8 mph (7.5 min mile)",797,950,1103,1256,13,130,155,180,205,Run_Walk
+"Running, 8.6 mph (7 min mile)",826,985,1144,1303,13,130,155,180,205,Run_Walk
+"Running, 9 mph (6.5 min mile)",885,1056,1226,1396,14,130,155,180,205,Run_Walk
+"Running, 10 mph (6 min mile)",944,1126,1308,1489,15,130,155,180,205,Run_Walk
+"Running, 10.9 mph (5.5 min mile)",1062,1267,1471,1675,17,130,155,180,205,Run_Walk
+"Running, general",472,563,654,745,7,130,155,180,205,Run_Walk
+"Running, stairs, up",885,1056,1226,1396,14,130,155,180,205,Run_Walk
+Badminton,266,317,368,419,4,130,155,180,205,Sport_Recreation
+Basketball,354,422,490,558,5,130,155,180,205,Sport_Recreation
+Bowling,177,211,245,279,2,130,155,180,205,Sport_Recreation
+"Boxing, in ring",708,844,981,1117,11,130,155,180,205,Sport_Recreation
+"Boxing, punching bag",354,422,490,558,5,130,155,180,205,Sport_Recreation
+"Cricket (batting, bowling)",295,352,409,465,4,130,155,180,205,Sport_Recreation
+Rugby,472,563,654,745,7,130,155,180,205,Sport_Recreation
+"Golf, walking and carrying clubs",266,317,368,419,4,130,155,180,205,Sport_Recreation
+"Golf, driving range",177,211,245,279,2,130,155,180,205,Sport_Recreation
+Gymnastics,236,281,327,372,3,130,155,180,205,Sport_Recreation
+Handball,472,563,654,745,7,130,155,180,205,Sport_Recreation
+Field hockey,472,563,654,745,7,130,155,180,205,Sport_Recreation
+Ice hockey,472,563,654,745,7,130,155,180,205,Sport_Recreation
+"Martial arts, judo, karate, jujitsu",590,704,817,931,9,130,155,180,205,Sport_Recreation
+"Martial arts, kick boxing",590,704,817,931,9,130,155,180,205,Sport_Recreation
+"Martial arts, tae kwan do",590,704,817,931,9,130,155,180,205,Sport_Recreation
+Football,502,599,695,791,8,130,155,180,205,Sport_Recreation
+"Rock climbing, ascending rock",649,774,899,1024,10,130,155,180,205,Sport_Recreation
+"Jumping rope, fast",708,844,981,1117,11,130,155,180,205,Gym
+"Jumping rope, moderate",590,704,817,931,9,130,155,180,205,Gym
+"Jumping rope, slow",472,563,654,745,7,130,155,180,205,Gym
+Skateboarding,295,352,409,465,4,130,155,180,205,Sport_Recreation
+Roller skating,413,493,572,651,6,130,155,180,205,Sport_Recreation
+Squash,708,844,981,1117,11,130,155,180,205,Sport_Recreation
+"Table tennis, ping pong",236,281,327,372,3,130,155,180,205,Sport_Recreation
+Playing tennis,413,493,572,651,6,130,155,180,205,Sport_Recreation
+Volleyball,177,211,245,279,2,130,155,180,205,Sport_Recreation
+Wrestling,354,422,490,558,5,130,155,180,205,Sport_Recreation
+Mountain climbing,472,563,654,745,7,130,155,180,205,Sport_Recreation
+"Walking, under 2.0 mph, very slow",118,141,163,186,1,130,155,180,205,Run_Walk
+"Walking 2.0 mph, slow",148,176,204,233,2,130,155,180,205,Run_Walk
+Walking 2.5 mph,177,211,245,279,2,130,155,180,205,Run_Walk
+"Walking 3.0 mph, moderate",195,232,270,307,3,130,155,180,205,Run_Walk
+"Walking 3.5 mph, brisk pace",224,267,311,354,3,130,155,180,205,Run_Walk
+"Walking 3.5 mph, uphill",354,422,490,558,5,130,155,180,205,Run_Walk
+"Walking 4.0 mph, very brisk",295,352,409,465,4,130,155,180,205,Run_Walk
+Walking 4.5 mph,372,443,515,586,6,130,155,180,205,Run_Walk
+Walking 5.0 mph,472,563,654,745,7,130,155,180,205,Run_Walk
+"Canoeing, rowing, light",177,211,245,279,2,130,155,180,205,Sport_Recreation
+"Canoeing, rowing, moderate",413,493,572,651,6,130,155,180,205,Sport_Recreation
+"Canoeing, rowing, vigorous",708,844,981,1117,11,130,155,180,205,Sport_Recreation
+Water skiing,354,422,490,558,5,130,155,180,205,Sport_Recreation
+"Skin diving, fast",944,1126,1308,1489,15,130,155,180,205,Sport_Recreation
+"Skin diving, moderate",738,880,1022,1163,12,130,155,180,205,Sport_Recreation
+"Skin diving, scuba diving",413,493,572,651,6,130,155,180,205,Sport_Recreation
+"Surfing, body surfing or board surfing",177,211,245,279,2,130,155,180,205,Sport_Recreation
+"Swimming laps, freestyle, fast",590,704,817,931,9,130,155,180,205,Sport_Recreation
+"Swimming laps, freestyle, slow",413,493,572,651,6,130,155,180,205,Sport_Recreation
+"Swimming leisurely, not laps",354,422,490,558,5,130,155,180,205,Sport_Recreation
+"Ice skating, < 9 mph",325,387,449,512,5,130,155,180,205,Sport_Recreation
+"Ice skating, average speed",413,493,572,651,6,130,155,180,205,Sport_Recreation
+"Ice skating, rapidly",531,633,735,838,8,130,155,180,205,Sport_Recreation
+General cleaning,207,246,286,326,3,130,155,180,205,Sport_Recreation
