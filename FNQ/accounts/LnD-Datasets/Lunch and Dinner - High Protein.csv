@@ -1,0 +1,14 @@
+Main Name,Main Protein,Main Carbs,Main Fats,Main Fibre,Type (Veg/ Non Veg),Main Quantity,Cuisine (North Indian/ South Indian/ General),Diabetes,Thyroid,PCOS,Kidney,Lactose Intolerant,Vegan
+Chicken Breast (Raw),22.8,0,2.7,0,Non Veg,100,General,Y,Y,Y,Y,Y,N
+Chicken Thigh (Raw),24.3,0,7.8,0,Non Veg,100,General,Y,Y,Y,Y,Y,N
+Chicken Drumstick (Raw),24.2,0,4,0,Non Veg,100,General,Y,Y,Y,Y,Y,N
+Chicken Leg (Raw),24.8,0,9.2,0,Non Veg,100,General,Y,Y,Y,Y,Y,N
+Chicken Wings (Raw),23,0,4,0,Non Veg,100,General,Y,Y,Y,Y,Y,N
+Chicken (Raw),27,0,14,0,Non Veg,100,General,Y,Y,Y,Y,Y,N
+Fish,18.3,0,2.1,0,Non Veg,100,General,Y,Y,Y,Y,Y,N
+Paneer,19.1,6.1,26.9,0,Veg,100,General,Y,Y,N,Y,N,N
+Turkey,24.35,0.07,7.35,0,Non Veg,100,General,Y,Y,Y,Y,Y,N
+Skimmed Milk Paneer,23,3,1,0,Veg,100,General,Y,Y,N,Y,N,N
+Low Fat Paneer,18,1.5,9,0,Veg,100,General,Y,Y,N,Y,N,N
+Soya Chunks (Raw),26,16.5,0.25,6.5,Veg,50,General,Y,N,Y,Y,Y,Y
+Whole Egg,13,0.7,9.5,0,Non Veg,100,General,Y,Y,Y,N,Y,N
