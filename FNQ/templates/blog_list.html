@@ -51,12 +51,21 @@
 </nav>
 <body>
 <div class="sidebar">
-  <a class="active" href="#about">Weight Loss</a>
-  <a href="#about">Weight Gain</a>
+  <!-- <a class="active" href="#about">Weight Loss</a> -->
+  <form action="view_blog_list" method="POST">
+    {% csrf_token %}
+    <button type="submit" class ="box" name="weight-loss" value="Weight Loss">Weight Loss</button>
+    <button type="submit" class ="box" name="weight-gain" value="Weight Gain">Weight Gain</button>
+    <button type="submit" class ="box" name="healthy-lifestyle" value="Healthy Lifestyle">Healthy Lifestyle</button>
+    <button type="submit" class ="box" name="recipes" value="Recipes">Recipes</button>
+    <button type="submit" class ="box" name="nutrition" value="Nutrition">Nutrition</button>
+    <button type="submit" class ="box" name="workout" value="Workout">Workout</button>
+  </form>
+  <!-- <a href="#about">Weight Gain</a>
   <a href="#about">Healthy Lifestyle</a>
   <a href="#about">Recipes</a>
   <a href="#about">Nutrition</a>
-  <a href="#about">Workout</a>
+  <a href="#about">Workout</a> -->
 </div>
 <div class="space"></div>
 <div class="subheading"><h2> {{ category }} </h2></div>
@@ -75,45 +84,6 @@
     </div>
 </div>
 {% endfor %}
-<!-- 
-<div class="column">
-    <div class="flex">
-      <div class="image" style="background-image: url('{% static 'images/fruit1.jpg'%}');"></div>
-          <div>
-            <h3>Aloe polyphylla Schönland ex Pillans</h3>
-            <p>Endangered native of the Maluti Mountains…</p>
-      			<div class="button_container">
-				<button class="btn1"><span>Read More</span></button>
-				</div>
-          </div>
-    </div>
-</div>
-
-<div class="column">
-    <div class="flex">
-      <div class="image" style="background-image: url('{% static 'images/fruit1.jpg'%}');"></div>
-          <div>
-            <h3>Aloe polyphylla Schönland ex Pillans</h3>
-            <p>Endangered native of the Maluti Mountains…</p>
-      			<div class="button_container">
-				<button class="btn1"><span>Read More</span></button>
-				</div>
-          </div>
-    </div>
-</div>
-
-<div class="column">
-    <div class="flex">
-      <div class="image" style="background-image: url('{% static 'images/fruit1.jpg'%}');"></div>
-          <div>
-            <h3>Aloe polyphylla Schönland ex Pillans</h3>
-            <p>Endangered native of the Maluti Mountains…</p>
-      			<div class="button_container">
-				<button class="btn1"><span>Read More</span></button>
-				</div>
-          </div>
-    </div>
-</div> -->
 
 </body>
 
