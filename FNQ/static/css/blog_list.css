@@ -355,22 +355,25 @@
   overflow: hidden;
 }
 
-/* Sidebar links */
-.sidebar a {
+/* Sidebar buttons */
+.sidebar button {
+  border: none;
   display: block;
+  text-align:start;
+  cursor: pointer;
   color: black;
-  padding: 16px;
-  text-decoration: none;
+  padding: 20px 30px;
+  width: 100%;
 }
 
-/* Active/current link */
-.sidebar a.active {
+/* Selected button */
+.sidebar .active {
   background-color: #536DFE;
   color: white;
 }
 
-/* Links on mouse-over */
-.sidebar a:hover:not(.active) {
+/* on hover */
+.sidebar button:hover{
   background-color: #555;
   color: white;
 }
