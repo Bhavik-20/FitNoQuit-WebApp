@@ -786,20 +786,35 @@ def bf_api(request):
             choices.loc[i, "Protein Powder"] = 0
 
     finalChoices = []
+    al = []
+    bl = []
+    cl = []
+    dl = []
+    el =[]
     for j in range(0, 3):
         i = random.randint(1, len(choices))
         s = "Main: " + choices.loc[i, "Breakfast Name"] + ", Quantity: " + str(float("{:.2f}".format(choices.loc[i, "Breakfast Quantity"])))
+        aa = choices.loc[i, "Breakfast Name"] + " (" + str(float("{:.2f}".format(choices.loc[i, "Breakfast Quantity"]))) + " g)"
+        al.append(aa)
         if likeMilk == "Y":
             s += "; " + "Milk: " + choices.loc[i, "Milk Name"] + ", Quantity: " + str(float("{:.2f}".format(choices.loc[i, "Milk Quantity"])))
+            bb = choices.loc[i, "Milk Name"] + " (" + str(float("{:.2f}".format(choices.loc[i, "Milk Quantity"]))) + " g)"
+            bl.append(bb)
         if likeFruits == "Y":
             s += "; " + "Fruit: " + choices.loc[i, "Fruits Name"] + ", Quantity: " + str(float("{:.2f}".format(choices.loc[i, "Fruits Quantity"])))
+            cc = choices.loc[i, "Fruits Name"] + " (" + str(float("{:.2f}".format(choices.loc[i, "Fruits Quantity"]))) + " g)"
+            cl.append(cc)
         if likeNuts == "Y":
             s += "; " + "Nut: " + choices.loc[i, "Nuts Name"] + ", Quantity: " + str(float("{:.2f}".format(choices.loc[i, "Nuts Quantity"])))
+            dd = choices.loc[i, "Nuts Name"] + " (" + str(float("{:.2f}".format(choices.loc[i, "Nuts Quantity"]))) + " g)"
+            dl.append(dd)
         s += "; " + "Protein Powder: " + str(float("{:.2f}".format(choices.loc[i, "Protein Powder"])))
+        ee = str(float("{:.2f}".format(choices.loc[i, "Protein Powder"]))) + " g"
+        el.append(ee)
         finalChoices.append(s)
     print(finalChoices)
-    context = {"diet": finalChoices}
-    return render(request,context)
+    context = {"diet": finalChoices, "al":al, "bl": bl, "cl": cl, "dl":dl, "el": el}
+    return render(request,"diet_disp.html", context)
 
 def ld_api(request):
     import copy
@@ -1347,18 +1362,30 @@ def ld_api(request):
             choices.loc[i, "Protein Powder"] = 0
 
     finalChoices = []
+    al = []
+    bl = []
+    cl = []
+    dl = []
     for j in range(0, 3):
         i = random.randint(1, len(choices))
+        aa = choices.loc[i, "Main Name"] + " (" + str(float("{:.2f}".format(choices.loc[i, "Main Quantity"]))) + " g)"
+        al.append(aa)
         s = "Main: " + choices.loc[i, "Main Name"] + ", Quantity: " + str(float("{:.2f}".format(choices.loc[i, "Main Quantity"])))
+        bb = choices.loc[i, "Sides Name"] + " (" + str(float("{:.2f}".format(choices.loc[i, "Sides Quantity"]))) + " g)"
+        bl.append(bb)
         s += "; " + "Side: " + choices.loc[i, "Sides Name"] + ", Quantity: " + str(float("{:.2f}".format(choices.loc[i, "Sides Quantity"])))
         if likeSalads == "Y":
             s += "; " + "Salad: " + choices.loc[i, "Salads Name"] + ", Quantity: " + str(float("{:.2f}".format(choices.loc[i, "Salads Quantity"])))
+            cc = choices.loc[i, "Salads Name"] + " (" + str(float("{:.2f}".format(choices.loc[i, "Salads Quantity"]))) + " g)"
+            cl.append(cc)
         s += "; " + "Protein Powder: " + str(float("{:.2f}".format(choices.loc[i, "Protein Powder"])))
+        dd = str(float("{:.2f}".format(choices.loc[i, "Protein Powder"]))) + "g"
+        dl.append(dd)
         finalChoices.append(s)
 
     print(finalChoices)
-    context = {"diet": finalChoices}
-    return render(request,context)
+    context = {"diet": finalChoices, "al": al, "bl": bl, "cl": cl, "dl": dl}
+    return render(request,"diet_disp.html", context)
 
 def snacks_api(request):
     import copy
@@ -1535,17 +1562,40 @@ def snacks_api(request):
     choices.index = np.arange(1, len(choices) + 1)
     choices.index.name = 'Index'
     choicesLength = choices.shape[0]
-
-    finalChoices = []
+   
+    # finalChoices = []
+    # for j in range(0, 3):
+    #     i = random.randint(1, len(choices))
+    #     s = "Main: " + choices.loc[i, "Snacks Name"] + ", Quantity: " + str(float("{:.2f}".format(choices.loc[i, "Snacks Quantity"])))
+    #     if likeFruits == "Y":
+    #         s += "; " + "Fruit: " + choices.loc[i, "Fruits Name"] + ", Quantity: " + str(float("{:.2f}".format(choices.loc[i, "Fruits Quantity"])))
+    #     if likeSweets == "Y":
+    #         s += "; " + "Sweet: " + choices.loc[i, "Sweets Name"] + ", Quantity: " + str(float("{:.2f}".format(choices.loc[i, "Sweets Quantity"])))
+    #     finalChoices.append(s)
+    # print(finalChoices)
+    al = []
+    bl = []
+    cl = []
     for j in range(0, 3):
         i = random.randint(1, len(choices))
-        s = "Main: " + choices.loc[i, "Snacks Name"] + ", Quantity: " + str(float("{:.2f}".format(choices.loc[i, "Snacks Quantity"])))
+        aa = ""
+        bb = ""
+        cc = ""
+        aa += choices.loc[i, "Snacks Name"] + " (" + str(float("{:.2f}".format(choices.loc[i, "Snacks Quantity"]))) + " g )"
+        al.append(aa)
         if likeFruits == "Y":
-            s += "; " + "Fruit: " + choices.loc[i, "Fruits Name"] + ", Quantity: " + str(float("{:.2f}".format(choices.loc[i, "Fruits Quantity"])))
+            bb +=  choices.loc[i, "Fruits Name"] + " (" + str(float("{:.2f}".format(choices.loc[i, "Fruits Quantity"]))) + " g )"
+            bl.append(bb)
+        else:
+            bb += "NONE"
+            bl.append(bb)
+        
         if likeSweets == "Y":
-            s += "; " + "Sweet: " + choices.loc[i, "Sweets Name"] + ", Quantity: " + str(float("{:.2f}".format(choices.loc[i, "Sweets Quantity"])))
-        finalChoices.append(s)
+            cc +=  choices.loc[i, "Sweets Name"] + " (" + str(float("{:.2f}".format(choices.loc[i, "Sweets Quantity"]))) + " g )"
+            cl.append(cc)
+        else:
+            cc += "NONE"
+            cl.append(cc)
 
-    print(finalChoices)
-    context = {"diet": finalChoices}
-    return render(request,context)
+    context = {"al":al, "bl": bl, "cl": cl}
+    return render(request,"diet_disp.html", context)
