@@ -49,14 +49,26 @@
     <script>
         setTimeout(function(){
             window.location.href = 'bf_api';
-         }, 2000);
-         setTimeout(function(){
+         }, 2000);         
+    </script>
+    {% elif dest == "ld_api" %}
+    <script>
+        setTimeout(function(){
             window.location.href = 'ld_api';
          }, 2000);
-         setTimeout(function(){
+    </script>
+    {% elif dest == "snacks_api" %}
+    <script>
+        setTimeout(function(){
             window.location.href = 'snacks_api';
          }, 2000);
     </script>
+     {% elif dest == "diet_disp" %}
+     <script>
+         setTimeout(function(){
+             window.location.href = 'diet_disp';
+          }, 2000);
+     </script>
     {% endif %}
 </body>
 </html>
