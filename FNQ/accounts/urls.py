@@ -12,7 +12,7 @@ urlpatterns = [
     path("workout", views.workout, name = "workout"),
     path("wo_api",views.wo_api, name="wo_api"),
     path("view_workout",views.view_workout,name="view_workout"),
-    path("view_bf",views.bf_api,name="view_bf"),
-    path("view_ld",views.ld_api,name="view_ld"),
-    path("view_snacks",views.snacks_api,name="view_snacks")
+    path("bf_api",views.bf_api,name="view_bf"),
+    path("ld_api",views.ld_api,name="view_ld"),
+    path("snacks_api",views.snacks_api,name="view_snacks")
 ]

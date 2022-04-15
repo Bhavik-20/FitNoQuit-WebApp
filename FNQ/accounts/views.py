@@ -242,36 +242,6 @@ def dashboard(request):
         context = {'user_profile': user_profile, 'r1':r1, 'r2': r2, 'wl': wl, "wg": wg, 'user_diet':user_diet, 'user_workout':user_workout}
         return render(request, "dashboard.html",context)
 
-def diet(request):
-    if request.method == "POST":
-        is_vegan = request.POST['vegan']
-        like_milk = request.POST['milk']
-        like_seeds_nuts = request.POST['seeds']
-        like_sweets = request.POST['sweet']
-        like_fruits = request.POST['fruits']
-        like_salads =request.POST['salads']
-        like_north = request.POST['n-cuisine']
-        like_south = request.POST['s-cuisine']
-
-        user_diet = Diet.objects.get(uid = request.user)
-        user_diet.is_vegan = is_vegan
-        user_diet.like_milk = like_milk
-        user_diet.like_seeds_nuts = like_seeds_nuts
-        user_diet.like_sweets = like_sweets
-        user_diet.like_fruits = like_fruits
-        user_diet.like_salads = like_salads
-        user_diet.like_north = like_north
-        user_diet.like_south = like_south
-        user_diet.plan_exists = True
-        user_diet.save()
-        user_diet = Diet.objects.get(uid = request.user)
-        context = {"dest": "dashboard", "user_diet":user_diet}
-        return render(request, "loading.html",context)
-    else:
-        user_diet = Diet.objects.get(uid = request.user)
-        context = {"user_diet":user_diet}
-        return render(request, 'diet-qn.html', context)
-
 def workout(request):
     if request.method=="POST":
         time = request.POST.getlist("time")
@@ -813,8 +783,8 @@ def bf_api(request):
         el.append(ee)
         finalChoices.append(s)
     print(finalChoices)
-    context = {"diet": finalChoices, "al":al, "bl": bl, "cl": cl, "dl":dl, "el": el}
-    return render(request,"diet_disp.html", context)
+    context = {"dest":"ld_api", "diet": finalChoices, "al":al, "bl": bl, "cl": cl, "dl":dl, "el": el}
+    return render(request,"loading_diet.html", context)
 
 def ld_api(request):
     import copy
@@ -1384,8 +1354,8 @@ def ld_api(request):
         finalChoices.append(s)
 
     print(finalChoices)
-    context = {"diet": finalChoices, "al": al, "bl": bl, "cl": cl, "dl": dl}
-    return render(request,"diet_disp.html", context)
+    context = {"dest":"snacks_api","diet": finalChoices, "al": al, "bl": bl, "cl": cl, "dl": dl}
+    return render(request,"loading_diet.html", context)
 
 def snacks_api(request):
     import copy
@@ -1562,17 +1532,6 @@ def snacks_api(request):
     choices.index = np.arange(1, len(choices) + 1)
     choices.index.name = 'Index'
     choicesLength = choices.shape[0]
-   
-    # finalChoices = []
-    # for j in range(0, 3):
-    #     i = random.randint(1, len(choices))
-    #     s = "Main: " + choices.loc[i, "Snacks Name"] + ", Quantity: " + str(float("{:.2f}".format(choices.loc[i, "Snacks Quantity"])))
-    #     if likeFruits == "Y":
-    #         s += "; " + "Fruit: " + choices.loc[i, "Fruits Name"] + ", Quantity: " + str(float("{:.2f}".format(choices.loc[i, "Fruits Quantity"])))
-    #     if likeSweets == "Y":
-    #         s += "; " + "Sweet: " + choices.loc[i, "Sweets Name"] + ", Quantity: " + str(float("{:.2f}".format(choices.loc[i, "Sweets Quantity"])))
-    #     finalChoices.append(s)
-    # print(finalChoices)
     al = []
     bl = []
     cl = []
@@ -1599,3 +1558,33 @@ def snacks_api(request):
 
     context = {"al":al, "bl": bl, "cl": cl}
     return render(request,"diet_disp.html", context)
+
+def diet(request):
+    if request.method == "POST":
+        is_vegan = request.POST['vegan']
+        like_milk = request.POST['milk']
+        like_seeds_nuts = request.POST['seeds']
+        like_sweets = request.POST['sweet']
+        like_fruits = request.POST['fruits']
+        like_salads =request.POST['salads']
+        like_north = request.POST['n-cuisine']
+        like_south = request.POST['s-cuisine']
+
+        user_diet = Diet.objects.get(uid = request.user)
+        user_diet.is_vegan = is_vegan
+        user_diet.like_milk = like_milk
+        user_diet.like_seeds_nuts = like_seeds_nuts
+        user_diet.like_sweets = like_sweets
+        user_diet.like_fruits = like_fruits
+        user_diet.like_salads = like_salads
+        user_diet.like_north = like_north
+        user_diet.like_south = like_south
+        user_diet.plan_exists = True
+        user_diet.save()
+        user_diet = Diet.objects.get(uid = request.user)
+        context = {'dest': "bf_api"}
+        return render(request, "loading_diet.html",context)
+    else:
+        user_diet = Diet.objects.get(uid = request.user)
+        context = {"user_diet":user_diet}
+        return render(request, 'diet-qn.html', context)
