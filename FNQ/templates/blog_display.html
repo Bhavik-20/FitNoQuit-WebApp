@@ -1,0 +1,107 @@
+{%load static%}
+<!DOCTYPE html>
+<html>
+<head>
+	<title> FitNoQuit | Blogs</title>
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	  <!-- BootStrap -->
+      <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> 
+      <!-- Main CSS -->
+      <link rel="stylesheet" href="{% static 'css/blog_display.css' %}">
+</head>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light" id="mainNav">
+	<div class="container">
+		<a class="navbar-brand" href="/"><h4>FitNoQuit</h4></a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+			Menu
+			<i class="fas fa-bars ms-1"></i>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarResponsive">
+			<ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+				{% if user.is_authenticated %}
+				<li class="nav-item"><p class="no-hover">Hello, {{user.first_name}}!</p></li> 
+				<li class="nav-item"><a class="nav-link" href="dashboard">Dashboard</a></li>
+				<li class="nav-item"><a class="nav-link" href="/#about">About Us</a></li>
+				<li class="nav-item"><a class="nav-link" href="/#contact">Contact</a></li>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fas fa-user-circle" style="font-size: 20px"></i>
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					  <a class="dropdown-item" href="profile">Edit Profile</a>
+					  <a class="dropdown-item" href="logout">Log out</a>
+					</div>
+				  </li>
+				{% else %}
+				<li class="nav-item"><a class="nav-link" href="login">Login</a></li>
+				<li class="nav-item"><a class="nav-link" href="signup">Sign Up</a></li>
+				<li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
+				<li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li> 
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+  </nav>
+
+<body>
+
+<div class="container1">
+
+	<div class="hero" style="background: url('{{ blog_obj.img.url }}') no-repeat center center / cover;">
+		
+	</div>
+	<main>
+		<h2>{{ blog_obj.title }}</h2>
+		<div class="profile-container">
+			<div class="profile">
+				<div class="img.container">				
+			    </div>
+				 <div class="text">
+					<h3>{{ blog_obj.author }}</h3>
+					<p>{{ blog_obj.publish_date }}</p>
+				 </div>
+			</div>
+			<div class="category">
+				<p>Category: {{ blog_obj.category }}</p>
+			</div>
+		</div>
+		<div class="content">
+			<!-- <div class="content-img-container">
+				
+			</div> -->
+			<!-- <p>
+				Wikipedia, free Internet-based encyclopaedia, started in 2001, that operates under an open-source management style. It is overseen by the nonprofit Wikimedia Foundation. Wikipedia uses a collaborative software known as wiki that facilitates the creation and development of articles. Although some highly publicized problems have called attention to Wikipedia’s editorial process, they have done little to dampen public use of the resource, which is one of the most-visited sites on the Internet.
+			</p>
+			<p>
+				In 1996 Jimmy Wales, a successful bond trader, moved to San Diego, California, to establish Bomis, Inc., a Web portal company. In March 2000 Wales founded Nupedia, a free online encyclopaedia, with Larry Sanger as editor in chief. Nupedia was organized like existing encyclopaedias, with an advisory board of experts and a lengthy review process. By January 2001 fewer than two dozen articles were finished, and Sanger advocated supplementing Nupedia with an open-source encyclopaedia based on wiki software. On January 15, 2001, Wikipedia was launched as a feature of Nupedia.com, but, following objections from the advisory board, it was relaunched as an independent Web site a few days later. In its first year Wikipedia expanded to some 20,000 articles in 18 languages, including French, German, Polish, Dutch, Hebrew, Chinese, and Esperanto. In 2003 Nupedia was terminated and its articles moved into Wikipedia.
+			</p>
+			<p>
+				By 2006 the English-language version of Wikipedia had more than one million articles, and by the time of its 10th anniversary in 2011 it had surpassed 3.5 million. However, while the encyclopaedia continued to expand at a rate of millions of words per month, the number of new articles created each year gradually decreased, from a peak of 665,000 in 2007 to 374,000 in 2010. In response to this slowdown, the Wikimedia Foundation began to focus its expansion efforts on the non-English versions of Wikipedia, which by 2011 numbered more than 250. With some versions having already amassed hundreds of thousands of articles—the French and German versions both boasted more than one million—particular attention was paid to languages of the developing world, such as Swahili and Tamil, in an attempt to reach populations otherwise underserved by the Internet. One impediment to Wikipedia’s ability to reach a truly global audience, however, was the Chinese government’s periodic restrictions of access to some or all of the site’s content within China.
+
+Principles and procedures
+			</p> -->
+			{{ blog_obj.content }}
+		</div>
+	</main>
+</div>
+</body>
+<!-- Footer-->
+<footer class="footer py-4">
+	<div class="container">
+		<div class="row align-items-center">
+			<div class="col text-lg-start">Copyright &copy; FitNoQuit 2022</div>
+			<div class="col text-lg-end">
+				<a class="link-dark text-decoration-none me-3" href="#!">Privacy Policy</a>
+				<a class="link-dark text-decoration-none" href="#!">Terms of Use</a>
+			</div>
+		</div>
+	</div>
+</footer>
+</html>

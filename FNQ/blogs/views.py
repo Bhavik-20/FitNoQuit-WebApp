@@ -1,11 +1,15 @@
+from unicodedata import category
 from django.shortcuts import render
 from .models import Blogs
 # Create your views here.
 
 def view_blog(request):
-    get_blogs = Blogs.objects.get(blog_id=3)
-    context={'sample': get_blogs.content}
-    return render(request, "disp_blog.html",context)
+    if request.method == "POST":
+        blog_id = request.POST['blog_id']
+        get_blogs = Blogs.objects.get(blog_id=blog_id)
+        context={'blog_obj': get_blogs}
+        # return render(request, "disp_blog.html",context)
+        return render(request, "blog_display.html",context)
 
 def view_blog_categories(request):
     return render(request,"blog-categories.html")
@@ -29,10 +33,12 @@ def view_blog_list(request):
         lst_title = []
         lst_desc = []
         lst_img =[]
+        lst_blogs=[]
         for value in get_blogs.all():
             lst_title.append(value.title)
             lst_desc.append(value.content)
             lst_img.append(value.img)
-        dicts = zip(lst_title, lst_desc, lst_img)
-        context={'dicts': dicts, 'category': categ}
+            lst_blogs.append(value.blog_id)
+        dicts = zip(lst_title, lst_desc, lst_img, lst_blogs)
+        context={'dicts': dicts, 'category': categ }
         return render(request, "blog_list.html",context)

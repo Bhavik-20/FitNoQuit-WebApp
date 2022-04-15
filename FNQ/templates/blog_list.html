@@ -73,8 +73,11 @@
           <div class="text">
             <h3>{{i.0}}</h3>
             <p>{{i.1}}</p>
+            <form action="view_blog" method="POST">
+              {% csrf_token %}
       			<div class="button_container">
-				<button class="btn1"><span>Read More</span></button>
+				<button class="btn1" type="submit" name="blog_id" value="{{ i.3 }}"><span>Read More</span></button>
+            </form>
 				</div>
           </div>
     </div>
