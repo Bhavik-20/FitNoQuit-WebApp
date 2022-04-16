@@ -7,8 +7,21 @@ Chicken Wings (Raw),23,0,4,0,Non Veg,100,General,Y,Y,Y,Y,Y,N
 Chicken (Raw),27,0,14,0,Non Veg,100,General,Y,Y,Y,Y,Y,N
 Fish,18.3,0,2.1,0,Non Veg,100,General,Y,Y,Y,Y,Y,N
 Paneer,19.1,6.1,26.9,0,Veg,100,General,Y,Y,N,Y,N,N
-Turkey,24.35,0.07,7.35,0,Non Veg,100,General,Y,Y,Y,Y,Y,N
+Turkey,24.35,0,7.35,0,Non Veg,100,General,Y,Y,Y,Y,Y,N
 Skimmed Milk Paneer,23,3,1,0,Veg,100,General,Y,Y,N,Y,N,N
 Low Fat Paneer,18,1.5,9,0,Veg,100,General,Y,Y,N,Y,N,N
 Soya Chunks (Raw),26,16.5,0.25,6.5,Veg,50,General,Y,N,Y,Y,Y,Y
 Whole Egg,13,0.7,9.5,0,Non Veg,100,General,Y,Y,Y,N,Y,N
+Chicken Breast (Raw),34.2,0,4.05,0,Non Veg,150,General,Y,Y,Y,Y,Y,N
+Chicken Thigh (Raw),36.45,0,11.7,0,Non Veg,150,General,Y,Y,Y,Y,Y,N
+Chicken Drumstick (Raw),36.3,0,6,0,Non Veg,150,General,Y,Y,Y,Y,Y,N
+Chicken Leg (Raw),37.2,0,13.8,0,Non Veg,150,General,Y,Y,Y,Y,Y,N
+Chicken Wings (Raw),34.5,0,6,0,Non Veg,150,General,Y,Y,Y,Y,Y,N
+Chicken (Raw),40.5,0,21,0,Non Veg,150,General,Y,Y,Y,Y,Y,N
+Fish,27.45,0,3.15,0,Non Veg,150,General,Y,Y,Y,Y,Y,N
+Paneer,28.95,9.15,40.35,0,Veg,150,General,Y,Y,N,Y,N,N
+Turkey,36.53,0,11.03,0,Non Veg,150,General,Y,Y,Y,Y,Y,N
+Skimmed Milk Paneer,34.5,4.5,1.5,0,Veg,150,General,Y,Y,N,Y,N,N
+Low Fat Paneer,27,2.25,13.5,0,Veg,150,General,Y,Y,N,Y,N,N
+Soya Chunks (Raw),39,25.75,0.38,9.75,Veg,75,General,Y,N,Y,Y,Y,Y
+Whole Egg,19.5,1.05,14.25,0,Non Veg,150,General,Y,Y,Y,N,Y,N
