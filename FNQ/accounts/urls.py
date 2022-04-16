@@ -15,4 +15,5 @@ urlpatterns = [
     path("bf_api",views.bf_api,name="view_bf"),
     path("ld_api",views.ld_api,name="view_ld"),
     path("snacks_api",views.snacks_api,name="view_snacks")
+    # path("view_diet",views.view_diet,name="view_diet")
 ]

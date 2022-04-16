@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.test import tag
 import re
 import math
-from .models import Profile, Diet, Workout
+from .models import Breakfast, Profile, Diet, Snacks, Workout, Lunch, Dinner
 import json
 import random
 
@@ -65,10 +65,19 @@ def signup(request):
                     user_diet = Diet.objects.create(uid = user, diet_calories=0, plan_exists = False, is_vegan = False,
                                                     like_milk = True, like_seeds_nuts = True, like_sweets = True, 
                                                     like_fruits = True, like_salads = True, like_north = True, like_south = True)
+                    user_diet.save();
+                    user_bf = Breakfast.objects.create(uid = user)
+                    user_bf.save();
+                    user_l = Lunch.objects.create(uid = user)
+                    user_l.save();
+                    user_d = Dinner.objects.create(uid = user)
+                    user_d.save();
+                    user_s = Snacks.objects.create(uid = user)
+                    user_s.save();
                     user_wo = Workout.objects.create(uid = user, wo_exists = False, wo_calories = 200, time = NULL, wo_type = NULL, 
                                                         sug_wo_cal = NULL, weight = 0.0, sug_wo_categories= NULL, sug_wo_name = NULL,
                                                          sug_wo_time = NULL)
-                    user_diet.save();
+                    user_wo.save();
                     context = {"dest": "login"}
                     return render(request, "loading.html", context)
             else:
@@ -783,7 +792,28 @@ def bf_api(request):
         el.append(ee)
         finalChoices.append(s)
     print(finalChoices)
-    context = {"dest":"ld_api", "diet": finalChoices, "al":al, "bl": bl, "cl": cl, "dl":dl, "el": el}
+    user_bf = Breakfast.objects.get(uid = request.user)
+    user_bf.bf_main_1 = al[0]
+    user_bf.bf_main_2 = al[1]
+    user_bf.bf_main_3 = al[2]
+    user_bf.bf_milk_1 = bl[0]
+    user_bf.bf_milk_2 = bl[1]
+    user_bf.bf_milk_3 = bl[2]
+    user_bf.bf_fruits_1 = cl[0]
+    user_bf.bf_fruits_2 = cl[1]
+    user_bf.bf_fruits_3 = cl[2]
+    user_bf.bf_nuts_1 = dl[0]
+    user_bf.bf_nuts_2 = dl[1]
+    user_bf.bf_nuts_3 = dl[2]
+    user_bf.bf_pp_1 = el[0]
+    user_bf.bf_pp_2 = el[1]
+    user_bf.bf_pp_3 = el[2]
+    # user_bf.bf_milk = json.dumps(bl)
+    # user_bf.bf_fruits = json.dumps(cl)
+    # user_bf.bf_nuts = json.dumps(dl)
+    # user_bf.bf_pp = json.dumps(el)
+    user_bf.save()
+    context = {"dest":"ld_api"}
     return render(request,"loading_diet.html", context)
 
 def ld_api(request):
@@ -1352,9 +1382,65 @@ def ld_api(request):
         dd = str(float("{:.2f}".format(choices.loc[i, "Protein Powder"]))) + "g"
         dl.append(dd)
         finalChoices.append(s)
+    
+    finalChoices2 = []
+    al2 = []
+    bl2 = []
+    cl2 = []
+    dl2 = []
+    for j in range(0, 3):
+        i = random.randint(1, len(choices))
+        aa = choices.loc[i, "Main Name"] + " (" + str(float("{:.2f}".format(choices.loc[i, "Main Quantity"]))) + " g)"
+        al2.append(aa)
+        s = "Main: " + choices.loc[i, "Main Name"] + ", Quantity: " + str(float("{:.2f}".format(choices.loc[i, "Main Quantity"])))
+        bb = choices.loc[i, "Sides Name"] + " (" + str(float("{:.2f}".format(choices.loc[i, "Sides Quantity"]))) + " g)"
+        bl2.append(bb)
+        s += "; " + "Side: " + choices.loc[i, "Sides Name"] + ", Quantity: " + str(float("{:.2f}".format(choices.loc[i, "Sides Quantity"])))
+        if likeSalads == "Y":
+            s += "; " + "Salad: " + choices.loc[i, "Salads Name"] + ", Quantity: " + str(float("{:.2f}".format(choices.loc[i, "Salads Quantity"])))
+            cc = choices.loc[i, "Salads Name"] + " (" + str(float("{:.2f}".format(choices.loc[i, "Salads Quantity"]))) + " g)"
+            cl2.append(cc)
+        s += "; " + "Protein Powder: " + str(float("{:.2f}".format(choices.loc[i, "Protein Powder"])))
+        dd = str(float("{:.2f}".format(choices.loc[i, "Protein Powder"]))) + "g"
+        dl2.append(dd)
+        finalChoices.append(s)
 
-    print(finalChoices)
-    context = {"dest":"snacks_api","diet": finalChoices, "al": al, "bl": bl, "cl": cl, "dl": dl}
+
+    user_lunch = Lunch.objects.get(uid = request.user)
+    user_lunch.l_main_1 = al[0]
+    user_lunch.l_main_2 = al[1]
+    user_lunch.l_main_3 = al[2]
+    user_lunch.l_side_1 = bl[0]
+    user_lunch.l_side_2 = bl[1]
+    user_lunch.l_side_3 = bl[2]
+    user_lunch.l_salad_1 = cl[0]
+    user_lunch.l_salad_2 = cl[1]
+    user_lunch.l_salad_3 = cl[2]
+    user_lunch.l_pp_1 = dl[0]
+    user_lunch.l_pp_2 = dl[1]
+    user_lunch.l_pp_3 = dl[2]
+    # user_diet.ld_main = json.dumps(al)
+    # user_diet.ld_side = json.dumps(bl)
+    # user_diet.ld_salad = json.dumps(cl)
+    # user_diet.ld_pp = json.dumps(dl)
+    user_lunch.save()
+
+    user_dinner = Dinner.objects.get(uid = request.user)
+    user_dinner.d_main_1 = al2[0]
+    user_dinner.d_main_2 = al2[1]
+    user_dinner.d_main_3 = al2[2]
+    user_dinner.d_side_1 = bl2[0]
+    user_dinner.d_side_2 = bl2[1]
+    user_dinner.d_side_3 = bl2[2]
+    user_dinner.d_salad_1 = cl2[0]
+    user_dinner.d_salad_2 = cl2[1]
+    user_dinner.d_salad_3 = cl2[2]
+    user_dinner.d_pp_1 = dl2[0]
+    user_dinner.d_pp_2 = dl2[1]
+    user_dinner.d_pp_3 = dl2[2]
+    user_dinner.save()
+    
+    context = {"dest":"snacks_api"}
     return render(request,"loading_diet.html", context)
 
 def snacks_api(request):
@@ -1363,7 +1449,7 @@ def snacks_api(request):
     import numpy as np
     import random
 
-
+    user_diet = Diet.objects.get(uid = request.user)
     allSnacks = pd.read_csv('accounts/Snack-Datasets/Snacks.csv')
     allSnacks.dropna(inplace = True)
     allSnacks.index = np.arange(1, len(allSnacks) + 1)
@@ -1395,6 +1481,9 @@ def snacks_api(request):
     kidney = "N"
     lactoseIntolerant = "N"
     vegan = "N"
+
+    likeFruits= "Y"
+    likeSweets = "Y"
 
     snacks = copy.deepcopy(allSnacks)
     fruits = copy.deepcopy(allFruits)
@@ -1444,10 +1533,7 @@ def snacks_api(request):
     sweets.drop(
         ['Diabetes', 'Thyroid', 'PCOS', 'Kidney', 'Lactose Intolerant', 'Vegan', 'Type (Veg/ Non Veg)', 'Sweets Protein',
         'Sweets Carbs', 'Sweets Fats', 'Sweets Fibre'], axis=1, inplace=True)
-
-
-    likeFruits= "Y"
-    likeSweets = "Y"
+    
 
     snacksLength = snacks.shape[0]
     fruitsLength = fruits.shape[0]
@@ -1556,8 +1642,20 @@ def snacks_api(request):
             cc += "NONE"
             cl.append(cc)
 
-    context = {"al":al, "bl": bl, "cl": cl}
-    return render(request,"diet_disp.html", context)
+    user_snack = Snacks.objects.get(uid = request.user)
+    user_snack.s_main_1 = al[0]
+    user_snack.s_main_2 = al[1]
+    user_snack.s_main_3 = al[2]
+    user_snack.s_fruit_1 = bl[0]
+    user_snack.s_fruit_2 = bl[1]
+    user_snack.s_fruit_3 = bl[2]
+    user_snack.s_sweet_1 = cl[0]
+    user_snack.s_sweet_2 = cl[1]
+    user_snack.s_sweet_3 = cl[2]
+    user_snack.save()
+
+    context = {'dest': "diet_disp"}
+    return render(request, "loading_diet.html",context)
 
 def diet(request):
     if request.method == "POST":
@@ -1588,3 +1686,16 @@ def diet(request):
         user_diet = Diet.objects.get(uid = request.user)
         context = {"user_diet":user_diet}
         return render(request, 'diet-qn.html', context)
+
+def view_diet(request):
+    user_diet = Diet.objects.get(uid = request.user)
+    wn = json.loads(user_diet.sug_wo_name)
+    wot = json.loads(user_diet.sug_wo_time)
+    wc = json.loads(user_diet.sug_wo_cal)
+    wtype = json.loads(user_diet.sug_wo_categories)
+       
+    for i in range(len(wot)):
+        wot[i] *= 60
+    dicts = zip(wn,wtype, wot, wc)
+    context = {'user_wo': user_wo, 'dicts': dicts}
+    return render(request, "wo_disp.html",context)
