@@ -652,3 +652,27 @@ section {
     width: 100px;
     border-radius: 10px;
   }
+  
+.no-decor{
+  text-decoration: none;
+  font-size: 24px;
+}
+
+.no-decor:hover{
+  color: grey;
+}
+
+
+.generate{
+  font-size: 12px;
+  color: grey;
+  margin-top: 5px;
+}
+
+.col1{
+  width: 30%;
+}
+
+.col2{
+  width:40%;
+}
