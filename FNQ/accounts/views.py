@@ -12,10 +12,11 @@ import math
 from .models import Profile, Diet, Workout
 import json
 import random
-
+import validate_email_address
+from validate_email_address import validate_email
 
 email_regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
-
+pass_regex = r"\b^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{6,20}$\b"
 def signup(request):
     if request.method == "POST":
         fname = request.POST['fname']
@@ -24,7 +25,8 @@ def signup(request):
         uname = request.POST['uname']
         pass1 = request.POST['pass1']
         pass2 = request.POST['pass2']
-        
+        is_valid_email = validate_email(email)
+        print(is_valid_email)
         if fname == "":
             context = { "fname" : "Please enter your First name", "lname" : "", "email": "", "uname": "", "pass": "",
             "fname1":fname,"lname1" : lname, "email1": email, "uname1": uname, "pass1": pass1}
@@ -33,7 +35,7 @@ def signup(request):
             context = { "fname" : "", "lname" : "Please enter your Last name", "email": "", "uname": "", "pass": "",
             "fname1":fname,"lname1" : lname, "email1": email, "uname1": uname, "pass1": pass1}
             return render(request, "signup.html", context)
-        elif email == "" or re.fullmatch(email_regex, email) == None:
+        elif email == "" or re.fullmatch(email_regex, email) == None or is_valid_email == False:
             context = { "fname" : "", "lname" : "", "email": "Please enter valid Email id", "uname": "", "pass": "",
             "fname1":fname,"lname1" : lname, "email1": email, "uname1": uname, "pass1": pass1}
             return render(request, "signup.html", context)
@@ -47,7 +49,15 @@ def signup(request):
             return render(request, "signup.html", context)
         else:
             if pass1 == pass2:
-                if User.objects.filter(email = email).exists():
+                if re.fullmatch(pass_regex, pass1) == None:
+                    context = { "fname" : "", "lname" : "", "email": "", "uname": "", 
+                                "pass": '''Password Should have at least one number.
+                                            Should have at least one uppercase and one lowercase character.
+                                            Should have at least one special symbol.
+                                            Should be between 6 to 20 characters long''',
+                    "fname1":fname,"lname1" : lname, "email1": email, "uname1": uname, "pass1": pass1} 
+                    return render(request, "signup.html", context)
+                elif User.objects.filter(email = email).exists():
                     context = { "fname" : "", "lname" : "", "email": "User with this Email already exists", "uname": "", "pass": "",
                     "fname1":fname,"lname1" : lname, "email1": email, "uname1": uname, "pass1": pass1}
                     return render(request, "signup.html", context)
@@ -167,6 +177,10 @@ def profile(request):
         elif bmi > 25 and fitness_goal == "Weight Gain" or bmi > 25 and fitness_goal == "Maintain Health":
             context = {"height":"","weight":"","age":"","gender":"", "fitness_goal":"You are over weight! Please Select Weight Loss.", 
             "curr_exc":"", "food_pref":"", "health_issues":"", "user_profile": user_profile}
+            return render(request, "profile.html", context)
+        elif pcos == "True" and gender == "male":
+            context = {"height":"","weight":"","age":"","gender":"", "fitness_goal":"", 
+            "curr_exc":"", "food_pref":"", "health_issues":"Males cannot suffer from PCOS", "user_profile": user_profile}
             return render(request, "profile.html", context)
         else:
             user_profile = Profile.objects.get(uid = request.user)
