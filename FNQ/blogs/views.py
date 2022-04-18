@@ -2,14 +2,16 @@ from unicodedata import category
 from django.shortcuts import render
 from .models import Blogs
 # Create your views here.
+from django.shortcuts import render, redirect
 
 def view_blog(request):
     if request.method == "POST":
         blog_id = request.POST['blog_id']
         get_blogs = Blogs.objects.get(blog_id=blog_id)
         context={'blog_obj': get_blogs}
-        # return render(request, "disp_blog.html",context)
         return render(request, "blog_display.html",context)
+    else:
+        return redirect('/blogs/view_blog_categories')
 
 def view_blog_categories(request):
     return render(request,"blog-categories.html")
@@ -42,3 +44,5 @@ def view_blog_list(request):
         dicts = zip(lst_title, lst_desc, lst_img, lst_blogs)
         context={'dicts': dicts, 'category': categ }
         return render(request, "blog_list.html",context)
+    else:
+        return redirect('/blogs/view_blog_categories')

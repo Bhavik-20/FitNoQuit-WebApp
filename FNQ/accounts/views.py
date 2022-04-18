@@ -233,9 +233,7 @@ def profile(request):
             elif workoutChoice == "extra-active":
                 tdee = bmr * 1.9
             tdee = 0.9 * tdee
-            # print("TDEE =", tdee)
-
-            # print("Choose your target from the given options:\n1. Weight Loss\n2. Weight Maintain\n3. Weight Gain")
+    
             targetChoice = fitness_goal
 
             totalCalories = tdee
@@ -378,16 +376,22 @@ def workout(request):
 
 def view_workout(request):
     user_wo = Workout.objects.get(uid = request.user)
-    wn = json.loads(user_wo.sug_wo_name)
-    wot = json.loads(user_wo.sug_wo_time)
-    wc = json.loads(user_wo.sug_wo_cal)
-    wtype = json.loads(user_wo.sug_wo_categories)
-       
-    for i in range(len(wot)):
-        wot[i] *= 60
-    dicts = zip(wn,wtype, wot, wc)
-    context = {'user_wo': user_wo, 'dicts': dicts}
-    return render(request, "wo_disp.html",context)
+    if user_wo.wo_exists:
+        wn = json.loads(user_wo.sug_wo_name)
+        wot = json.loads(user_wo.sug_wo_time)
+        wc = json.loads(user_wo.sug_wo_cal)
+        wtype = json.loads(user_wo.sug_wo_categories)
+        
+        for i in range(len(wot)):
+            wot[i] *= 60
+        dicts = zip(wn,wtype, wot, wc)
+        context = {'user_wo': user_wo, 'dicts': dicts}
+        return render(request, "wo_disp.html",context)
+    else:
+        user_wo = Workout.objects.get(uid = request.user)
+        context = {"user_wo": user_wo}
+        return redirect('/workout',context)
+        # return render(request, 'workout.html', context)
 
 def wo_api(request):
     import pandas as pd
@@ -1930,20 +1934,19 @@ def diet(request):
         return render(request, 'diet-qn.html', context)
 
 def view_diet(request):
-    user_bf = Breakfast.objects.get(uid = request.user)
-    user_lunch = Lunch.objects.get(uid = request.user)
-    user_dinner = Dinner.objects.get(uid= request.user)
-    user_snacks = Snacks.objects.get(uid = request.user)
-    # wn = json.loads(user_diet.sug_wo_name)
-    # wot = json.loads(user_diet.sug_wo_time)
-    # wc = json.loads(user_diet.sug_wo_cal)
-    # wtype = json.loads(user_diet.sug_wo_categories)
-       
-    # for i in range(len(wot)):
-    #     wot[i] *= 60
-    # dicts = zip(wn,wtype, wot, wc)
-    context = {'user_bf': user_bf, 'user_lunch': user_lunch, 'user_dinner': user_dinner, 'user_snacks':user_snacks} 
-    return render(request, "diet2.html", context)
+    user_diet = Diet.objects.get(uid = request.user)
+    if user_diet.plan_exists:
+        user_bf = Breakfast.objects.get(uid = request.user)
+        user_lunch = Lunch.objects.get(uid = request.user)
+        user_dinner = Dinner.objects.get(uid= request.user)
+        user_snacks = Snacks.objects.get(uid = request.user)
+        context = {'user_bf': user_bf, 'user_lunch': user_lunch, 'user_dinner': user_dinner, 'user_snacks':user_snacks} 
+        return render(request, "diet2.html", context)
+    else:
+        user_diet = Diet.objects.get(uid = request.user)
+        context = {"user_diet":user_diet}
+        return redirect('/diet', context)
+
 
 def regenerate(request):
     if request.method == "GET":
