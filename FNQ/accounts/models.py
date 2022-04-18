@@ -36,6 +36,14 @@ class Diet(models.Model):
     like_salads = models.BooleanField(default=True)
     like_north = models.BooleanField(default=True)
     like_south = models.BooleanField(default=True)
+    bf_protein = models.DecimalField(max_digits=5, decimal_places=2)
+    bf_carbs = models.DecimalField(max_digits=5, decimal_places=2)
+    bf_fats = models.DecimalField(max_digits=5, decimal_places=2)
+    ld_protein = models.DecimalField(max_digits=5, decimal_places=2)
+    ld_carbs = models.DecimalField(max_digits=5, decimal_places=2)
+    ld_fats = models.DecimalField(max_digits=5, decimal_places=2)
+    snack_calories = models.DecimalField(max_digits=5, decimal_places=2)
+  
 
 class Breakfast(models.Model):
     uid = models.ForeignKey(User, on_delete=models.CASCADE, primary_key= True, db_column='uid')
@@ -54,7 +62,8 @@ class Breakfast(models.Model):
     bf_pp_1 = models.CharField(max_length=50, default= "None")
     bf_pp_2 = models.CharField(max_length=50, default= "None")
     bf_pp_3 = models.CharField(max_length=50, default= "None")
-
+    choices = models.TextField()
+    
 class Lunch(models.Model):
     uid = models.ForeignKey(User, on_delete=models.CASCADE, primary_key= True, db_column='uid')
     l_main_1 = models.CharField(max_length=50, default= "None")
@@ -69,6 +78,7 @@ class Lunch(models.Model):
     l_pp_1 = models.CharField(max_length=50, default= "None")
     l_pp_2 = models.CharField(max_length=50, default= "None")
     l_pp_3 = models.CharField(max_length=50, default= "None")
+    choices = models.TextField()
 
 class Dinner(models.Model):
     uid = models.ForeignKey(User, on_delete=models.CASCADE, primary_key= True, db_column='uid')
@@ -84,6 +94,7 @@ class Dinner(models.Model):
     d_pp_1 = models.CharField(max_length=50, default= "None")
     d_pp_2 = models.CharField(max_length=50, default= "None")
     d_pp_3 = models.CharField(max_length=50, default= "None")
+    choices = models.TextField()
 
 class Snacks(models.Model):
     uid = models.ForeignKey(User, on_delete=models.CASCADE, primary_key= True, db_column='uid')
@@ -96,6 +107,7 @@ class Snacks(models.Model):
     s_sweet_1 = models.CharField(max_length=50, default= "None")
     s_sweet_2 = models.CharField(max_length=50, default= "None")
     s_sweet_3 = models.CharField(max_length=50, default= "None")
+    choices = models.TextField()
     
 class Workout(models.Model):
     uid = models.ForeignKey(User, on_delete=models.CASCADE, primary_key= True, db_column='uid')

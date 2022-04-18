@@ -9,6 +9,8 @@ from django.contrib import messages
 from django.test import tag
 import re
 import math
+
+from numpy import uint
 from .models import Breakfast, Profile, Diet, Snacks, Workout, Lunch, Dinner
 import json
 import random
@@ -74,7 +76,7 @@ def signup(request):
                     user_d.save();
                     user_s = Snacks.objects.create(uid = user)
                     user_s.save();
-                    user_wo = Workout.objects.create(uid = user, wo_exists = False, wo_calories = 200, time = NULL, wo_type = NULL, 
+                    user_wo = Workout.objects.create(uid = user, wo_exists = False, wo_calories = 0, time = NULL, wo_type = NULL, 
                                                         sug_wo_cal = NULL, weight = 0.0, sug_wo_categories= NULL, sug_wo_name = NULL,
                                                          sug_wo_time = NULL)
                     user_wo.save();
@@ -194,6 +196,81 @@ def profile(request):
                 elif fitness_goal == "Weight Gain" and float(weight)>user_profile.target_wt:
                     user_profile.target_wt = weight
 
+
+            bmr = 0
+            if gender == 'male':
+                bmr = 10 * float(weight) + 6.25 * float(height) - 5 * float(age) + 5
+            elif gender == 'female':
+                bmr = 10 * float(weight) + 6.25 * float(height) - 5 * float(age) - 161
+            print("BMR =", bmr)
+
+            workoutChoice = curr_exc
+
+            tdee = 0
+            if workoutChoice == "sedentary":
+                tdee = bmr * 1.2
+            elif workoutChoice == "lightly":
+                tdee = bmr * 1.375
+            elif workoutChoice == "moderately":
+                tdee = bmr * 1.55
+            elif workoutChoice == "very-active":
+                tdee = bmr * 1.725
+            elif workoutChoice == "extra-active":
+                tdee = bmr * 1.9
+            tdee = 0.9 * tdee
+            # print("TDEE =", tdee)
+
+            # print("Choose your target from the given options:\n1. Weight Loss\n2. Weight Maintain\n3. Weight Gain")
+            targetChoice = fitness_goal
+
+            totalCalories = tdee
+            if targetChoice == "Weight Loss":
+                totalCalories -= 500
+            elif targetChoice == "Weight Gain":
+                totalCalories += 200
+
+            proteinCalories = 0
+            carbsCalories = 0
+            fatsCalories = 0
+
+            if targetChoice == "Weight Loss":
+                proteinCalories = 1.5 * float(weight) * 4
+                carbsCalories = 0.5 * totalCalories
+            else:
+                if workoutChoice == "sedentary" or workoutChoice == "lightly":
+                    proteinCalories = 1.25 * float(weight) * 4
+                    carbsCalories = 0.55 * totalCalories
+                else :
+                    proteinCalories = 1.5 * float(weight) * 4
+                    carbsCalories = 0.6 * totalCalories
+            fatsCalories = totalCalories - (proteinCalories + carbsCalories)
+
+            total = {'Protein': proteinCalories, 'Carbs': carbsCalories, 'Fats': fatsCalories}
+            print(total)
+
+            breakfast = {'Protein': 0.3 * proteinCalories, 'Carbs': 0.3 * carbsCalories, 'Fats': 0.3 * fatsCalories}
+            print(breakfast)
+
+            lunch = {'Protein': 0.35 * proteinCalories, 'Carbs': 0.35 * carbsCalories, 'Fats': 0.35 * fatsCalories}
+            print(lunch)
+
+            dinner = {'Protein': 0.35 * proteinCalories, 'Carbs': 0.35 * carbsCalories, 'Fats': 0.35 * fatsCalories}
+            print(dinner)
+
+            user_diet = Diet.objects.get(uid = request.user)
+            if totalCalories >= 2500:
+                snackCalories = 0.12 * totalCalories
+            else:
+                snackCalories = 0.10 * totalCalories
+            user_diet.snack_calories = snackCalories
+            user_diet.diet_calories = totalCalories
+            user_diet.bf_carbs = breakfast['Carbs']
+            user_diet.bf_fats = breakfast['Fats']
+            user_diet.bf_protein = breakfast['Protein']
+            user_diet.ld_carbs = lunch['Carbs']
+            user_diet.ld_fats = lunch['Fats']
+            user_diet.ld_protein = lunch['Protein']
+            
             user_profile.height = height            
             user_profile.age = age
             user_profile.gender = gender            
@@ -207,12 +284,14 @@ def profile(request):
             user_profile.bmi = bmi
             user_profile.weight = weight
             user_profile.fitness_goal = fitness_goal
-            
             user_profile.save()
+            user_diet.save()
+
             user_profile = Profile.objects.get(uid = request.user)
 
             user_wo = Workout.objects.get(uid = request.user)
             user_wo.weight = weight
+            user_wo.wo_calories = snackCalories * 0.67
             user_wo.save()
 
             context ={"user_profile": user_profile, "res": "Saved Successfully!"}
@@ -406,7 +485,7 @@ def bf_api(request):
     allNuts.index = np.arange(1, len(allNuts) + 1)
     allNuts.index.name = 'Index'
     allNutsLength = allNuts.shape[0]
-
+    
     allMilk = pd.read_csv('accounts/Breakfast-Datasets/Milk.csv')
     allMilk.dropna(inplace = True)
     allMilk.index = np.arange(1, len(allMilk) + 1)
@@ -438,15 +517,67 @@ def bf_api(request):
     allNuts.drop(['Nuts Protein', 'Nuts Carbs', 'Nuts Fats'], axis = 1, inplace = True)
     allMilk.drop(['Milk Protein', 'Milk Carbs', 'Milk Fats'], axis = 1, inplace = True)
 
+    user_diet = Diet.objects.get(uid = request.user)
+    user_profile = Profile.objects.get(uid = request.user)
 
-    isVeg = "N"
-    diabetes = "N"
-    thyroid = "N"
-    pcos = "N"
-    kidney = "N"
-    lactoseIntolerant = "N"
-    vegan = "N"
-    cuisine = ["North Indian", "South Indian", "General"]
+    if user_profile.food_pref == "veg":
+        isVeg =  "Y"
+    else:
+        isVeg =  "N"
+    
+    if user_profile.diabetes:
+        diabetes = "Y"
+    else:
+        diabetes = "N"
+
+    if user_profile.thyroid:
+        thyroid = "Y"
+    else:
+        thyroid = "N"
+
+    if user_profile.pcos:
+        pcos = "Y"
+    else:
+        pcos = "N"
+
+    if user_profile.kidney:
+        kidney = "Y"
+    else:
+        kidney = "N"
+
+    if user_profile.lactose:
+        lactoseIntolerant = "Y"
+    else:
+        lactoseIntolerant = "N"
+    
+    if user_diet.is_vegan:
+        vegan = "Y"
+    else:
+        vegan = "N"
+    
+    if user_diet.like_milk:
+        likeMilk = "Y"
+    else:
+        likeMilk = "N"
+    
+    if user_diet.like_fruits:
+        likeFruits = "Y"
+    else:
+        likeFruits = "N"
+
+    if user_diet.like_seeds_nuts:
+        likeNuts = "Y"
+    else:
+        likeNuts = "N"
+        
+
+    # print("NUTSSSSSSS 1: " + likeNuts)
+    cuisine = ["General"]
+    if user_diet.like_north:
+        cuisine.append("North Indian")
+    
+    if user_diet.like_south:
+        cuisine.append("South Indian")
 
 
     breakfast = allBreakfast
@@ -505,24 +636,23 @@ def bf_api(request):
             inplace=True)
     milk.drop(['Diabetes', 'Thyroid', 'PCOS', 'Kidney', 'Lactose Intolerant', 'Vegan'], axis=1, inplace=True)
 
-
-    likeMilk = "Y"
-    likeFruits = "Y"
-    likeNuts = "Y"
-
-
+    
     breakfastLength = breakfast.shape[0]
     fruitsLength = fruits.shape[0]
     milkLength = milk.shape[0]
     nutsLength = nuts.shape[0]
-
+    user_diet = Diet.objects.get(uid = request.user)
+    print("Nuts Length:", nutsLength)
     if fruitsLength == 0:
         likeFruits = 'N'
+        user_diet.like_fruits = False
     if milkLength == 0:
         likeMilk = 'N'
+        user_diet.like_milk = False
     if nutsLength == 0:
         likeNuts = 'N'
-
+        user_diet.like_seeds_nuts = False
+    user_diet.save()
     breakfastMeal = breakfast
     if likeFruits == 'Y':
         breakfastMeal = pd.merge(breakfastMeal, fruits, how='cross')
@@ -561,10 +691,10 @@ def bf_api(request):
 
 
     targetCalories = {'Protein': 0, 'Carbs': 0, 'Fats': 0, 'Total': 0}
-    targetCalories['Protein'] = 60
-    targetCalories['Carbs'] = 400
-    targetCalories['Fats'] = 200
-    targetCalories['Total'] = 550
+    targetCalories['Protein'] = float(user_diet.bf_protein)
+    targetCalories['Carbs'] = float(user_diet.bf_carbs)
+    targetCalories['Fats'] = float(user_diet.bf_fats)
+    targetCalories['Total'] =  targetCalories['Protein'] +  targetCalories['Carbs'] +  targetCalories['Fats']
 
     breakfastMeal['Total Protein Error'] = abs(breakfastMeal['Protein Calories'] - targetCalories['Protein'])
     breakfastMeal['Total Carbs Error'] = abs(breakfastMeal['Carbs Calories'] - targetCalories['Carbs'])
@@ -770,6 +900,7 @@ def bf_api(request):
     cl = []
     dl = []
     el =[]
+    # print("NUTSSSSSSSSSSSSS:" + likeNuts)
     for j in range(0, 3):
         i = random.randint(1, len(choices))
         s = "Main: " + choices.loc[i, "Breakfast Name"] + ", Quantity: " + str(float("{:.2f}".format(choices.loc[i, "Breakfast Quantity"])))
@@ -779,14 +910,20 @@ def bf_api(request):
             s += "; " + "Milk: " + choices.loc[i, "Milk Name"] + ", Quantity: " + str(float("{:.2f}".format(choices.loc[i, "Milk Quantity"])))
             bb = choices.loc[i, "Milk Name"] + " (" + str(float("{:.2f}".format(choices.loc[i, "Milk Quantity"]))) + " g)"
             bl.append(bb)
+        else:
+            bl.append("None")
         if likeFruits == "Y":
             s += "; " + "Fruit: " + choices.loc[i, "Fruits Name"] + ", Quantity: " + str(float("{:.2f}".format(choices.loc[i, "Fruits Quantity"])))
             cc = choices.loc[i, "Fruits Name"] + " (" + str(float("{:.2f}".format(choices.loc[i, "Fruits Quantity"]))) + " g)"
             cl.append(cc)
+        else:
+            cl.append("None")
         if likeNuts == "Y":
             s += "; " + "Nut: " + choices.loc[i, "Nuts Name"] + ", Quantity: " + str(float("{:.2f}".format(choices.loc[i, "Nuts Quantity"])))
             dd = choices.loc[i, "Nuts Name"] + " (" + str(float("{:.2f}".format(choices.loc[i, "Nuts Quantity"]))) + " g)"
             dl.append(dd)
+        else:
+            dl.append("None")
         s += "; " + "Protein Powder: " + str(float("{:.2f}".format(choices.loc[i, "Protein Powder"])))
         ee = str(float("{:.2f}".format(choices.loc[i, "Protein Powder"]))) + " g"
         el.append(ee)
@@ -808,10 +945,8 @@ def bf_api(request):
     user_bf.bf_pp_1 = el[0]
     user_bf.bf_pp_2 = el[1]
     user_bf.bf_pp_3 = el[2]
-    # user_bf.bf_milk = json.dumps(bl)
-    # user_bf.bf_fruits = json.dumps(cl)
-    # user_bf.bf_nuts = json.dumps(dl)
-    # user_bf.bf_pp = json.dumps(el)
+    choices = choices.to_json()
+    user_bf.choices = json.dumps(choices)
     user_bf.save()
     context = {"dest":"ld_api"}
     return render(request,"loading_diet.html", context)
@@ -874,14 +1009,56 @@ def ld_api(request):
     allSalads.drop(['Salads Protein', 'Salads Carbs', 'Salads Fats'], axis = 1, inplace = True)
 
 
-    isVeg = "N"
-    diabetes = "N"
-    thyroid = "N"
-    pcos = "N"
-    kidney = "N"
-    lactoseIntolerant = "N"
-    vegan = "N"
-    cuisine = ["North Indian", "South Indian", "General"]
+    user_diet = Diet.objects.get(uid = request.user)
+    user_profile = Profile.objects.get(uid = request.user)
+
+    if user_profile.food_pref == "veg":
+        isVeg =  "Y"
+    else:
+        isVeg =  "N"
+    
+    if user_profile.diabetes:
+        diabetes = "Y"
+    else:
+        diabetes = "N"
+
+    if user_profile.thyroid:
+        thyroid = "Y"
+    else:
+        thyroid = "N"
+
+    if user_profile.pcos:
+        pcos = "Y"
+    else:
+        pcos = "N"
+
+    if user_profile.kidney:
+        kidney = "Y"
+    else:
+        kidney = "N"
+
+    if user_profile.lactose:
+        lactoseIntolerant = "Y"
+    else:
+        lactoseIntolerant = "N"
+    
+    if user_diet.is_vegan:
+        vegan = "Y"
+    else:
+        vegan = "N"
+    
+    if user_diet.like_salads:
+        likeSalads = "Y"
+    else:
+        likeSalads = "N"
+    
+
+    cuisine = ["General"]
+    if user_diet.like_north:
+        cuisine.append("North Indian")
+    
+    if user_diet.like_south:
+        cuisine.append("South Indian")
 
 
     mainHP = copy.deepcopy(allMainHP)
@@ -942,9 +1119,6 @@ def ld_api(request):
     salads.drop(['Diabetes', 'Thyroid', 'PCOS', 'Kidney', 'Lactose Intolerant', 'Vegan', 'Type (Veg/ Non Veg)'], axis=1,
                 inplace=True)
 
-
-    likeSalads = "Y"
-
     mainHPLength = len(mainHP)
     mainLPLength = len(mainLP)
     sidesLength = len(sides)
@@ -952,7 +1126,8 @@ def ld_api(request):
 
     if saladsLength == 0:
         likeSalads = 'N'
-
+        user_diet.like_salads = False
+    user_diet.save()
 
     ldMealHP = mainHP
     ldMealHP = pd.merge(ldMealHP, sides, how='cross')
@@ -995,10 +1170,10 @@ def ld_api(request):
 
 
     targetCalories = {'Protein': 0, 'Carbs': 0, 'Fats': 0, 'Total': 0}
-    targetCalories['Protein'] = 80
-    targetCalories['Carbs'] = 350
-    targetCalories['Fats'] = 200
-    targetCalories['Total'] = 500
+    targetCalories['Protein'] = float(user_diet.ld_protein)
+    targetCalories['Carbs'] = float(user_diet.ld_carbs)
+    targetCalories['Fats'] = float(user_diet.ld_fats)
+    targetCalories['Total'] =  targetCalories['Protein'] +  targetCalories['Carbs'] +  targetCalories['Fats']
 
     ldMealHP['Total Protein Error'] = abs(ldMealHP['Protein Calories'] - targetCalories['Protein'])
     ldMealHP['Total Carbs Error'] = abs(ldMealHP['Carbs Calories'] - targetCalories['Carbs'])
@@ -1378,6 +1553,8 @@ def ld_api(request):
             s += "; " + "Salad: " + choices.loc[i, "Salads Name"] + ", Quantity: " + str(float("{:.2f}".format(choices.loc[i, "Salads Quantity"])))
             cc = choices.loc[i, "Salads Name"] + " (" + str(float("{:.2f}".format(choices.loc[i, "Salads Quantity"]))) + " g)"
             cl.append(cc)
+        else:
+            cl.append("None")
         s += "; " + "Protein Powder: " + str(float("{:.2f}".format(choices.loc[i, "Protein Powder"])))
         dd = str(float("{:.2f}".format(choices.loc[i, "Protein Powder"]))) + "g"
         dl.append(dd)
@@ -1388,6 +1565,8 @@ def ld_api(request):
     bl2 = []
     cl2 = []
     dl2 = []
+    print("------------------------------------------------------------")
+    print(choices)
     for j in range(0, 3):
         i = random.randint(1, len(choices))
         aa = choices.loc[i, "Main Name"] + " (" + str(float("{:.2f}".format(choices.loc[i, "Main Quantity"]))) + " g)"
@@ -1400,10 +1579,12 @@ def ld_api(request):
             s += "; " + "Salad: " + choices.loc[i, "Salads Name"] + ", Quantity: " + str(float("{:.2f}".format(choices.loc[i, "Salads Quantity"])))
             cc = choices.loc[i, "Salads Name"] + " (" + str(float("{:.2f}".format(choices.loc[i, "Salads Quantity"]))) + " g)"
             cl2.append(cc)
+        else:
+            cl2.append("None")
         s += "; " + "Protein Powder: " + str(float("{:.2f}".format(choices.loc[i, "Protein Powder"])))
         dd = str(float("{:.2f}".format(choices.loc[i, "Protein Powder"]))) + "g"
         dl2.append(dd)
-        finalChoices.append(s)
+        finalChoices2.append(s)
 
 
     user_lunch = Lunch.objects.get(uid = request.user)
@@ -1419,10 +1600,8 @@ def ld_api(request):
     user_lunch.l_pp_1 = dl[0]
     user_lunch.l_pp_2 = dl[1]
     user_lunch.l_pp_3 = dl[2]
-    # user_diet.ld_main = json.dumps(al)
-    # user_diet.ld_side = json.dumps(bl)
-    # user_diet.ld_salad = json.dumps(cl)
-    # user_diet.ld_pp = json.dumps(dl)
+    choices = choices.to_json()
+    user_lunch.choices = json.dumps(choices)
     user_lunch.save()
 
     user_dinner = Dinner.objects.get(uid = request.user)
@@ -1438,6 +1617,7 @@ def ld_api(request):
     user_dinner.d_pp_1 = dl2[0]
     user_dinner.d_pp_2 = dl2[1]
     user_dinner.d_pp_3 = dl2[2]
+    user_dinner.choices = json.dumps(choices)
     user_dinner.save()
     
     context = {"dest":"snacks_api"}
@@ -1474,16 +1654,53 @@ def snacks_api(request):
     allSweets['Sweets Calories'] = allSweets['Sweets Protein'] * 4 + allSweets['Sweets Carbs'] * 4 + allSweets['Sweets Fats'] * 9
 
 
-    isVeg = "N"
-    diabetes = "N"
-    thyroid = "N"
-    pcos = "N"
-    kidney = "N"
-    lactoseIntolerant = "N"
-    vegan = "N"
+    user_diet = Diet.objects.get(uid = request.user)
+    user_profile = Profile.objects.get(uid = request.user)
 
-    likeFruits= "Y"
-    likeSweets = "Y"
+    if user_profile.food_pref == "veg":
+        isVeg =  "Y"
+    else:
+        isVeg =  "N"
+    
+    if user_profile.diabetes:
+        diabetes = "Y"
+    else:
+        diabetes = "N"
+
+    if user_profile.thyroid:
+        thyroid = "Y"
+    else:
+        thyroid = "N"
+
+    if user_profile.pcos:
+        pcos = "Y"
+    else:
+        pcos = "N"
+
+    if user_profile.kidney:
+        kidney = "Y"
+    else:
+        kidney = "N"
+
+    if user_profile.lactose:
+        lactoseIntolerant = "Y"
+    else:
+        lactoseIntolerant = "N"
+    
+    if user_diet.is_vegan:
+        vegan = "Y"
+    else:
+        vegan = "N"
+
+    if user_diet.like_fruits:
+        likeFruits = "Y"
+    else:
+        likeFruits = "N"
+    
+    if user_diet.like_sweets:
+        likeSweets = "Y"
+    else:
+        likeSweets = "N"
 
     snacks = copy.deepcopy(allSnacks)
     fruits = copy.deepcopy(allFruits)
@@ -1541,8 +1758,11 @@ def snacks_api(request):
 
     if fruitsLength == 0:
         likeFruits = 'N'
+        user_diet.like_fruits = False
     if sweetsLength == 0:
         likeSweets = 'N'
+        user_diet.like_sweets = False
+    user_diet.save()
 
     snacksMeal = snacks
     if likeFruits == 'Y':
@@ -1558,7 +1778,7 @@ def snacks_api(request):
         snacksMeal['Total Calories'] += snacksMeal['Sweets Calories']
 
 
-    targetCalories = 300
+    targetCalories = float(user_diet.snack_calories)
     snacksMeal['Total Error'] = abs(snacksMeal['Total Calories'] - targetCalories)
 
     selected = snacksMeal.sort_values('Total Error')[snacksMeal['Total Error'] <= 200]
@@ -1652,6 +1872,8 @@ def snacks_api(request):
     user_snack.s_sweet_1 = cl[0]
     user_snack.s_sweet_2 = cl[1]
     user_snack.s_sweet_3 = cl[2]
+    choices = choices.to_json()
+    user_snack.choices = json.dumps(choices)
     user_snack.save()
 
     context = {'dest': "diet_disp"}
@@ -1669,15 +1891,20 @@ def diet(request):
         like_south = request.POST['s-cuisine']
 
         user_diet = Diet.objects.get(uid = request.user)
+
         user_diet.is_vegan = is_vegan
         user_diet.like_milk = like_milk
         user_diet.like_seeds_nuts = like_seeds_nuts
         user_diet.like_sweets = like_sweets
         user_diet.like_fruits = like_fruits
+
         user_diet.like_salads = like_salads
+
         user_diet.like_north = like_north
         user_diet.like_south = like_south
+
         user_diet.plan_exists = True
+
         user_diet.save()
         user_diet = Diet.objects.get(uid = request.user)
         context = {'dest': "bf_api"}
@@ -1688,14 +1915,247 @@ def diet(request):
         return render(request, 'diet-qn.html', context)
 
 def view_diet(request):
-    user_diet = Diet.objects.get(uid = request.user)
-    wn = json.loads(user_diet.sug_wo_name)
-    wot = json.loads(user_diet.sug_wo_time)
-    wc = json.loads(user_diet.sug_wo_cal)
-    wtype = json.loads(user_diet.sug_wo_categories)
+    user_bf = Breakfast.objects.get(uid = request.user)
+    user_lunch = Lunch.objects.get(uid = request.user)
+    user_dinner = Dinner.objects.get(uid= request.user)
+    user_snacks = Snacks.objects.get(uid = request.user)
+    # wn = json.loads(user_diet.sug_wo_name)
+    # wot = json.loads(user_diet.sug_wo_time)
+    # wc = json.loads(user_diet.sug_wo_cal)
+    # wtype = json.loads(user_diet.sug_wo_categories)
        
-    for i in range(len(wot)):
-        wot[i] *= 60
-    dicts = zip(wn,wtype, wot, wc)
-    context = {'user_wo': user_wo, 'dicts': dicts}
-    return render(request, "wo_disp.html",context)
+    # for i in range(len(wot)):
+    #     wot[i] *= 60
+    # dicts = zip(wn,wtype, wot, wc)
+    context = {'user_bf': user_bf, 'user_lunch': user_lunch, 'user_dinner': user_dinner, 'user_snacks':user_snacks} 
+    return render(request, "diet2.html", context)
+
+def regenerate(request):
+    if request.method == "GET":
+        import pandas as pd
+        user_diet = Diet.objects.get(uid = request.user)
+        user_lunch = Lunch.objects.get(uid=request.user)
+        user_snack = Snacks.objects.get(uid = request.user)
+        user_bf = Breakfast.objects.get(uid = request.user)
+        user_dinner = Dinner.objects.get(uid = request.user)
+
+        cuisine = ["General"]
+        if user_diet.like_north:
+            cuisine.append("North Indian")
+        
+        if user_diet.like_south:
+            cuisine.append("South Indian")
+        #----------------------------SNACKS-------------------------------------
+        
+        if user_diet.like_fruits:
+            likeFruits = "Y"
+        else:
+            likeFruits = "N"
+        
+        if user_diet.like_sweets:
+            likeSweets = "Y"
+        else:
+            likeSweets = "N"
+        
+        
+        
+        choices1 = json.loads(user_snack.choices)
+        choices1 = pd.read_json(choices1)
+        print("REGENERATE--------------------------------------------")
+        print(choices1)
+        asn = []
+        bsn = []
+        csn = []
+        for j in range(0, 3):
+            i = random.randint(1, len(choices1))
+            aa = choices1.loc[i, "Snacks Name"] + " (" + str(float("{:.2f}".format(choices1.loc[i, "Snacks Quantity"]))) + " g )"
+            asn.append(aa)
+            if likeFruits == "Y":
+                bb =  choices1.loc[i, "Fruits Name"] + " (" + str(float("{:.2f}".format(choices1.loc[i, "Fruits Quantity"]))) + " g )"
+                bsn.append(bb)
+            else:
+                bb = "NONE"
+                bsn.append(bb)
+            
+            if likeSweets == "Y":
+                cc =  choices1.loc[i, "Sweets Name"] + " (" + str(float("{:.2f}".format(choices1.loc[i, "Sweets Quantity"]))) + " g )"
+                csn.append(cc)
+            else:
+                cc = "NONE"
+                csn.append(cc)
+        
+        user_snack.s_main_1 = asn[0]
+        user_snack.s_main_2 = asn[1]
+        user_snack.s_main_3 = asn[2]
+        user_snack.s_fruit_1 = bsn[0]
+        user_snack.s_fruit_2 = bsn[1]
+        user_snack.s_fruit_3 = bsn[2]
+        user_snack.s_sweet_1 = csn[0]
+        user_snack.s_sweet_2 = csn[1]
+        user_snack.s_sweet_3 = csn[2]
+        user_snack.save()
+        
+        #----------------------------LUNCH & DINNER-----------------------------
+       
+        if user_diet.like_salads:
+            likeSalads = "Y"
+        else:
+            likeSalads = "N"
+        
+        choices2 = json.loads(user_lunch.choices)
+        choices2 = pd.read_json(choices2)
+
+        finalChoices = []
+        al = []
+        bl = []
+        cl = []
+        dl = []
+        for j in range(0, 3):
+            i = random.randint(1, len(choices2))
+            aa = choices2.loc[i, "Main Name"] + " (" + str(float("{:.2f}".format(choices2.loc[i, "Main Quantity"]))) + " g)"
+            al.append(aa)
+            s = "Main: " + choices2.loc[i, "Main Name"] + ", Quantity: " + str(float("{:.2f}".format(choices2.loc[i, "Main Quantity"])))
+            bb = choices2.loc[i, "Sides Name"] + " (" + str(float("{:.2f}".format(choices2.loc[i, "Sides Quantity"]))) + " g)"
+            bl.append(bb)
+            s += "; " + "Side: " + choices2.loc[i, "Sides Name"] + ", Quantity: " + str(float("{:.2f}".format(choices2.loc[i, "Sides Quantity"])))
+            if likeSalads == "Y":
+                s += "; " + "Salad: " + choices2.loc[i, "Salads Name"] + ", Quantity: " + str(float("{:.2f}".format(choices2.loc[i, "Salads Quantity"])))
+                cc = choices2.loc[i, "Salads Name"] + " (" + str(float("{:.2f}".format(choices2.loc[i, "Salads Quantity"]))) + " g)"
+                cl.append(cc)
+            else:
+                cl.append("None")
+            s += "; " + "Protein Powder: " + str(float("{:.2f}".format(choices2.loc[i, "Protein Powder"])))
+            dd = str(float("{:.2f}".format(choices2.loc[i, "Protein Powder"]))) + "g"
+            dl.append(dd)
+            finalChoices.append(s)
+        
+        finalChoices2 = []
+        al2 = []
+        bl2 = []
+        cl2 = []
+        dl2 = []
+        print("------------------------------------------------------------")
+        print(choices2)
+        for j in range(0, 3):
+            i = random.randint(1, len(choices2))
+            aa = choices2.loc[i, "Main Name"] + " (" + str(float("{:.2f}".format(choices2.loc[i, "Main Quantity"]))) + " g)"
+            al2.append(aa)
+            s = "Main: " + choices2.loc[i, "Main Name"] + ", Quantity: " + str(float("{:.2f}".format(choices2.loc[i, "Main Quantity"])))
+            bb = choices2.loc[i, "Sides Name"] + " (" + str(float("{:.2f}".format(choices2.loc[i, "Sides Quantity"]))) + " g)"
+            bl2.append(bb)
+            s += "; " + "Side: " + choices2.loc[i, "Sides Name"] + ", Quantity: " + str(float("{:.2f}".format(choices2.loc[i, "Sides Quantity"])))
+            if likeSalads == "Y":
+                s += "; " + "Salad: " + choices2.loc[i, "Salads Name"] + ", Quantity: " + str(float("{:.2f}".format(choices2.loc[i, "Salads Quantity"])))
+                cc = choices2.loc[i, "Salads Name"] + " (" + str(float("{:.2f}".format(choices2.loc[i, "Salads Quantity"]))) + " g)"
+                cl2.append(cc)
+            else:
+                cl2.append("None")
+            s += "; " + "Protein Powder: " + str(float("{:.2f}".format(choices2.loc[i, "Protein Powder"])))
+            dd = str(float("{:.2f}".format(choices2.loc[i, "Protein Powder"]))) + "g"
+            dl2.append(dd)
+            finalChoices2.append(s)
+
+        user_lunch.l_main_1 = al[0]
+        user_lunch.l_main_2 = al[1]
+        user_lunch.l_main_3 = al[2]
+        user_lunch.l_side_1 = bl[0]
+        user_lunch.l_side_2 = bl[1]
+        user_lunch.l_side_3 = bl[2]
+        user_lunch.l_salad_1 = cl[0]
+        user_lunch.l_salad_2 = cl[1]
+        user_lunch.l_salad_3 = cl[2]
+        user_lunch.l_pp_1 = dl[0]
+        user_lunch.l_pp_2 = dl[1]
+        user_lunch.l_pp_3 = dl[2]
+        user_lunch.save()
+
+        user_dinner.d_main_1 = al2[0]
+        user_dinner.d_main_2 = al2[1]
+        user_dinner.d_main_3 = al2[2]
+        user_dinner.d_side_1 = bl2[0]
+        user_dinner.d_side_2 = bl2[1]
+        user_dinner.d_side_3 = bl2[2]
+        user_dinner.d_salad_1 = cl2[0]
+        user_dinner.d_salad_2 = cl2[1]
+        user_dinner.d_salad_3 = cl2[2]
+        user_dinner.d_pp_1 = dl2[0]
+        user_dinner.d_pp_2 = dl2[1]
+        user_dinner.d_pp_3 = dl2[2]
+        user_dinner.save()
+
+        #-----------------------------BREAKFAST---------------------------------
+        
+        if user_diet.like_milk:
+            likeMilk = "Y"
+        else:
+            likeMilk = "N"
+        
+        if user_diet.like_fruits:
+            likeFruits = "Y"
+        else:
+            likeFruits = "N"
+
+        if user_diet.like_seeds_nuts:
+            likeNuts = "Y"
+        else:
+            likeNuts = "N"
+        
+        choices3 = json.loads(user_bf.choices)
+        choices3 = pd.read_json(choices3)
+        
+        finalChoices = []
+        abf = []
+        bbf = []
+        cbf = []
+        dbf = []
+        ebf =[]
+        for j in range(0, 3):
+            print("CHECKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK")
+            i = random.randint(1, len(choices3))
+            s = "Main: " + choices3.loc[i, "Breakfast Name"] + ", Quantity: " + str(float("{:.2f}".format(choices3.loc[i, "Breakfast Quantity"])))
+            aa = choices3.loc[i, "Breakfast Name"] + " (" + str(float("{:.2f}".format(choices3.loc[i, "Breakfast Quantity"]))) + " g)"
+            abf.append(aa)
+            if likeMilk == "Y":
+                s += "; " + "Milk: " + choices3.loc[i, "Milk Name"] + ", Quantity: " + str(float("{:.2f}".format(choices3.loc[i, "Milk Quantity"])))
+                bb = choices3.loc[i, "Milk Name"] + " (" + str(float("{:.2f}".format(choices3.loc[i, "Milk Quantity"]))) + " g)"
+                bbf.append(bb)
+            else:
+                bbf.append("None")
+            if likeFruits == "Y":
+                s += "; " + "Fruit: " + choices3.loc[i, "Fruits Name"] + ", Quantity: " + str(float("{:.2f}".format(choices3.loc[i, "Fruits Quantity"])))
+                cc = choices3.loc[i, "Fruits Name"] + " (" + str(float("{:.2f}".format(choices3.loc[i, "Fruits Quantity"]))) + " g)"
+                cbf.append(cc)
+            else:
+                cbf.append("None")
+            if likeNuts == "Y":
+                s += "; " + "Nut: " + choices3.loc[i, "Nuts Name"] + ", Quantity: " + str(float("{:.2f}".format(choices3.loc[i, "Nuts Quantity"])))
+                dd = choices3.loc[i, "Nuts Name"] + " (" + str(float("{:.2f}".format(choices3.loc[i, "Nuts Quantity"]))) + " g)"
+                dbf.append(dd)
+            else:
+                dbf.append("None")
+            s += "; " + "Protein Powder: " + str(float("{:.2f}".format(choices3.loc[i, "Protein Powder"])))
+            ee = str(float("{:.2f}".format(choices3.loc[i, "Protein Powder"]))) + " g"
+            ebf.append(ee)
+            finalChoices.append(s)
+        print(finalChoices)
+        user_bf = Breakfast.objects.get(uid = request.user)
+        print("ABF: ", abf)
+        user_bf.bf_main_1 = abf[0]
+        user_bf.bf_main_2 = abf[1]
+        user_bf.bf_main_3 = abf[2]
+        user_bf.bf_milk_1 = bbf[0]
+        user_bf.bf_milk_2 = bbf[1]
+        user_bf.bf_milk_3 = bbf[2]
+        user_bf.bf_fruits_1 = cbf[0]
+        user_bf.bf_fruits_2 = cbf[1]
+        user_bf.bf_fruits_3 = cbf[2]
+        user_bf.bf_nuts_1 = dbf[0]
+        user_bf.bf_nuts_2 = dbf[1]
+        user_bf.bf_nuts_3 = dbf[2]
+        user_bf.bf_pp_1 = ebf[0]
+        user_bf.bf_pp_2 = ebf[1]
+        user_bf.bf_pp_3 = ebf[2]
+        user_bf.save()
+
+    context = {'dest': "diet_disp"}
+    return render(request, "loading_diet.html",context)

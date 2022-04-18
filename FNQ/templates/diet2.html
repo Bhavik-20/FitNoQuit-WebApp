@@ -1,0 +1,273 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>FitNoQuit | Diet Recommmendation </title>
+        <!-- <link media="all" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
+        <!-- Bootstrap CSS-->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+        <!-- Main CSS-->
+        <link href="{% static 'css/diet2.css'%}" rel="stylesheet" media="all">
+    </head>
+    <body id="page-top">
+      <!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="/"><h4>FitNoQuit</h4></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars ms-1"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                {% if user.is_authenticated %}
+                <li class="nav-item"><p class="no-hover">Hello, {{user.first_name}}!</p></li> 
+                <li class="nav-item"><a class="nav-link" href="dashboard">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="/#about">About Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="/#contact">Contact</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-user-circle" style="font-size: 20px"></i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="profile">Edit Profile</a>
+                      <a class="dropdown-item" href="logout">Log out</a>
+                    </div>
+                  </li>
+                {% endif %}
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+        <!-- -->
+        <header>
+            <h3 class="subheading">Eat Healthy, Feel Healthy</h3>
+            <p>Here is a customized plan for your week, you may click on the regenerate button next to the days of the week if you are not satisfied with the current recommendation.</p>
+        </header>
+        <!-- Table -->
+        <div class="diet-chart">
+            <table class="table table-bordered table-responsive">
+                <tbody>
+                  <tr class="table-primary">
+                    <th>Meal</th>
+                    <th>Monday </th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday </th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                    <!-- <th>Sunday &nbsp;<i class='fa fa-refresh' style='font-size: 12px;'></i></th> -->
+                  </tr>
+                  <tr>
+                    <td>Breakfast</td>
+                    <td>
+                        <strong>Main:</strong> {{ user_bf.bf_main_1 }} <br>
+                        <strong>Milk:</strong> {{ user_bf.bf_milk_1 }}<br>
+                        <strong>Fruit:</strong> {{ user_bf.bf_fruits_1 }} <br>
+                        <strong>Nut: </strong> {{ user_bf.bf_nuts_1 }} <br>
+                        <strong>Protein: </strong> {{ user_bf.bf_pp_1 }} <br>
+                    </td>
+                    <td style="background-color: #f6f7f8;">
+                        <strong>Main:</strong> {{ user_bf.bf_main_2 }}<br>
+                        <strong>Milk:</strong> {{ user_bf.bf_milk_2 }}<br>
+                        <strong>Fruit:</strong> {{ user_bf.bf_fruits_2 }}<br>
+                        <strong>Nut: </strong> {{ user_bf.bf_nuts_2 }}<br>
+                        <strong>Protein: </strong> {{ user_bf.bf_pp_2 }}<br>
+                    </td>
+                    <td style="background-color: #EBF5FB;">
+                        <strong>Main:</strong> {{ user_bf.bf_main_3 }}<br>
+                        <strong>Milk:</strong> {{ user_bf.bf_milk_3 }}<br>
+                        <strong>Fruit:</strong> {{ user_bf.bf_fruits_3 }}<br>
+                        <strong>Nut: </strong> {{ user_bf.bf_nuts_3 }}<br>
+                        <strong>Protein: </strong> {{ user_bf.bf_pp_3 }}<br>
+                    </td>
+                    <td>
+                        <strong>Main:</strong> {{ user_bf.bf_main_1 }}<br>
+                        <strong>Milk:</strong> {{ user_bf.bf_milk_1 }}<br>
+                        <strong>Fruit:</strong> {{ user_bf.bf_fruits_1 }}<br>
+                        <strong>Nut: </strong> {{ user_bf.bf_nuts_1 }}<br>
+                        <strong>Protein: </strong> {{ user_bf.bf_pp_1 }}<br>
+                    </td>
+                    <td style="background-color: #f6f7f8;">
+                        <strong>Main:</strong> {{ user_bf.bf_main_2 }}<br>
+                        <strong>Milk:</strong> {{ user_bf.bf_milk_2 }}<br>
+                        <strong>Fruit:</strong>{{ user_bf.bf_fruits_2 }}<br>
+                        <strong>Nut: </strong> {{ user_bf.bf_nuts_2 }}<br>
+                        <strong>Protein: </strong> {{ user_bf.bf_pp_2 }}<br>
+                    </td>
+                    <td style="background-color: #EBF5FB;">
+                        <strong>Main:</strong> {{ user_bf.bf_main_3 }}<br>
+                        <strong>Milk:</strong> {{ user_bf.bf_milk_3 }}<br>
+                        <strong>Fruit:</strong> {{ user_bf.bf_fruits_3 }}<br>
+                        <strong>Nut: </strong> {{ user_bf.bf_nuts_3 }}<br>
+                        <strong>Protein: </strong>{{ user_bf.bf_pp_3 }}<br>
+                    </td>
+                    <!-- <td style="background-color: #f6f7f8;">
+                        <strong>Main:</strong> Kala Chana (Raw) (77.5g)<br>
+                        <strong>Milk:</strong> Low Fat Milk (324.52g)<br>
+                        <strong>Fruit:</strong> Banana (49g)<br>
+                        <strong>Nut: </strong> Chia Seeds (12.9g)<br>
+                        <strong>Protein: </strong> Protein Powder (10.7g)<br>
+                    </td> -->
+                  </tr>
+                  <tr class="active">
+                    <td>Lunch</td>
+                    <td >
+                        <strong>Main:</strong> {{ user_lunch.l_main_1 }} <br>
+                        <strong>Side:</strong> {{ user_lunch.l_side_1 }} <br>
+                        <strong>Salads:</strong> {{ user_lunch.l_salad_1 }}<br>
+                        <strong>Protein: </strong>{{ user_lunch.l_pp_1 }}<br>
+                    </td>
+                    <td style="background-color: #f6f7f8;">
+                        <strong>Main:</strong> {{ user_lunch.l_main_2 }}<br>
+                        <strong>Side:</strong> {{ user_lunch.l_side_2 }} <br>
+                        <strong>Salads:</strong> {{ user_lunch.l_salad_2 }}<br>
+                        <strong>Protein: </strong> {{ user_lunch.l_pp_2 }}<br>
+                    </td>
+                    <td style="background-color: #EBF5FB;">
+                        <strong>Main:</strong> {{ user_lunch.l_main_3 }}<br>
+                        <strong>Side:</strong> {{ user_lunch.l_side_3 }}<br>
+                        <strong>Salads:</strong> {{ user_lunch.l_salad_3 }}<br>
+                        <strong>Protein: </strong> {{ user_lunch.l_pp_3 }}<br>
+                    </td>
+                    <td><strong>Main:</strong> {{ user_lunch.l_main_1 }}<br>
+                        <strong>Side:</strong> {{ user_lunch.l_side_1 }}<br>
+                        <strong>Salads:</strong>{{ user_lunch.l_salad_1 }}<br>
+                        <strong>Protein: </strong> {{ user_lunch.l_pp_1 }}<br>
+                    </td>
+                    <td style="background-color: #f6f7f8;">
+                        <strong>Main:</strong> {{ user_lunch.l_main_2 }}<br>
+                        <strong>Side:</strong> {{ user_lunch.l_side_2 }}<br>
+                        <strong>Salads:</strong> {{ user_lunch.l_salad_2 }}<br>
+                        <strong>Protein: </strong> {{ user_lunch.l_pp_2 }}<br>
+                    </td>
+                    <td style="background-color: #EBF5FB;">
+                        <strong>Main:</strong> {{ user_lunch.l_main_3 }}<br>
+                        <strong>Side:</strong> {{ user_lunch.l_side_3 }}<br>
+                        <strong>Salads:</strong> {{ user_lunch.l_salad_3 }}<br>
+                        <strong>Protein: </strong> {{ user_lunch.l_pp_3 }}<br>
+                    </td>
+                    <!-- <td style="background-color: #f6f7f8;">
+                        <strong>Main:</strong> Turkey (130g)<br>
+                        <strong>Side:</strong> Brown Rice(Cooked) (294g)<br>
+                        <strong>Salads:</strong> Tomato (75g)<br>
+                        <strong>Protein: </strong> Protein Powder (0g)<br>
+                    </td> -->
+                  </tr>
+                  <tr>
+                    <td>Snacks</td>
+                    <td>
+                        <strong>Main:</strong> {{ user_snacks.s_main_1 }}<br>
+                        <strong>Fruit:</strong>{{ user_snacks.s_fruit_1 }}<br>
+                        <strong>Sweet:</strong> {{ user_snacks.s_sweet_1 }}<br>
+                    </td>
+                    <td style="background-color: #f6f7f8;">
+                        <strong>Main:</strong> {{ user_snacks.s_main_2 }}<br>
+                        <strong>Fruit:</strong> {{ user_snacks.s_fruit_2 }}<br>
+                        <strong>Sweet:</strong> {{ user_snacks.s_sweet_2 }}<br>
+                    </td>
+                    <td style="background-color: #EBF5FB;">
+                        <strong>Main:</strong> {{ user_snacks.s_main_3 }}<br>
+                        <strong>Fruit:</strong> {{ user_snacks.s_fruit_3 }}<br>
+                        <strong>Sweet:</strong> {{ user_snacks.s_sweet_3 }}<br>
+                    </td>
+                    <td>
+                        <strong>Main:</strong> {{ user_snacks.s_main_1 }}<br>
+                        <strong>Fruit:</strong> {{ user_snacks.s_fruit_1 }}<br>
+                        <strong>Sweet:</strong> {{ user_snacks.s_sweet_1 }}<br>
+                    </td>
+                    <td style="background-color: #f6f7f8;">
+                        <strong>Main:</strong> {{ user_snacks.s_main_2 }}<br>
+                        <strong>Fruit:</strong> {{ user_snacks.s_fruit_2 }}<br>
+                        <strong>Sweet:</strong> {{ user_snacks.s_sweet_2 }}<br>
+                    </td>
+                    <td style="background-color: #EBF5FB;">
+                        <strong>Main:</strong> {{ user_snacks.s_main_3 }}<br>
+                        <strong>Fruit:</strong> {{ user_snacks.s_fruit_3 }}<br>
+                        <strong>Sweet:</strong> {{ user_snacks.s_sweet_3 }}<br>
+                    </td>
+                    <!-- <td style="background-color: #f6f7f8;">
+                        <strong>Main:</strong> Sweet Corn (65g)<br>
+                        <strong>Fruit:</strong> Papaya (79g)<br>
+                        <strong>Sweet:</strong> Dark Chocolate (8.6g)<br>
+                    </td> -->
+                  </tr>
+                  <tr>
+                    <td>Dinner</td>
+                    <td >
+                        <strong>Main:</strong> {{ user_dinner.d_main_1 }} <br>
+                        <strong>Side:</strong> {{ user_dinner.d_side_1 }} <br>
+                        <strong>Salads:</strong> {{ user_dinner.d_salad_1 }}<br>
+                        <strong>Protein: </strong>{{ user_dinner.d_pp_1 }}<br>
+                    </td>
+                    <td style="background-color: #f6f7f8;">
+                        <strong>Main:</strong> {{ user_dinner.d_main_2 }}<br>
+                        <strong>Side:</strong> {{ user_dinner.d_side_2 }} <br>
+                        <strong>Salads:</strong> {{ user_dinner.d_salad_2 }}<br>
+                        <strong>Protein: </strong> {{ user_dinner.d_pp_2 }}<br>
+                    </td>
+                    <td style="background-color: #EBF5FB;">
+                        <strong>Main:</strong> {{ user_dinner.d_main_3 }}<br>
+                        <strong>Side:</strong> {{ user_dinner.d_side_3 }}<br>
+                        <strong>Salads:</strong> {{ user_dinner.d_salad_3 }}<br>
+                        <strong>Protein: </strong> {{ user_dinner.d_pp_3 }}<br>
+                    </td>
+                    <td><strong>Main:</strong> {{ user_dinner.d_main_1 }}<br>
+                        <strong>Side:</strong> {{ user_dinner.d_side_1 }}<br>
+                        <strong>Salads:</strong>{{ user_dinner.d_salad_1 }}<br>
+                        <strong>Protein: </strong> {{ user_dinner.d_pp_1 }}<br>
+                    </td>
+                    <td style="background-color: #f6f7f8;">
+                        <strong>Main:</strong> {{ user_dinner.d_main_2 }}<br>
+                        <strong>Side:</strong> {{ user_dinner.d_side_2 }}<br>
+                        <strong>Salads:</strong> {{ user_dinner.d_salad_2 }}<br>
+                        <strong>Protein: </strong> {{ user_dinner.d_pp_2 }}<br>
+                    </td>
+                    <td style="background-color: #EBF5FB;">
+                        <strong>Main:</strong> {{ user_dinner.d_main_3 }}<br>
+                        <strong>Side:</strong> {{ user_dinner.d_side_3 }}<br>
+                        <strong>Salads:</strong> {{ user_dinner.d_salad_3 }}<br>
+                        <strong>Protein: </strong> {{ user_dinner.d_pp_3 }}<br>
+                    </td>
+                    <!-- <td style="background-color: #f6f7f8;">
+                        <strong>Main:</strong> Chicken Leg (Raw) (125g)<br>
+                        <strong>Side:</strong> White Rice (Cooked) (244.5g)<br>
+                        <strong>Salads:</strong> Tomato (66g)<br>
+                        <strong>Protein: </strong> Protein Powder (0g)<br>
+                    </td> -->
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+    
+        <!-- Footer-->
+        <footer class="footer py-4">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col text-lg-start">Copyright &copy; FitNoQuit 2022</div>
+                    <div class="col text-lg-end">
+                        <a class="link-dark text-decoration-none me-3" href="#!">Privacy Policy</a>
+                        <a class="link-dark text-decoration-none" href="#!">Terms of Use</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <!-- <script src="js/scripts.js"></script> -->
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    </body>
+</html>

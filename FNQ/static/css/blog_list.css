@@ -235,13 +235,13 @@
     margin-top: 0;
     font-weight: 400;
   }
-  .flex p {
+  .excerpt {
     font-size: 1rem;
     line-height: 1.4;
     font-weight: 400;
     width: 150px;
-    overflow: hidden;
-    white-space: nowrap;
+    /* overflow: hidden;
+    white-space: nowrap; */
     text-overflow: ellipsis;
   }
   .flex p:last-of-type {
