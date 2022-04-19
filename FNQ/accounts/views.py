@@ -1960,27 +1960,40 @@ def regenerate(request):
         cuisine = ["General"]
         if user_diet.like_north:
             cuisine.append("North Indian")
-        
         if user_diet.like_south:
             cuisine.append("South Indian")
-        #----------------------------SNACKS-------------------------------------
-        
+
+        if user_diet.like_milk:
+            likeMilk = "Y"
+        else:
+            likeMilk = "N"
+        if user_diet.like_seeds_nuts:
+            likeNuts = "Y"
+        else:
+            likeNuts = "N"
         if user_diet.like_fruits:
             likeFruits = "Y"
         else:
             likeFruits = "N"
-        
         if user_diet.like_sweets:
             likeSweets = "Y"
         else:
             likeSweets = "N"
-        
+        if user_diet.like_salads:
+            likeSalads = "Y"
+        else:
+            likeSalads = "N"
         
         
         choices1 = json.loads(user_snack.choices)
         choices1 = pd.read_json(choices1)
-        print("REGENERATE--------------------------------------------")
-        print(choices1)
+        
+        choices2 = json.loads(user_lunch.choices)
+        choices2 = pd.read_json(choices2)
+
+        choices3 = json.loads(user_bf.choices)
+        choices3 = pd.read_json(choices3)
+        
         asn = []
         bsn = []
         csn = []
@@ -2002,28 +2015,8 @@ def regenerate(request):
                 cc = "NONE"
                 csn.append(cc)
         
-        user_snack.s_main_1 = asn[0]
-        user_snack.s_main_2 = asn[1]
-        user_snack.s_main_3 = asn[2]
-        user_snack.s_fruit_1 = bsn[0]
-        user_snack.s_fruit_2 = bsn[1]
-        user_snack.s_fruit_3 = bsn[2]
-        user_snack.s_sweet_1 = csn[0]
-        user_snack.s_sweet_2 = csn[1]
-        user_snack.s_sweet_3 = csn[2]
-        user_snack.save()
         
-        #----------------------------LUNCH & DINNER-----------------------------
-       
-        if user_diet.like_salads:
-            likeSalads = "Y"
-        else:
-            likeSalads = "N"
-        
-        choices2 = json.loads(user_lunch.choices)
-        choices2 = pd.read_json(choices2)
 
-        finalChoices = []
         al = []
         bl = []
         cl = []
@@ -2032,121 +2025,55 @@ def regenerate(request):
             i = random.randint(1, len(choices2))
             aa = choices2.loc[i, "Main Name"] + " (" + str(float("{:.2f}".format(choices2.loc[i, "Main Quantity"]))) + " g)"
             al.append(aa)
-            s = "Main: " + choices2.loc[i, "Main Name"] + ", Quantity: " + str(float("{:.2f}".format(choices2.loc[i, "Main Quantity"])))
             bb = choices2.loc[i, "Sides Name"] + " (" + str(float("{:.2f}".format(choices2.loc[i, "Sides Quantity"]))) + " g)"
             bl.append(bb)
-            s += "; " + "Side: " + choices2.loc[i, "Sides Name"] + ", Quantity: " + str(float("{:.2f}".format(choices2.loc[i, "Sides Quantity"])))
+            
             if likeSalads == "Y":
-                s += "; " + "Salad: " + choices2.loc[i, "Salads Name"] + ", Quantity: " + str(float("{:.2f}".format(choices2.loc[i, "Salads Quantity"])))
                 cc = choices2.loc[i, "Salads Name"] + " (" + str(float("{:.2f}".format(choices2.loc[i, "Salads Quantity"]))) + " g)"
                 cl.append(cc)
             else:
                 cl.append("None")
-            s += "; " + "Protein Powder: " + str(float("{:.2f}".format(choices2.loc[i, "Protein Powder"])))
             dd = str(float("{:.2f}".format(choices2.loc[i, "Protein Powder"]))) + "g"
             dl.append(dd)
-            finalChoices.append(s)
         
-        finalChoices2 = []
         al2 = []
         bl2 = []
         cl2 = []
         dl2 = []
-        print("------------------------------------------------------------")
-        print(choices2)
         for j in range(0, 3):
             i = random.randint(1, len(choices2))
             aa = choices2.loc[i, "Main Name"] + " (" + str(float("{:.2f}".format(choices2.loc[i, "Main Quantity"]))) + " g)"
             al2.append(aa)
-            s = "Main: " + choices2.loc[i, "Main Name"] + ", Quantity: " + str(float("{:.2f}".format(choices2.loc[i, "Main Quantity"])))
             bb = choices2.loc[i, "Sides Name"] + " (" + str(float("{:.2f}".format(choices2.loc[i, "Sides Quantity"]))) + " g)"
-            bl2.append(bb)
-            s += "; " + "Side: " + choices2.loc[i, "Sides Name"] + ", Quantity: " + str(float("{:.2f}".format(choices2.loc[i, "Sides Quantity"])))
-            if likeSalads == "Y":
-                s += "; " + "Salad: " + choices2.loc[i, "Salads Name"] + ", Quantity: " + str(float("{:.2f}".format(choices2.loc[i, "Salads Quantity"])))
+            bl2.append(bb)    
+            if likeSalads == "Y":                
                 cc = choices2.loc[i, "Salads Name"] + " (" + str(float("{:.2f}".format(choices2.loc[i, "Salads Quantity"]))) + " g)"
                 cl2.append(cc)
             else:
-                cl2.append("None")
-            s += "; " + "Protein Powder: " + str(float("{:.2f}".format(choices2.loc[i, "Protein Powder"])))
+                cl2.append("None")            
             dd = str(float("{:.2f}".format(choices2.loc[i, "Protein Powder"]))) + "g"
             dl2.append(dd)
-            finalChoices2.append(s)
-
-        user_lunch.l_main_1 = al[0]
-        user_lunch.l_main_2 = al[1]
-        user_lunch.l_main_3 = al[2]
-        user_lunch.l_side_1 = bl[0]
-        user_lunch.l_side_2 = bl[1]
-        user_lunch.l_side_3 = bl[2]
-        user_lunch.l_salad_1 = cl[0]
-        user_lunch.l_salad_2 = cl[1]
-        user_lunch.l_salad_3 = cl[2]
-        user_lunch.l_pp_1 = dl[0]
-        user_lunch.l_pp_2 = dl[1]
-        user_lunch.l_pp_3 = dl[2]
-        user_lunch.save()
-
-        user_dinner.d_main_1 = al2[0]
-        user_dinner.d_main_2 = al2[1]
-        user_dinner.d_main_3 = al2[2]
-        user_dinner.d_side_1 = bl2[0]
-        user_dinner.d_side_2 = bl2[1]
-        user_dinner.d_side_3 = bl2[2]
-        user_dinner.d_salad_1 = cl2[0]
-        user_dinner.d_salad_2 = cl2[1]
-        user_dinner.d_salad_3 = cl2[2]
-        user_dinner.d_pp_1 = dl2[0]
-        user_dinner.d_pp_2 = dl2[1]
-        user_dinner.d_pp_3 = dl2[2]
-        user_dinner.save()
-
-        #-----------------------------BREAKFAST---------------------------------
         
-        if user_diet.like_milk:
-            likeMilk = "Y"
-        else:
-            likeMilk = "N"
-        
-        if user_diet.like_fruits:
-            likeFruits = "Y"
-        else:
-            likeFruits = "N"
-
-        if user_diet.like_seeds_nuts:
-            likeNuts = "Y"
-        else:
-            likeNuts = "N"
-        
-        choices3 = json.loads(user_bf.choices)
-        choices3 = pd.read_json(choices3)
-        
-        finalChoices = []
         abf = []
         bbf = []
         cbf = []
         dbf = []
         ebf =[]
         for j in range(0, 3):
-            print("CHECKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK")
             i = random.randint(1, len(choices3))
-            s = "Main: " + choices3.loc[i, "Breakfast Name"] + ", Quantity: " + str(float("{:.2f}".format(choices3.loc[i, "Breakfast Quantity"])))
             aa = choices3.loc[i, "Breakfast Name"] + " (" + str(float("{:.2f}".format(choices3.loc[i, "Breakfast Quantity"]))) + " g)"
             abf.append(aa)
             if likeMilk == "Y":
-                s += "; " + "Milk: " + choices3.loc[i, "Milk Name"] + ", Quantity: " + str(float("{:.2f}".format(choices3.loc[i, "Milk Quantity"])))
                 bb = choices3.loc[i, "Milk Name"] + " (" + str(float("{:.2f}".format(choices3.loc[i, "Milk Quantity"]))) + " g)"
                 bbf.append(bb)
             else:
                 bbf.append("None")
             if likeFruits == "Y":
-                s += "; " + "Fruit: " + choices3.loc[i, "Fruits Name"] + ", Quantity: " + str(float("{:.2f}".format(choices3.loc[i, "Fruits Quantity"])))
                 cc = choices3.loc[i, "Fruits Name"] + " (" + str(float("{:.2f}".format(choices3.loc[i, "Fruits Quantity"]))) + " g)"
                 cbf.append(cc)
             else:
                 cbf.append("None")
             if likeNuts == "Y":
-                s += "; " + "Nut: " + choices3.loc[i, "Nuts Name"] + ", Quantity: " + str(float("{:.2f}".format(choices3.loc[i, "Nuts Quantity"])))
                 dd = choices3.loc[i, "Nuts Name"] + " (" + str(float("{:.2f}".format(choices3.loc[i, "Nuts Quantity"]))) + " g)"
                 dbf.append(dd)
             else:
@@ -2154,26 +2081,63 @@ def regenerate(request):
             s += "; " + "Protein Powder: " + str(float("{:.2f}".format(choices3.loc[i, "Protein Powder"])))
             ee = str(float("{:.2f}".format(choices3.loc[i, "Protein Powder"]))) + " g"
             ebf.append(ee)
-            finalChoices.append(s)
-        print(finalChoices)
-        user_bf = Breakfast.objects.get(uid = request.user)
-        print("ABF: ", abf)
-        user_bf.bf_main_1 = abf[0]
-        user_bf.bf_main_2 = abf[1]
-        user_bf.bf_main_3 = abf[2]
-        user_bf.bf_milk_1 = bbf[0]
-        user_bf.bf_milk_2 = bbf[1]
-        user_bf.bf_milk_3 = bbf[2]
-        user_bf.bf_fruits_1 = cbf[0]
-        user_bf.bf_fruits_2 = cbf[1]
-        user_bf.bf_fruits_3 = cbf[2]
-        user_bf.bf_nuts_1 = dbf[0]
-        user_bf.bf_nuts_2 = dbf[1]
-        user_bf.bf_nuts_3 = dbf[2]
-        user_bf.bf_pp_1 = ebf[0]
-        user_bf.bf_pp_2 = ebf[1]
-        user_bf.bf_pp_3 = ebf[2]
+            
+
+        user_lunch.l_main_1 = al[0] # Mon, Thur Pair Lunch
+        user_lunch.l_main_2 = al[1] # Tue, Fri Pair Lunch
+        user_lunch.l_main_3 = al[2] # Wed, Sat Pair Lunch
+        user_lunch.l_side_1 = bl[0] # Mon, Thur Pair Lunch
+        user_lunch.l_side_2 = bl[1] # Tue, Fri Pair Lunch
+        user_lunch.l_side_3 = bl[2] # Wed, Sat Pair Lunch
+        user_lunch.l_salad_1 = cl[0] # Mon, Thur Pair Lunch
+        user_lunch.l_salad_2 = cl[1] # Tue, Fri Pair Lunch
+        user_lunch.l_salad_3 = cl[2] # Wed, Sat Pair Lunch
+        user_lunch.l_pp_1 = dl[0] # Mon, Thur Pair Lunch
+        user_lunch.l_pp_2 = dl[1] # Tue, Fri Pair Lunch
+        user_lunch.l_pp_3 = dl[2] # Wed, Sat Pair Lunch
+        user_lunch.save()
+
+        user_dinner.d_main_1 = al2[0] # Mon, Thur Pair Dinner
+        user_dinner.d_main_2 = al2[1] # Tue, Fri Pair Dinner
+        user_dinner.d_main_3 = al2[2] # Wed, Sat Pair Dinner
+        user_dinner.d_side_1 = bl2[0] # Mon, Thur Pair Dinner
+        user_dinner.d_side_2 = bl2[1] # Tue, Fri Pair Dinner
+        user_dinner.d_side_3 = bl2[2] # Wed, Sat Pair Dinner
+        user_dinner.d_salad_1 = cl2[0] # Mon, Thur Pair Dinner
+        user_dinner.d_salad_2 = cl2[1] # Tue, Fri Pair Dinner
+        user_dinner.d_salad_3 = cl2[2] # Wed, Sat Pair Dinner
+        user_dinner.d_pp_1 = dl2[0] # Mon, Thur Pair Dinner
+        user_dinner.d_pp_2 = dl2[1] # Tue, Fri Pair Dinner
+        user_dinner.d_pp_3 = dl2[2] # Wed, Sat Pair Dinner
+        user_dinner.save()
+        
+        user_bf.bf_main_1 = abf[0] # Mon, Thur Pair Bf
+        user_bf.bf_main_2 = abf[1] # Tue, Fri Pair Bf
+        user_bf.bf_main_3 = abf[2] # Wed, Sat Pair Bf
+        user_bf.bf_milk_1 = bbf[0] # Mon, Thur Pair Bf
+        user_bf.bf_milk_2 = bbf[1] # Tue, Fri Pair Bf
+        user_bf.bf_milk_3 = bbf[2] # Wed, Sat Pair Bf
+        user_bf.bf_fruits_1 = cbf[0] # Mon, Thur Pair Bf
+        user_bf.bf_fruits_2 = cbf[1] # Tue, Fri Pair Bf
+        user_bf.bf_fruits_3 = cbf[2] # Wed, Sat Pair Bf
+        user_bf.bf_nuts_1 = dbf[0] # Mon, Thur Pair Bf
+        user_bf.bf_nuts_2 = dbf[1] # Tue, Fri Pair Bf
+        user_bf.bf_nuts_3 = dbf[2] # Wed, Sat Pair Bf
+        user_bf.bf_pp_1 = ebf[0] # Mon, Thur Pair Bf
+        user_bf.bf_pp_2 = ebf[1] # Tue, Fri Pair Bf
+        user_bf.bf_pp_3 = ebf[2] # Wed, Sat Pair Bf
         user_bf.save()
+
+        user_snack.s_main_1 = asn[0] # Mon, Thur Pair Snack
+        user_snack.s_main_2 = asn[1] # Tue, Fri Pair Snack
+        user_snack.s_main_3 = asn[2] # Wed, Sat Pair Snack
+        user_snack.s_fruit_1 = bsn[0] # Mon, Thur Pair Snack
+        user_snack.s_fruit_2 = bsn[1] # Tue, Fri Pair Snack
+        user_snack.s_fruit_3 = bsn[2] # Wed, Sat Pair Snack
+        user_snack.s_sweet_1 = csn[0] # Mon, Thur Pair Snack
+        user_snack.s_sweet_2 = csn[1] # Tue, Fri Pair Snack
+        user_snack.s_sweet_3 = csn[2] # Wed, Sat Pair Snack
+        user_snack.save()
 
     context = {'dest': "diet_disp"}
     return render(request, "loading_diet.html",context)
