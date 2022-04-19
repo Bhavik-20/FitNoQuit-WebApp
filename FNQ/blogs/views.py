@@ -36,12 +36,14 @@ def view_blog_list(request):
         lst_desc = []
         lst_img =[]
         lst_blogs=[]
+        lst_excerpt = []
         for value in get_blogs.all():
             lst_title.append(value.title)
             lst_desc.append(value.content)
             lst_img.append(value.img)
             lst_blogs.append(value.blog_id)
-        dicts = zip(lst_title, lst_desc, lst_img, lst_blogs)
+            lst_excerpt.append(value.excerpt)
+        dicts = zip(lst_title, lst_desc, lst_img, lst_blogs, lst_excerpt)
         context={'dicts': dicts, 'category': categ }
         return render(request, "blog_list.html",context)
     else:

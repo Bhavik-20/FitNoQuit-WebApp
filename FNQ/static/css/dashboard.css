@@ -140,59 +140,88 @@ position: relative;
   transition: all 200ms ease-in;
   }
 
-  .time-line-box .start {
-    padding: 0px 0px;
-    display: flex;
-    /* justify-content: center; */
-    border-top: 3px solid #455EFC;
-    position: relative;
-    transition: all 200ms ease-in;
-    }
-    
-    .time-line-box .start span {
+.time-line-box .start {
+  padding: 0px 0px;
+  display: flex;
+  /* justify-content: center; */
+  border-top: 3px solid #455EFC;
+  position: relative;
+  transition: all 200ms ease-in;
+  }
+  
+.time-line-box .start span {
+  padding-top: 8px;
+  }
+
+.timestamp-start{
+  /* margin: auto; */
+  text-align: left;
+  margin-bottom: 5px;
+  }
+
+.time-line-box .end span:before {
+  content: '';
+  width: 12px;
+  height: 12px;
+  background-color: grey;
+  border-radius: 12px;
+  border: 2px solid grey;
+  position: absolute;
+  left: 94%;
+  top: 0%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  transition: all 200ms ease-in;
+  }
+  
+.time-line-box .end {
+  padding-left: 25px;
+  display: flex;
+  /* justify-content: center; */
+  border-top: 3px solid grey;
+  position: relative;
+  transition: all 200ms ease-in;
+  }
+      
+.time-line-box .end span {
     padding-top: 8px;
     }
 
-    .timestamp-start{
-      /* margin: auto; */
-      text-align: left;
-      margin-bottom: 5px;
-      }
+.time-line-box .end-comp span:before {
+  content: '';
+  width: 12px;
+  height: 12px;
+  background-color: #455EFC;
+  border-radius: 12px;
+  border: 2px solid #455EFC;
+  position: absolute;
+  left: 94%;
+  top: 0%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  transition: all 200ms ease-in;
+  }
+  
+.time-line-box .end-comp {
+  padding-left: 25px;
+  display: flex;
+  /* justify-content: center; */
+  border-top: 3px solid #455EFC;
+  position: relative;
+  transition: all 200ms ease-in;
+  }
+      
+  .time-line-box .end-comp span {
+  padding-top: 8px;
+  }
 
-      .time-line-box .end span:before {
-        content: '';
-        width: 12px;
-        height: 12px;
-        background-color: grey;
-        border-radius: 12px;
-        border: 2px solid grey;
-        position: absolute;
-        left: 94%;
-        top: 0%;
-        -webkit-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
-        transition: all 200ms ease-in;
-        }
-      
-        .time-line-box .end {
-          padding-left: 25px;
-          display: flex;
-          /* justify-content: center; */
-          border-top: 3px solid grey;
-          position: relative;
-          transition: all 200ms ease-in;
-          }
-          
-          .time-line-box .end span {
-          padding-top: 8px;
-          }
-      
-          .timestamp-end{
-            /* margin: auto; */
-            text-align: right;
-            margin-bottom: 5px;
-            }
+  .timestamp-end{
+    /* margin: auto; */
+    text-align: right;
+    margin-bottom: 5px;
+    }
 /* ------ */
 * {
     margin: 0;
@@ -474,6 +503,7 @@ section {
     border-radius: 10px;
     background: #fff;
     overflow: hidden;
+    
 }
 
 /* Muskaan */
@@ -669,10 +699,9 @@ section {
   margin-top: 5px;
 }
 
-.col1{
-  width: 30%;
-}
-
-.col2{
-  width:40%;
+@media (min-width: 992px) {
+  .column-b{
+    height: 280px;
+    width: auto;
+  }
 }

@@ -1895,7 +1895,7 @@ def snacks_api(request):
     user_snack.choices = json.dumps(choices)
     user_snack.save()
 
-    context = {'dest': "diet_disp"}
+    context = {'dest': "view_diet"}
     return render(request, "loading_diet.html",context)
 
 def diet(request):
@@ -2139,5 +2139,5 @@ def regenerate(request):
         user_snack.s_sweet_3 = csn[2] # Wed, Sat Pair Snack
         user_snack.save()
 
-    context = {'dest': "diet_disp"}
+    context = {'dest': "view_diet"}
     return render(request, "loading_diet.html",context)
