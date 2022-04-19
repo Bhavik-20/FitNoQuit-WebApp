@@ -29,25 +29,11 @@
 			{% csrf_token %}
 			<label for="uname">User Name*</label><input class="form-control" name="uname" type="text" value="{{uname1}}">
 			<p style="color: red;">{{uname}}</p>
-			<!-- {% if messages %}
-				{% for message in messages %}
-					{% if message.tags == "empty_uname info" %}
-					<p>{{ message }}</p>
-					{% endif %}
-        		{% endfor %}
-    		{% endif %} -->
-			<br>
-			<label for="pass1">Password*</label><input class="form-control" name="pass1" type="password" value="{{pass1}}">
-			<p style="color: red;">{{pass}}</p>
-			<!-- {% if messages %}
-				{% for message in messages %}
-					{% if message.tags == "empty_pass info" %}
-					<p>{{ message }}</p>
-					{% endif %}
-        		{% endfor %}
-    		{% endif %} -->
 			
-			<a class="forgot" href="#">Forgot Password?</a>
+			<br>
+			<label for="pass1">Password*</label><input class="form-control" id="myInput" name="pass1" type="password" value="{{pass1}}">
+			<p style="color: red;">{{pass}}</p>
+			<input type="checkbox" onclick="myFunction()"> Show Password
 			<br><br>
 			<input type="submit" class="login">
 			<a href="/" class="back-to-home">Back to Home</a>
@@ -55,15 +41,19 @@
 			
 		</form>
 		<center><p style="color: red;">{{final}}</p></center>
-		
-		<!-- <br><br>
-		<button class="login">Login</button> -->
-		<!-- <div>
-			{% for message in messages %}
-			<h3> {{message.tags}} </h3>
-			{% endfor %}		
-		</div> -->
 </div>
 </div>
 </body>
+
+<script>
+	function myFunction() {
+	  var x = document.getElementById("myInput");
+	  if (x.type === "password") {
+		x.type = "text";
+	  } else {
+		x.type = "password";
+	  }
+	}
+	</script>
+
 </html>

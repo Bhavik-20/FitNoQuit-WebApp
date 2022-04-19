@@ -1,3 +1,4 @@
+from pyexpat import model
 from unicodedata import category
 from django.db import models
 
@@ -11,3 +12,4 @@ class Blogs(models.Model):
     publish_date = models.DateField()
     content = models.TextField()
     img = models.ImageField(upload_to='blog_images')
+    excerpt = models.TextField()

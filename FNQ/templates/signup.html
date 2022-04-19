@@ -43,21 +43,29 @@
 			<p style="color: red;">{{uname}}</p>
 			
 			<div class="row">
-				<div class="col"><label for="pass1">Password*</label><input class="form-control" name="pass1" type="password" value="{{pass1}}"></div>
+				<div class="col"><label for="pass1">Password*</label><input class="form-control" id="myInput" name="pass1" type="password" value="{{pass1}}"></div>
 				<br>
-				<div class="col"><label for="pass2">Confirm Password*</label><input class="form-control" name="pass2" type="password">
+				<div class="col"><label for="pass2">Confirm Password*</label><input class="form-control" id="myInput2" name="pass2" type="password">
 				<p style="color: red;">{{pass}}</p></div>
 			</div>
-			<a class="forgot" href="#">Forgot Password?</a>
+			<input type="checkbox" onclick="myFunction()"> Show Password
 			<br><br>
 			<input type="submit" class="login">
 			<a href="/" class="back-to-home">Back to Home</a>
 		</form>
-		<!-- <div>
-			{% for message in messages %}
-			<h3> {{message}} </h3>
-			{% endfor %}		
-		</div> -->
+		<script>
+			function myFunction() {
+			  var x = document.getElementById("myInput");
+			  var y = document.getElementById("myInput2");
+			  if (x.type === "password" || y.type === "password") {
+				x.type = "text";
+				y.type = "text";
+			  } else {
+				x.type = "password";
+				y.type = "password";
+			  }
+			}
+		</script>
 </div>
 	
 </div>

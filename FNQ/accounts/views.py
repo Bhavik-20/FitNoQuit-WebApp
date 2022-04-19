@@ -1895,7 +1895,7 @@ def snacks_api(request):
     user_snack.choices = json.dumps(choices)
     user_snack.save()
 
-    context = {'dest': "diet_disp"}
+    context = {'dest': "view_diet"}
     return render(request, "loading_diet.html",context)
 
 def diet(request):
@@ -2175,5 +2175,5 @@ def regenerate(request):
         user_bf.bf_pp_3 = ebf[2]
         user_bf.save()
 
-    context = {'dest': "diet_disp"}
+    context = {'dest': "view_diet"}
     return render(request, "loading_diet.html",context)

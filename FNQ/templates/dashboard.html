@@ -46,6 +46,7 @@
                 <li class="nav-item"><a class="nav-link" href="dashboard">Dashboard</a></li>
                 <li class="nav-item"><a class="nav-link" href="/#about">About Us</a></li>
                 <li class="nav-item"><a class="nav-link" href="/#contact">Contact</a></li>
+                <li class="nav-item"><a class="nav-link" href="blogs/view_blog_categories">Blogs</a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-user-circle" style="font-size: 20px"></i>
@@ -102,11 +103,11 @@
                                     </div>
                                     <div class="swiper-slide">
                                     <div class="timestamp"><span class="above"><i class="fas fa-spinner"></i></span></div>
-                                    <div class="status"><span>4. Track your Progress</span></div>
+                                    <div class="status" id="step_track"><span>4. Track your Progress</span></div>
                                     </div>  
                                     <div class="start_end_slide">
                                     <div class="timestamp-end"><span class="above"><i class="fas fa-flag-checkered"></i></span></div>
-                                    <div class="end"><span>Reached your Goal !</span></div>
+                                    <div class="end" id="step_reached_goal"><span>Reached your Goal !</span></div>
                                     </div>     
                                 </div>
                                 <div class="swiper-pagination"></div>
@@ -133,7 +134,20 @@
                                     console.log("{{user_workout.wo_exists}}");
                                     element3.classList.remove("status");
                                     element3.classList.add("complete");
-                                }        
+                                } 
+
+                                element4 = document.getElementById("step_track")
+                                if("{{user_workout.wo_exists}}" == "True" && "{{ user_profile.weight}}" != "{{user_profile.start_wt}}"){
+                                    element4.classList.remove("status");
+                                    element4.classList.add("complete");
+                                } 
+
+                                element5 = document.getElementById("step_reached_goal");
+                                if("{{user_workout.wo_exists}}" == "True" && "{{user_profile.weight}}" == "{{user_profile.target_wt}}"){
+                                    element5.classList.remove("end");
+                                    element5.classList.add("end-comp");
+                                }
+                                       
                              }
                          </script>
                          <br>
@@ -235,33 +249,10 @@
                         <br>
                         
                         <div class="row">
-                            {% if user_profile.age != 0 %} <!-- IF USER IS HAS NOT ENTERED PROFILE INFO -->
-                            <div class="column" style="margin-top: 10px; width:30%">
-                                <div class="au-card recent-report">
-                                    <div class="au-card-inner">
-                                        <center><h3><a class="no-decor" href="view_diet">View Diet Plan</a></h3><a class="generate" href="diet" >Generate New Diet Plan</a></center>
-                                        <a href="view_diet"><img src="{% static 'images/diet-module.png' %}" width="100%"></a>
-                                    </div>
-                                    <div><center>
-                                    <!-- <a href=""><button class="custom-btn">Generate Diet</button></a>
-                                    <a href=""><button class="custom-btn">View Your Diet</button></a> -->
-                                    </center></div>
-                                </div>
-                            </div>
-                            <div class="column" style="margin-top: 10px; width:30%">
-                                <div class="au-card recent-report">
-                                    <div class="au-card-inner">
-                                        <center><h3><a class="no-decor" href="view_workout">View Wokout Plan</h3><a class="generate" href="workout" >Generate New Workout Plan</a>
-                                        <a href="view_workout"><img src="{% static 'images/workout-module.png' %}" width="85%"></a></center>
-                                    </div>
-                                </div>
-                            </div>
-                            {% endif %}
                             <!-- progress bar -->
                             {% if user_profile.age != 0 %} <!-- IF USER IS NOT NEW -->
-                            <div class="column" style="margin-top: 10px; width: 40%">
-                                <div class="au-card chart-percent-card">
-                                    <div class="au-card-inner">
+                            <div class="col-xs-12 col-sm-6 col-md-5" style="margin-top: 10px;">
+                                <div class="au-card">
                                         <h3 class="title-2" style="margin-bottom: 15px;">Track your Progress</h3>
                                         <div class="row">
                                             <div>
@@ -427,10 +418,36 @@
                                             <span style="font-size: 13px;"> To Track your progess, Please Enter Your Details in the <a href="profile">Profile</a> Section.</span>                                                    
                                             </center>
                                             {% endif %}
-                    
-                                        </div>
                                     </div>
                                 </div>
+                            </div>
+                            
+                            <div class="col-xs-12 col-sm-6 col-md-7">
+                                <div class="container-fluid">
+                                <div class="row">
+                                {% if user_profile.age != 0 %} <!-- IF USER IS HAS NOT ENTERED PROFILE INFO -->
+                                <div class="col-xs-12 col-md-6" style="margin-top: 10px;">
+                                    <div class="au-card column-b">
+                                        <center><h3><a class="no-decor" href="view_diet">View Diet Plan</a></h3><a class="generate" href="diet" >Generate New Diet</a></center>
+                                        <br>
+                                        <a href="view_diet"><img src="{% static 'images/diet-module.png' %}" width="100%"></a>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6" style="margin-top: 10px;">
+                                    <div class="au-card column-b">
+                                        <center><h3><a class="no-decor" href="view_workout">View Workout Plan</h3><a class="generate" href="workout" >Generate New Diet</a></center>
+                                        <a href="view_workout"><img src="{% static 'images/workout-module.png' %}" width="100%"></a>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6" style="margin-top: 10px;">
+                                    <div class="au-card">
+                                        <center><h3><a class="no-decor" href="blogs/view_blog_categories">View Blogs</h3>
+                                        <img src="{% static 'images/blogs.png' %}" width="100%"></a></center>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div> <!-- row-->
+                            </div> <!-- container fluid-->
                             </div>
                         </div>
                     </div>
