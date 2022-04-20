@@ -1,0 +1,117 @@
+{%load static%}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitNoQuit | Blog List </title>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" /> <!-- BootStrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> 
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <!-- Main CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/blog_list.css'%}">     
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light" id="mainNav">
+  <div class="container">
+      <a class="navbar-brand" href="/"><h4>FitNoQuit</h4></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fas fa-bars ms-1"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+              {% if user.is_authenticated %}
+              <li class="nav-item"><p class="no-hover">Hello, {{user.first_name}}!</p></li> 
+              <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li>
+              <li class="nav-item"><a class="nav-link" href="/#about">About Us</a></li>
+              <li class="nav-item"><a class="nav-link" href="/#contact">Contact</a></li>
+              <li class="nav-item"><a class="nav-link" href="blogs/view_blog_categories">Blogs</a></li>
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-user-circle" style="font-size: 20px"></i>
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/profile">Edit Profile</a>
+                    <a class="dropdown-item" href="/logout">Log out</a>
+                  </div>
+                </li>
+              {% else %}
+              <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+              <li class="nav-item"><a class="nav-link" href="/signup">Sign Up</a></li>
+              <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
+              <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li> 
+              {% endif %}
+          </ul>
+      </div>
+  </div>
+</nav>
+<body>
+<div class="sidebar">
+  <form action="view_blog_list" method="POST">
+    {% csrf_token %}
+    <button type="submit" class ="" id = "wl" name="weight-loss" value="Weight Loss">Weight Loss</button>
+    <button type="submit" class ="" id = "wg" name="weight-gain" value="Weight Gain">Weight Gain</button>
+    <button type="submit" class ="" id = "hl" name="healthy-lifestyle" value="Healthy Lifestyle">Healthy Lifestyle</button>
+    <button type="submit" class ="" id = "r" name="recipes" value="Recipes" >Recipes</button>
+    <button type="submit" class ="" id="n" name="nutrition" value="Nutrition" >Nutrition</button>
+    <button type="submit" class ="" id="w" name="workout" value="Workout">Workout</button>
+  </form>
+</div>
+
+<button type="hidden" id="categ" value="{{category}}"></button>
+<!-- script tag needs to be added, if category == weight loss add active class to weightloss button -->
+<script>
+ if($('#categ').val() == 'Weight Loss'){
+  $('#wl').addClass('active').siblings().removeClass('active');
+ }
+ if($('#categ').val() == 'Weight Gain'){
+  $('#wg').addClass('active').siblings().removeClass('active');
+ }
+ if($('#categ').val() == 'Healthy Lifestyle'){
+  $('#hl').addClass('active').siblings().removeClass('active');
+ }
+ if($('#categ').val() == 'Recipes'){
+  $('#r').addClass('active').siblings().removeClass('active');
+ }
+ if($('#categ').val() == 'Nutrition'){
+  $('#n').addClass('active').siblings().removeClass('active');
+ }
+ if($('#categ').val() == 'Workout'){
+  $('#w').addClass('active').siblings().removeClass('active');
+ }
+</script>
+<!-- side bar ends -->
+<div class="space"></div>
+<header><div><h3 class="subheading"> {{ category }} </h3></div></header>
+
+<!-- Side navbar ends -->
+  {% for i in dicts %}
+<div class="column">
+    <div class="flex">
+          <div class="image" style="background-image: url('{{i.2.url}}');"></div>
+          <div class="text">
+            <h3>{{i.0}}</h3>
+            <p>{{i.4}}</p>
+            <form action="view_blog" method="POST">
+              {% csrf_token %}
+      			<div class="button_container">
+				<button class="btn1" type="submit" name="blog_id" value="{{ i.3 }}"><span>Read More</span></button>
+            </form>
+				</div>
+          </div>
+    </div>
+</div>
+{% endfor %}
+
+</body>
+
+</html>

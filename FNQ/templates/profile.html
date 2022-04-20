@@ -1,0 +1,382 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>FitNoQuit | {{user.first_name}}'s Profile</title>
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
+         <!-- Google fonts-->
+         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <link href="{% static 'css/profile.css' %}" rel="stylesheet" /> 
+        <!-- jquery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+        <!-- <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand" href="#page-top"><h4>FitNoQuit</h4></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars ms-1"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                        {% if user.is_authenticated %}
+                        <li class="nav-item"><p class="no-hover">Hello, {{user.first_name}}!</p></li> 
+                        <li class="nav-item"><a class="nav-link" href="dashboard">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/#about">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/#contact">Contact</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-user-circle" style="font-size: 20px"></i>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="profile">Edit Profile</a>
+                            <a class="dropdown-item" href="logout">Log out</a>
+                            </div>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav> -->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand" href="/"><h4>FitNoQuit</h4></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars ms-1"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                        {% if user.is_authenticated %}
+                        <li class="nav-item"><p class="no-hover">Hello, {{user.first_name}}!</p></li> 
+                        <li class="nav-item"><a class="nav-link" href="dashboard">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/#about">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/#contact">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link" href="blogs/view_blog_categories">Blogs</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-user-circle" style="font-size: 20px"></i>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                              <a class="dropdown-item" href="profile">Edit Profile</a>
+                              <a class="dropdown-item" href="logout">Log out</a>
+                            </div>
+                          </li>
+                        {% endif %}
+                        
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Body -->
+        
+        <div class="wrapper bg-white mt-sm-5">
+            <center><h4 class="pb-4 heading-profile">{{res|safe}}</h4></center>
+            <h4 class="pb-4 border-bottom heading-profile">Account settings</h4>
+            <!-- <div class="d-flex align-items-start py-3 border-bottom"> 
+                <img src="https://images.pexels.com/photos/1037995/pexels-photo-1037995.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" class="img" alt="">
+                <div class="pl-sm-4 pl-2" id="img-section"> <b>Profile Photo</b>
+                    <p>Accepted file type .png. Less than 1MB</p> 
+                    <button class="btn button border">Upload</button>
+                </div>
+            </div> -->
+            <form action="profile" method="post">
+                {% csrf_token %}
+            <div class="py-2">
+                <div class="row py-2">
+                    <div class="col"> <label for="firstname">First Name</label> <input type="text" class="bg-light non-edit form-control" name="fname" value="{{user_profile.fname}}" readonly> </div>
+                    <div class="col"> <label for="lastname">Last Name</label> <input type="text" class="bg-light non-edit form-control" name="lname" value="{{user_profile.lname}}" readonly> </div>
+                </div>
+                <div class="row py-2">
+                    <div class="col"> <label for="email">Email Address</label> <input type="text" class="bg-light form-control non-edit" name="email" value="{{user_profile.email}}" readonly> </div>
+                    <!-- <div class="col-md-6 pt-md-0 pt-3"> <label for="phone">Phone Number</label> <input type="tel" class="bg-light form-control" name="contact" placeholder="9876543210"> </div> -->
+                </div>
+                <div class="row py-2">
+                    <div class="col"> <label for="height">Height (in cm)</label> <input type="number" name ="height" class="bg-light form-control" value="{{user_profile.height}}" step=0.1 min=0 max=200><p style="color: red; font-size: 12px;">{{height}}</p></div>
+                    <div class="col"> <label for="weight">Weight (in kg)</label> <input type="number" name = "weight" class="bg-light form-control" value="{{user_profile.weight}}" step=0.01 min=0><p style="color: red; font-size: 12px;">{{weight}}</p></div>
+                    <div class="col"> <label for="age">Age (in years)</label> <input type="number" name="age" class="bg-light form-control" value="{{user_profile.age}}" min=0><p style="color: red; font-size: 12px;">{{age}}</p></div>
+                    <!-- gender - can also try with Javascript -->
+                    <div class="col"> <label for="gender">Gender</label> <select name="gender" id="gender" class="bg-light">
+                        {% if user_profile.gender == "other" %}
+                            <option value="----">----</option>
+                            <option value="female">Female</option>
+                            <option value="male">Male</option>
+                            <option value="other" selected>Other</option>
+                        {% elif user_profile.gender == "female" %}
+                            <option value="----">----</option>
+                            <option value="female" selected>Female</option>
+                            <option value="male">Male</option>
+                            <option value="other">Other</option>
+                        {% elif user_profile.gender == "male" %} 
+                            <option value="----">----</option>
+                            <option value="female">Female</option>
+                            <option value="male" selected>Male</option>
+                            <option value="other">Other</option>
+                        {% else %}
+                            <option value="----" selected>----</option>
+                            <option value="female">Female</option>
+                            <option value="male">Male</option>
+                            <option value="other">Other</option>
+                        {% endif%}
+                    </select><p style="color: red; font-size: 12px;">{{gender}}</p> </div>
+                </div>
+                <div class="row py-2">
+                    <div class="col"> <label for="fitness_goal">What is your fitness goal?</label> <select name="fitness_goal" id="fitness_goal" class="bg-light">
+                        {% if user_profile.fitness_goal == "Maintain Health" %}
+                            <option value="----" >----</option>
+                            <option value="Maintain Health" selected>Maintain Health</option>
+                            <option value="Weight Loss">Weight Loss</option>
+                            <option value="Weight Gain">Weight Gain</option>
+                        {% elif user_profile.fitness_goal == "Weight Loss" %}
+                            <option value="----" >----</option>
+                            <option value="Maintain Health">Maintain Health</option>
+                            <option value="Weight Loss" selected>Weight Loss</option>
+                            <option value="Weight Gain">Weight Gain</option>
+                        {% elif user_profile.fitness_goal == "Weight Gain" %} 
+                            <option value="----" >----</option>
+                            <option value="Maintain Health">Maintain Health</option>
+                            <option value="Weight Loss">Weight Loss</option>
+                            <option value="Weight Gain" selected>Weight Gain</option>
+                        {% else %}
+                            <option value="----" selected>----</option>
+                            <option value="Maintain Health">Maintain Health</option>
+                            <option value="Weight Loss">Weight Loss</option>
+                            <option value="Weight Gain">Weight Gain</option>
+                        {% endif%}
+                    </select>
+                    <p style="color: red; font-size: 12px;">{{fitness_goal}}</p>
+                    </div>
+    
+                    <div class="col"> <label for="food">Select your food Preferences: </label> <select name="food_pref" id="food_pref" class="bg-light">
+                        {% if user_profile.food_pref == "veg" %}
+                            <option value="----" >----</option>
+                            <option value="veg" selected>Vegeterian</option>
+                            <option value="non-veg">Non-Vegetarian</option>
+                            
+                        {% elif user_profile.food_pref == "non-veg" %}
+                            <option value="----">----</option>
+                            <option value="veg">Vegeterian</option>
+                            <option value="non-veg" selected>Non-Vegetarian</option>                            
+                
+                        {% else %}
+                            <option value="----" selected>----</option>
+                            <option value="veg">Vegeterian</option>
+                            <option value="non-veg">Non-Vegetarian</option>
+                            
+                        {% endif%}
+                    </select><p style="color: red; font-size: 12px;">{{food_pref}}</p></div>
+                </div>
+            <div class="row py-2">
+                <div class="col"> <label for="curr_exc">Select your Excercise Activity Level: </label>
+                    <select name="curr_exc" id="curr_exc" class="bg-light">
+                    {% if user_profile.curr_exercise == "sedentary" %}
+                        <option value="----" >----</option>
+                        <option value="sedentary" selected>Sedentary (little or no exercise)</option>
+                        <option value="lightly">Lightly active (light exercise/sports 1-3 days/week)</option>
+                        <option value="moderately">Moderately active (moderate exercise/sports 3-5 days/week)</option>
+                        <option value="very-active">Very active (hard exercise/sports 6-7 days a week)</option>
+                        <option value="extra-active">Extra active (very hard exercise/sports & a physical job)</option>
+                    {% elif user_profile.curr_exercise == "lightly" %}
+                        <option value="----" >----</option>
+                        <option value="sedentary">Sedentary (little or no exercise)</option>
+                        <option value="lightly" selected>Lightly active (light exercise/sports 1-3 days/week)</option>
+                        <option value="moderately">Moderately active (moderate exercise/sports 3-5 days/week)</option>
+                        <option value="very-active">Very active (hard exercise/sports 6-7 days a week)</option>
+                        <option value="extra-active">Extra active (very hard exercise/sports & a physical job)</option>
+                    {% elif user_profile.curr_exercise == "moderately" %} 
+                        <option value="----" >----</option>
+                        <option value="sedentary">Sedentary (little or no exercise)</option>
+                        <option value="lightly">Lightly active (light exercise/sports 1-3 days/week)</option>
+                        <option value="moderately" selected>Moderately active (moderate exercise/sports 3-5 days/week)</option>
+                        <option value="very-active">Very active (hard exercise/sports 6-7 days a week)</option>
+                        <option value="extra-active">Extra active (very hard exercise/sports & a physical job)</option>
+                    {% elif user_profile.curr_exercise == "very-active" %} 
+                        <option value="----" >----</option>
+                        <option value="sedentary">Sedentary (little or no exercise)</option>
+                        <option value="lightly">Lightly active (light exercise/sports 1-3 days/week)</option>
+                        <option value="moderately">Moderately active (moderate exercise/sports 3-5 days/week)</option>
+                        <option value="very-active" selected>Very active (hard exercise/sports 6-7 days a week)</option>
+                        <option value="extra-active">Extra active (very hard exercise/sports & a physical job)</option>
+                    {% elif user_profile.curr_exercise == "extra-active" %} 
+                        <option value="----" >----</option>
+                        <option value="sedentary">Sedentary (little or no exercise)</option>
+                        <option value="lightly">Lightly active (light exercise/sports 1-3 days/week)</option>
+                        <option value="moderately">Moderately active (moderate exercise/sports 3-5 days/week)</option>
+                        <option value="very-active">Very active (hard exercise/sports 6-7 days a week)</option>
+                        <option value="extra-active" selected>Extra active (very hard exercise/sports & a physical job)</option>
+                    {% else %}
+                        <option value="----" selected>----</option>
+                        <option value="sedentary">Sedentary (little or no exercise)</option>
+                        <option value="lightly">Lightly active (light exercise/sports 1-3 days/week)</option>
+                        <option value="moderately">Moderately active (moderate exercise/sports 3-5 days/week)</option>
+                        <option value="very-active">Very active (hard exercise/sports 6-7 days a week)</option>
+                        <option value="extra-active">Extra active (very hard exercise/sports & a physical job)</option>
+                    {% endif%}
+                </select><p style="color: red; font-size: 12px;">{{curr_exc}}</p>
+                </div>
+            </div>
+            <div class="row py-2">   	
+            <label for="health">Existing Health Conditions</label>
+            <div class="chips__filter">
+            {% if user_profile.diabetes == True %}
+            <div class="chip diabetes chip--active">
+            {% else %}
+            <div class="chip diabetes">
+            {% endif %}
+                <span class="icon icon--leadind chip--check">
+                    <i class="fas fa-check"></i>
+                </span>
+                <span><input type="hidden" id="diabetes" name="diabetes" value="{{user_profile.diabetes}}">Diabetes</input></span> 
+            </div>
+            <!-- ----------- -->
+            {% if user_profile.thyroid == True %}
+            <div class="chip thyroid chip--active">
+            {% else %}
+            <div class="chip thyroid">
+            {% endif %}
+                <span class="icon icon--leadind chip--check">
+                    <i class="fas fa-check"></i>
+                </span>
+                <span><input type="hidden" id="thyroid" name="thyroid" value="{{user_profile.thyroid}}">Thyroid</input></span> 
+            </div>
+            <!-- ------------------ -->
+            {% if user_profile.pcos == True %}
+            <div class="chip pcos chip--active">
+            {% else %}
+            <div class="chip pcos">
+            {% endif %}
+                <span class="icon icon--leadind chip--check">
+                    <i class="fas fa-check"></i>
+                </span>
+                <span><input type="hidden" id="pcos" name="pcos" value="{{user_profile.pcos}}">PCOS</input></span> 
+            </div>
+            <!-- ------------ -->
+            {% if user_profile.kidney == True %}
+            <div class="chip kidney chip--active">
+            {% else %}
+            <div class="chip kidney">
+            {% endif %}
+                <span class="icon icon--leadind chip--check">
+                    <i class="fas fa-check"></i>
+                </span>
+                <span><input type="hidden" id="kidney" name="kidney" value="{{user_profile.kidney}}">Kidney Issues</input></span> 
+            </div>
+            <!-- -------------- -->
+            {% if user_profile.lactose == True %}
+            <div class="chip lactose chip--active">
+            {% else %}
+            <div class="chip lactose">
+            {% endif %}
+                <span class="icon icon--leadind chip--check">
+                    <i class="fas fa-check"></i>
+                </span>
+                <span><input type="hidden" id="lactose" name="lactose" value="{{user_profile.lactose}}">Lactose Intolerant</input></span> 
+            </div>
+            <br>
+            {{health_issues}}
+        </div>
+	</div>
+<div class="py-3 pb-4 border-bottom"> <button class="btn btn-primary mr-3" type="submit">Save Changes</button> <a href="/dashboard" class="btn border button">Cancel</a> </div>
+</form>
+                <div class="d-sm-flex align-items-center pt-3" id="deactivate">
+                    <div> <b>Deactivate your account</b>
+                        <p>Details about your company account and password</p>
+                    </div>
+                    <div class="ml-auto"> <button class="btn danger">Deactivate</button> </div>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            $(function () {
+                $(".chips__filter .chip.diabetes").click(function(event) 
+                {
+                    // $(this).toggleClass("chip--active");
+                    if ($(this).hasClass('chip--active')) {
+                        $(this).removeClass( 'chip--active');
+                        $('#diabetes').val("False");
+                    } else {
+                        $(this).addClass('chip--active');
+                        $('#diabetes').val("True");
+                    }
+                });
+            });
+
+            $(function () {
+                $(".chips__filter .chip.thyroid").click(function(event) 
+                {
+                    // $(this).toggleClass("chip--active");
+                    if ($(this).hasClass('chip--active')) {
+                        $(this).removeClass( 'chip--active');
+                        $('#thyroid').val("False");
+                    } else {
+                        $(this).addClass('chip--active');
+                        $('#thyroid').val("True");
+                    }
+                });
+            });
+
+            $(function () {
+                $(".chips__filter .chip.pcos").click(function(event) 
+                {
+                    // $(this).toggleClass("chip--active");
+                    if ($(this).hasClass('chip--active')) {
+                        $(this).removeClass( 'chip--active');
+                        $('#pcos').val("False");
+                    } else {
+                        $(this).addClass('chip--active');
+                        $('#pcos').val("True");
+                    }
+                });
+            });
+
+            $(function () {
+                $(".chips__filter .chip.kidney").click(function(event) 
+                {
+                    // $(this).toggleClass("chip--active");
+                    if ($(this).hasClass('chip--active')) {
+                        $(this).removeClass( 'chip--active');
+                        $('#kidney').val("False");
+                    } else {
+                        $(this).addClass('chip--active');
+                        $('#kidney').val("True");
+                    }
+                });
+            });
+
+            $(function () {
+                $(".chips__filter .chip.lactose").click(function(event) 
+                {
+                    // $(this).toggleClass("chip--active");
+                    if ($(this).hasClass('chip--active')) {
+                        $(this).removeClass( 'chip--active');
+                        $('#lactose').val("False");
+                    } else {
+                        $(this).addClass('chip--active');
+                        $('#lactose').val("True");
+                    }
+                });
+            });
+
+           
+        </script>
+        
+        <!-- Bootstrap core JS
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        Core theme JS
+        <script src="js/scripts.js"></script>
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script> -->
+    </body>
+</html>

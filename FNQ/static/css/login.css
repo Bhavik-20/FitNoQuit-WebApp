@@ -62,7 +62,7 @@ body {
   }
 }
 .box-form .right_box h5 {
-  font-size: 60px;
+  font-size: 70px;
   line-height: 0;
   color: #536DFE;
 }
@@ -87,12 +87,6 @@ body {
 .form-control:hover {
   border: 1px solid #5AB0DB;
   border-radius: 5px;
-}
-
-.forgot{
-  text-decoration: none;
-  color: #B0B3B9;
-  font-size: 15px;
 }
 
 .login{

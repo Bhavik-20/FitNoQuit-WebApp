@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>FitNoQuit | Workout Recommmendations </title>
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <link href="{% static 'css/wo_disp.css' %}" rel="stylesheet" />
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light" id="mainNav">
+  <div class="container">
+      <a class="navbar-brand" href="/"><h4>FitNoQuit</h4></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fas fa-bars ms-1"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+              {% if user.is_authenticated %}
+              <li class="nav-item"><p class="no-hover">Hello, {{user.first_name}}!</p></li> 
+              <li class="nav-item"><a class="nav-link" href="dashboard">Dashboard</a></li>
+              <li class="nav-item"><a class="nav-link" href="/#about">About Us</a></li>
+              <li class="nav-item"><a class="nav-link" href="/#contact">Contact</a></li>
+              <li class="nav-item"><a class="nav-link" href="blogs/view_blog_categories">Blogs</a></li>
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-user-circle" style="font-size: 20px"></i>
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="profile">Edit Profile</a>
+                    <a class="dropdown-item" href="logout">Log out</a>
+                  </div>
+                </li>
+              {% endif %}
+              
+          </ul>
+      </div>
+  </div>
+</nav>
+      <!-- -->
+        <!--  -->
+      <header>
+        <h3 class="subheading">Let's Get It</h3>
+        <p>Here are a few workout options we believe you might like and they will help you reach your Fitness goal.</p>
+             
+      </header>
+      <div class="row position">
+        {% for i in dicts %}
+          <div class="column box"> 
+            {% if i.1 == "Run_Walk" %}
+            <img src="{% static 'images/run_walk.png' %}" width="100%"/>
+              <strong>Workout:</strong> {{ i.0 }} <br>
+              <strong>Category:</strong> Run/Walk <br>
+              <strong>Duration:</strong> {{ i.2 }} mins<br>
+              <strong>Burn Calories:</strong> {{ i.3 }} calories<br>
+            {% elif i.1 == "Sport_Recreation" %}
+            <img src="{% static 'images/sports_recreation.png' %}" width="100%"/>
+              <strong>Workout:</strong> {{ i.0 }} <br>
+              <strong>Category:</strong> Sports/Recreation <br>
+              <strong>Duration:</strong> {{ i.2 }} mins<br>
+              <strong>Burn Calories:</strong> {{ i.3 }} calories<br>
+            {% elif i.1 == "Gym" %}
+            <img src="{% static 'images/gym.png' %}" width="100%"/>
+              <strong>Workout:</strong> {{ i.0 }} <br>
+              <strong>Category:</strong> Gym/Excercise <br>
+              <strong>Duration:</strong> {{ i.2 }} mins<br>
+              <strong>Burn Calories:</strong> {{ i.3 }} calories<br>
+              {% endif %}
+          </div>
+          {% endfor %}
+      </div>
+     
+      <br>
+        <center><a href="workout" style="text-decoration: none;" class="submit-btn">Regenerate</a></center>
+        
+        <!-- Bootstrap core JS-->
+        <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> -->
+        <!-- Core theme JS-->
+        <!-- <script src="js/scripts.js"></script> -->
+        <!-- <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script> -->
+    </body>
+     <!-- Footer-->
+     <footer class="footer py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col text-lg-start">Copyright &copy; FitNoQuit 2022</div>
+                <div class="col text-lg-end">
+                    <a class="link-dark text-decoration-none me-3" href="#!">Privacy Policy</a>
+                    <a class="link-dark text-decoration-none" href="#!">Terms of Use</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</html>

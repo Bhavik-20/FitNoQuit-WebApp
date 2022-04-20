@@ -1,0 +1,182 @@
+
+@import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');
+
+.no-hover{
+	font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	font-size: 0.95rem;
+	color: #536DFE;
+	letter-spacing: 0.0625em;
+	padding-top: 5px;
+  }
+  
+#mainNav {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: #212529;
+}
+#mainNav .navbar-toggler {
+  padding: 0.75rem;
+  font-size: 0.75rem;
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  text-transform: uppercase;
+  font-weight: 700;
+}
+#mainNav .navbar-brand {
+  color: #536DFE;
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-weight: 700;
+  letter-spacing: 0.0625em;
+  text-transform: uppercase;
+}
+#mainNav .navbar-brand img {
+  height: 1.5rem;
+}
+#mainNav .navbar-nav .nav-item .nav-link {
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 0.95rem;
+  color: #536DFE;
+  letter-spacing: 0.0625em;
+}
+#mainNav .navbar-nav .nav-item .nav-link.active, #mainNav .navbar-nav .nav-item .nav-link:hover {
+  color: #324196;
+}
+
+@media (min-width: 992px) {
+  #mainNav {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    border: none;
+    background-color: transparent;
+    transition: padding-top 0.3s ease-in-out, padding-bottom 0.3s ease-in-out;
+  }
+  #mainNav .navbar-brand {
+    font-size: 1.5em;
+    transition: font-size 0.3s ease-in-out;
+  }
+  #mainNav .navbar-brand img {
+    height: 2rem;
+    transition: height 0.3s ease-in-out;
+  }
+  #mainNav.navbar-shrink {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background-color: #212529;
+  }
+  #mainNav.navbar-shrink .navbar-brand {
+    font-size: 1.25em;
+  }
+  #mainNav.navbar-shrink .navbar-brand svg,
+#mainNav.navbar-shrink .navbar-brand img {
+    height: 1.5rem;
+  }
+  #mainNav .navbar-nav .nav-item {
+    margin-right: 1rem;
+  }
+  #mainNav .navbar-nav .nav-item:last-child {
+    margin-right: 0;
+  }
+}
+/*nav bar ends*/
+
+*{
+	margin-top: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Poppins',sans-serif;
+
+}
+body{
+	background-color: #E2E2E2;
+}
+
+a{
+	text-decoration: none;
+}
+h1{
+	font-size: 1.9rem;
+}
+p{
+	font-size: 1rem;
+}
+.container1{
+	/* widows: 94%; */
+	max-width: 100rem;
+	margin: 0 auto;
+}
+.hero{
+	max-width: 114rem;
+	height: 35rem;
+	
+	margin-top: 100px;
+}
+main{
+	widows: 100%;
+	max-width: 60rem;
+	background-color: white;
+	margin: 0 auto;
+	padding: 3rem;
+	border-radius: 1.5rem;
+	margin-top: -15rem;
+	margin-bottom: 10px;
+}
+main h2{
+	font-size: 2rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 5px;
+}
+main .profile-container{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 3rem 0; 
+}
+main .profile-container .profile{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+main .profile-container .profile .text{
+	margin: 0 1rem;
+	color: #5b5963;
+	font-size: 1.2rem;
+	letter-spacing: 1px;
+}
+.profile .text h3{
+	text-transform: uppercase;
+	font-size: 1rem;
+	font-weight: 400; 
+}
+.profile .text p{
+	font-size: 0.8rem; 
+}
+main .content p{
+	color: #5b5963;
+	margin: 1rem 0;
+}
+
+main .content h4{
+	font-size: 1.4rem;
+	font-weight: 600;
+	color: #5b5963;
+	margin: 2rem 0;
+
+}
+.category{
+	margin: 0 1rem;
+	color: #5b5963;
+	font-weight: 400;
+	letter-spacing: 1px;
+	margin-bottom: -20px;
+	
+}
+
+
+
+
+
+
+
+
+
+

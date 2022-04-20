@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Page in HTML with CSS Code Example</title>
+  <title>FitNoQuit | Login</title>
   <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 <link rel="stylesheet" href="{% static 'css/login.css' %}">
@@ -25,30 +25,15 @@
 		<h5>Login</h5>
 		<br><br>
 		<p>Don't have an account? <a href="signup">Create Your Account</a> it takes less than a minute</p>
-		<br>
 		<form action="login" method="POST">
 			{% csrf_token %}
-			<input class="form-control" name="uname" type="text" placeholder="User name *">
+			<label for="uname">User Name*</label><input class="form-control" name="uname" type="text" value="{{uname1}}">
 			<p style="color: red;">{{uname}}</p>
-			<!-- {% if messages %}
-				{% for message in messages %}
-					{% if message.tags == "empty_uname info" %}
-					<p>{{ message }}</p>
-					{% endif %}
-        		{% endfor %}
-    		{% endif %} -->
+			
 			<br>
-			<input class="form-control" name="pass1" type="password" placeholder="Password *">
+			<label for="pass1">Password*</label><input class="form-control" id="myInput" name="pass1" type="password" value="{{pass1}}">
 			<p style="color: red;">{{pass}}</p>
-			<!-- {% if messages %}
-				{% for message in messages %}
-					{% if message.tags == "empty_pass info" %}
-					<p>{{ message }}</p>
-					{% endif %}
-        		{% endfor %}
-    		{% endif %} -->
-			<br>
-			<a class="forgot" href="#">Forgot Password?</a>
+			<input type="checkbox" onclick="myFunction()"> Show Password
 			<br><br>
 			<input type="submit" class="login">
 			<a href="/" class="back-to-home">Back to Home</a>
@@ -56,17 +41,19 @@
 			
 		</form>
 		<center><p style="color: red;">{{final}}</p></center>
-		
-		<!-- <br><br>
-		<button class="login">Login</button> -->
-		<!-- <div>
-			{% for message in messages %}
-			<h3> {{message.tags}} </h3>
-			{% endfor %}		
-		</div> -->
 </div>
-	
 </div>
-  
 </body>
+
+<script>
+	function myFunction() {
+	  var x = document.getElementById("myInput");
+	  if (x.type === "password") {
+		x.type = "text";
+	  } else {
+		x.type = "password";
+	  }
+	}
+	</script>
+
 </html>

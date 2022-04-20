@@ -1,0 +1,550 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <!-- Title Page-->
+    <title>FitNoQuit | Dashboard</title>
+
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
+
+    <!-- Main CSS-->
+    <link href="{% static 'css/dashboard.css'%}" rel="stylesheet" media="all">
+
+    <!-- Bootstrap CSS-->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="/"><h4>FitNoQuit</h4></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars ms-1"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                {% if user.is_authenticated %}
+                <li class="nav-item"><p class="no-hover">Hello, {{user.first_name}}!</p></li> 
+                <li class="nav-item"><a class="nav-link" href="dashboard">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="/#about">About Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="/#contact">Contact</a></li>
+                <li class="nav-item"><a class="nav-link" href="blogs/view_blog_categories">Blogs</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-user-circle" style="font-size: 20px"></i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="profile">Edit Profile</a>
+                      <a class="dropdown-item" href="logout">Log out</a>
+                    </div>
+                  </li>
+                {% endif %}
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+<body class="bg-light" onload="stepper_func()">
+    <div class="page-wrapper">
+        <!-- PAGE CONTAINER-->
+        <div class="page-container">
+            <!-- HEADER DESKTOP-->
+            <header class="header-desktop">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="header-wrap">
+                                           
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- HEADER DESKTOP-->
+
+            <!-- MAIN CONTENT-->
+            <div class="main-content">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                         <section class="time-line-box">
+                            <div class="swiper-container text-center"> 
+                                <div class="swiper-wrapper">
+                                    <div class="start_end_slide">
+                                    <div class="timestamp-start"><span class="above"><i class="fas fa-play-circle"></i></span></div>
+                                    <div class="start"><span>Start</span></div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                    <div class="timestamp"><span class="above"><i class="fas fa-user"></i></span></div>
+                                    <div class="status" id="step_profile"><span>1. Complete Profile</span></div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                    <div class="timestamp"><span class="above"><i class="fas fa-utensils"></i></span></div>
+                                    <div class="status" id="step_diet"><span>2. Generate Diet</span></div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                    <div class="timestamp"><span class="above"><i class="fas fa-dumbbell"></i></span></div>
+                                    <div class="status" id="step_workout"><span>3. Generate Workout Recommendation</span></div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                    <div class="timestamp"><span class="above"><i class="fas fa-spinner"></i></span></div>
+                                    <div class="status" id="step_track"><span>4. Track your Progress</span></div>
+                                    </div>  
+                                    <div class="start_end_slide">
+                                    <div class="timestamp-end"><span class="above"><i class="fas fa-flag-checkered"></i></span></div>
+                                    <div class="end" id="step_reached_goal"><span>Reached your Goal !</span></div>
+                                    </div>     
+                                </div>
+                                <div class="swiper-pagination"></div>
+                            </div>
+                         </section>
+
+                         <script>
+                            function stepper_func() {
+                                element = document.getElementById("step_profile")
+                                if ("{{user_profile.bmi}}"!="0.00"){
+                                    element.classList.remove("status");
+                                    element.classList.add("complete");
+                                }
+
+                                element2 = document.getElementById("step_diet")
+                                if("{{user_diet.plan_exists}}" == "True"){
+                                    console.log("{{user_diet.plan_exists}}");
+                                    element2.classList.remove("status");
+                                    element2.classList.add("complete");
+                                }      
+
+                                element3 = document.getElementById("step_workout")
+                                if("{{user_workout.wo_exists}}" == "True"){
+                                    console.log("{{user_workout.wo_exists}}");
+                                    element3.classList.remove("status");
+                                    element3.classList.add("complete");
+                                } 
+
+                                element4 = document.getElementById("step_track")
+                                if("{{user_workout.wo_exists}}" == "True" && "{{ user_profile.weight}}" != "{{user_profile.start_wt}}"){
+                                    element4.classList.remove("status");
+                                    element4.classList.add("complete");
+                                } 
+
+                                element5 = document.getElementById("step_reached_goal");
+                                if("{{user_workout.wo_exists}}" == "True" && "{{user_profile.weight}}" == "{{user_profile.target_wt}}"){
+                                    element5.classList.remove("end");
+                                    element5.classList.add("end-comp");
+                                }
+                                       
+                             }
+                         </script>
+                         <br>
+                        <div class="row m-t-25">
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="overview-item overview-item--c1">
+                                    <div class="overview__inner">
+                                        <div class="overview-box clearfix">
+                                            <div class="row">
+                                            <div class="column icon">
+                                                <i class="fas fa-ruler-vertical"></i>
+                                            </div>
+                                            <div class="column text">
+                                                <h2>{{user_profile.height}} cm</h2>
+                                                <span>Height</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                        <!-- <div class="overview-chart">
+                                            <canvas id="widgetChart1"></canvas>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="overview-item overview-item--c2">
+                                    <div class="overview__inner">
+                                        <div class="overview-box clearfix">
+                                            <div class="row">
+                                            <div class="column icon"><i class="fas fa-weight"></i></div>
+                                            <div class="column text">
+                                                <h2>{{user_profile.weight}} kg</h2>
+                                                <span>Weight</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                        <!-- <div class="overview-chart">
+                                            <canvas id="widgetChart2"></canvas>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="overview-item overview-item--c3">
+                                    <div class="overview__inner">
+                                        <div class="overview-box clearfix">
+
+                                            <div class="row">
+                                            <div class="column icon"><i class="fas fa-hourglass-start"></i></div>
+                                            <div class="column text">
+                                                <h2>{{user_profile.age}} years</h2>
+                                                <span>Age</span>
+                                            </div>
+                                        </div>
+                                        </div>
+                                        <!-- <div class="overview-chart">
+                                            <canvas id="widgetChart2"></canvas>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="overview-item overview-item--c4">
+                                    <div class="overview__inner">
+                                        <div class="overview-box clearfix">
+                                            <div class="row">
+                                            <div class="column icon">
+                                                <i class="fas fa-clipboard"></i>
+                                            </div>
+                                            <div class="column text">
+                                                <h2>{{user_profile.bmi}}</h2>
+                                                {% if user_profile.bmi < 18.50 %}
+                                                    <span>BMI - Underweight</span>
+                                                {% elif user_profile.bmi > 24.99 %}
+                                                    <span>BMI - Overweight</span>
+                                                {% elif user_profile.bmi > 18.49 and user_profile.bmi < 25  %}
+                                                    <span>BMI - Healthy</span>
+                                                {% else %}
+                                                    <span> BMI</span>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                        <!-- <div class="overview-chart">
+                                            <canvas id="widgetChart2"></canvas>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% if user_profile.bmi == 0 %}
+                        {% elif user_profile.bmi > 24.99 and user_profile.fitness_goal != "Weight Loss" %}
+                        <em><p style="font-size: 14px; text-align: center;">Your BMI Suggests that you are overweight, thus we would recommend you to select Weight Loss as your Fitness Goal in your <a href="profile">Profile</a>. You have currently selected {{user_profile.fitness_goal}}. </p></em>
+                        {% elif user_profile.bmi < 18.50 and user_profile.fitness_goal != "Weight Gain" %}
+                        <em><p style="font-size: 14px; text-align: center;">Your BMI Suggests that you are underweight, thus we would recommend you to select Weight Gain as your Fitness Goal in your <a href="profile">Profile</a>. You have currently selected {{user_profile.fitness_goal}}. </p></em>
+                        {% elif user_profile.bmi > 18.49 and user_profile.bmi < 25.00 and user_profile.fitness_goal != "Maintain Health" %}
+                        <em><p style="font-size: 14px; text-align: center;">Your BMI Suggests that you are healthy, thus we would recommend you to select Maintain Health as your Fitness Goal in your <a href="profile">Profile</a>. You have currently selected {{user_profile.fitness_goal}}. </p></em>
+                        {% endif %}
+                        <br>
+                        
+                        <div class="row">
+                            <!-- progress bar -->
+                            {% if user_profile.age != 0 %} <!-- IF USER IS NOT NEW -->
+                            <div class="col-xs-12 col-sm-6 col-md-5" style="margin-top: 10px;">
+                                <div class="au-card">
+                                        <h3 class="title-2" style="margin-bottom: 15px;">Track your Progress</h3>
+                                        <div class="row">
+                                            <div>
+                                                    <div>
+                                                        <span class="dot dot--grey"></span>
+                                                        <span> Goal = {{user_profile.fitness_goal}}</span>
+                                                    </div>
+                                                    <div>
+                                                        <span class="dot dot--grey"></span>
+                                                        <span> Start Weight = <span id="start-wt"></span> kg</span>
+                                                    </div>
+                                                    <div>
+                                                        <span class="dot dot--grey"></span>
+                                                        <span> Current Weight = <span id="current-wt"></span> kg</span>
+                                                        <span style="font-size: 13px;"><em>  (Update it in <a href="profile">Profile</a>)</em></span>
+                                                    </div>
+                                                    <div>
+                                                        {% if user_profile.fitness_goal == "Maintain Health" %}
+                                                            <script>
+                                                                start_wt = "{{user_profile.start_wt}}" 
+                                                                current_wt = "{{user_profile.weight}}"  
+                                                                document.getElementById("start-wt").innerHTML = start_wt;
+                                                                document.getElementById("current-wt").innerHTML = current_wt;
+                                                            </script>
+                                                            {% if user_profile.start_wt < user_profile.weight %}                                                            
+                                                            <div>
+                                                                <span class="dot dot--blue"></span>
+                                                                <span> <strong> Progress: You have gained weight ! </strong>
+                                                                </span>
+                                                            </div> 
+                                                            {% elif user_profile.start_wt > user_profile.weight %}
+                                                            <div>
+                                                                <span class="dot dot--blue"></span>
+                                                                <span> <strong> Progress: You have lost weight ! </strong>
+                                                                </span>
+                                                            </div> 
+                                                            {% else %}
+                                                            <div>
+                                                                <span class="dot dot--blue"></span>
+                                                                <span> <strong> Progress: You are on track ! </strong>
+                                                                </span>
+                                                            </div> 
+                                                            {% endif %}
+                                                        {% else %}
+                                                        <form action="dashboard" method="post">
+                                                            {% csrf_token %}
+                                                            <span class="dot dot--grey"></span>
+
+                                                            {% if user_profile.fitness_goal == "Weight Loss" %} 
+                                                            <span> Target Weight = <input type="number" name ="target_wt" class="target-wt" value = {{user_profile.target_wt}} min={{r2}} max={{wl}}>kg</span>
+                                                            {% endif %}
+                                                            {% if user_profile.fitness_goal == "Weight Gain" %} 
+                                                            <span> Target Weight = <input type="number" name ="target_wt" class="target-wt" value = {{user_profile.target_wt}} min={{wg}} max={{r1}}>kg</span>
+                                                            {% endif %}
+
+                                                            <button type="submit" class="set-btn">Set </button>
+                                                            <div style="margin: 10px;">
+                                                            <span style="font-size:12.5px;"><em>To be in the Healthy BMI range your target weight should be between {{r2}} - {{r1}} kg.</em></span>
+                                                            </div>
+                                                        </form>
+                                                        {% endif %}
+                                                    </div>
+                                            </div>                            
+<!-- no progress bar if maintain health-->{% if user_profile.fitness_goal != "Maintain Health" or user_profile.target_wt != 0 %}                                            
+                                            <center>                                            
+                                                <div class="col-xl-6" >
+                                                    <div class="circular" >
+                                                        <div class="inner" ></div>
+                                                        <div class="number">0%</div>
+                                                        <div class="circle" >
+                                                        <div class="bar left" id="left">
+                                                            <div class="progress" ></div>
+                                                        </div>
+                                                        <div class="bar right" id = "right">
+                                                            <div class="progress" ></div>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    <br>
+                                                </div>
+                                                <div>
+                                                    <span class="dot dot--blue"></span>
+                                                    <span> <strong> Progress: <span id="percentage"></span> </strong>
+                                                    </span>
+                                                </div> 
+                                            </center>
+                                            <script>
+                                                const numb = document.querySelector(".number");
+                                                let counter = 0;
+                                                
+                                                start_wt = "{{user_profile.start_wt}}" 
+                                                current_wt = "{{user_profile.weight}}"  
+                                                document.getElementById("start-wt").innerHTML = start_wt;
+                                                document.getElementById("current-wt").innerHTML = current_wt;
+                                                
+                                                target_wt = "{{user_profile.target_wt}}" 
+                                                
+                                                perc = (start_wt - current_wt)/(start_wt - target_wt) * 100;
+                                                console.log(perc)
+                                                if (perc<0)
+                                                {
+                                                    perc = 0
+                                                    document.getElementById("percentage").innerHTML = "You Are Not On Track !";
+                                                }
+                                                else if(perc<50)
+                                                {   
+                                                    perc = Math.ceil(perc)
+                                                    document.getElementById("percentage").innerHTML = "You are " + perc + "% there !";
+                                                    x = 2*180*perc/100
+                                                    keyframes = document.styleSheets[0];
+                                                    keyframes.insertRule(`
+                                                    @keyframes left{
+                                                    100%{
+                                                    transform: rotate(`+x+`deg); 
+                                                        }
+                                                    }
+                                                    `, keyframes.cssRules.length);
+                                                
+                                                    keyframes.insertRule(`
+                                                    @keyframes right{
+                                                    100%{
+                                                    transform: rotate(0deg); 
+                                                        }
+                                                    }
+                                                    `, keyframes.cssRules.length);
+                                                    
+                                                } 
+                                                else {
+                                                    perc = Math.ceil(perc)
+                                                    document.getElementById("percentage").innerHTML = "You are " + perc + "% there !";
+                                                    x = 2*180*(perc-50)/100
+                                                    keyframes = document.styleSheets[0];
+                                                    keyframes.insertRule(`
+                                                    @keyframes left{
+                                                    100%{
+                                                    transform: rotate(180deg); 
+                                                        }
+                                                    }
+                                                    `, keyframes.cssRules.length);
+                                                
+                                                    keyframes.insertRule(`
+                                                    @keyframes right{
+                                                    100%{
+                                                    transform: rotate(`+x+`deg); 
+                                                        }
+                                                    }
+                                                    `, keyframes.cssRules.length);
+                                                    
+                                                }
+                                                                                                
+                                                setInterval(() => {
+                                                  if(counter == perc){
+                                                    clearInterval();
+                                                  }else{
+                                                    counter+=1;
+                                                    numb.textContent = counter + "%";
+                                                  }
+                                                }, 80);
+                                                </script>
+                                            {% endif %}
+                                            {% else %} <!-- IF USER IS NEW -->      
+                                            <center>                                      
+                                            <span style="font-size: 13px;"> To Track your progess, Please Enter Your Details in the <a href="profile">Profile</a> Section.</span>                                                    
+                                            </center>
+                                            {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-xs-12 col-sm-6 col-md-7">
+                                <div class="container-fluid">
+                                <div class="row">
+                                {% if user_profile.age != 0 %} <!-- IF USER IS HAS NOT ENTERED PROFILE INFO -->
+                                <div class="col-xs-12 col-md-6" style="margin-top: 10px;">
+                                    <div class="au-card column-b">
+                                        <center><h3><a class="no-decor" href="view_diet">View Diet Plan</a></h3><a class="generate" href="diet" >Generate New Diet</a></center>
+                                        <br>
+                                        <a href="view_diet"><img src="{% static 'images/diet-module.png' %}" width="100%"></a>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6" style="margin-top: 10px;">
+                                    <div class="au-card column-b">
+                                        <center><h3><a class="no-decor" href="view_workout">View Workout Plan</h3><a class="generate" href="workout" >Generate New Diet</a></center>
+                                        <a href="view_workout"><img src="{% static 'images/workout-module.png' %}" width="100%"></a>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6" style="margin-top: 10px;">
+                                    <div class="au-card">
+                                        <center><h3><a class="no-decor" href="blogs/view_blog_categories">View Blogs</h3>
+                                        <img src="{% static 'images/blogs.png' %}" width="100%"></a></center>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div> <!-- row-->
+                            </div> <!-- container fluid-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END MAIN CONTENT-->
+            <!-- END PAGE CONTAINER-->
+        </div>
+
+    </div>
+
+    <!-- Footer-->
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col text-lg-start">Copyright &copy; FitNoQuit 2022</div>
+                <div class="col text-lg-end">
+                    <a class="link-dark text-decoration-none me-3" href="#!">Privacy Policy</a>
+                    <a class="link-dark text-decoration-none" href="#!">Terms of Use</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+<!-- <script>
+const numb = document.querySelector(".number");
+let counter = 0;
+
+start_wt = "{{user_profile.start_wt}}" 
+current_wt = "{{user_profile.weight}}"  
+document.getElementById("start-wt").innerHTML = start_wt;
+document.getElementById("current-wt").innerHTML = current_wt;
+
+target_wt = "{{user_profile.target_wt}}" 
+
+perc = (start_wt - current_wt)/(start_wt - target_wt) * 100;
+console.log(perc)
+if (perc<0)
+{
+    document.getElementById("percentage").innerHTML = "You Are Not On Track !";
+}
+else if(perc<50)
+{
+    document.getElementById("percentage").innerHTML = "You are " + perc + "% there !";
+    x = 2*180*perc/100
+    keyframes = document.styleSheets[0];
+    keyframes.insertRule(`
+    @keyframes left{
+    100%{
+    transform: rotate(`+x+`deg); 
+        }
+    }
+    `, keyframes.cssRules.length);
+
+    keyframes.insertRule(`
+    @keyframes right{
+    100%{
+    transform: rotate(0deg); 
+        }
+    }
+    `, keyframes.cssRules.length);
+    
+} 
+else {
+    document.getElementById("percentage").innerHTML = "You are " + perc + "% there !";
+    x = 2*180*(perc-50)/100
+    keyframes = document.styleSheets[0];
+    keyframes.insertRule(`
+    @keyframes left{
+    100%{
+    transform: rotate(180deg); 
+        }
+    }
+    `, keyframes.cssRules.length);
+
+    keyframes.insertRule(`
+    @keyframes right{
+    100%{
+    transform: rotate(`+x+`deg); 
+        }
+    }
+    `, keyframes.cssRules.length);
+    
+}
+
+
+setInterval(() => {
+  if(counter == perc){
+    clearInterval();
+  }else{
+    counter+=1;
+    numb.textContent = counter + "%";
+  }
+}, 80);
+</script> -->
+
+</html>
+<!-- end document-->

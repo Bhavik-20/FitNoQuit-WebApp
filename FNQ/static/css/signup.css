@@ -23,7 +23,7 @@ body {
 }
 
 .box-form .left_box {
-  padding-top: 4%;
+  padding-top: 3%;
   width: 60%;
   display: flex;
   align-items: center;
@@ -48,7 +48,7 @@ body {
 }
 
 .box-form .right_box {
-  padding-top: 8%;
+  padding-top: 7%;
   padding-right: 8%;
   padding-bottom: 5%;
   overflow: hidden;
@@ -62,7 +62,7 @@ body {
   }
 }
 .box-form .right_box h5 {
-  font-size: 60px;
+  font-size: 70px;
   line-height: 0;
   color: #536DFE;
 }
@@ -89,12 +89,6 @@ body {
   border-radius: 5px;
 }
 
-.forgot{
-  text-decoration: none;
-  color: #B0B3B9;
-  font-size: 15px;
-}
-
 .login{
   color: #fff;
   font-size: 16px;
@@ -113,6 +107,10 @@ body {
   padding-top: 10px;
   padding-left: 10px;
   text-decoration: none;
+}
+
+label .p{
+  font-size: 10px;
 }
 
 

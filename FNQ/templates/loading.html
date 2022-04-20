@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        /* Style #1 */
+        .loading {
+            display: flex;
+            justify-content: center;        
+            position: absolute;
+            top: 45%;
+            left: 49%;
+        }
+        
+        .loading--full-height {
+            align-items: center;
+            height: 100%;   
+        }
+        
+        .loading::after {
+            content: "";
+            width: 50px;
+            height: 50px;
+            border: 10px solid #536DFE;
+            border-top-color: #003d6b;
+            border-radius: 50%;
+            transform: rotate(0.16turn);
+            animation: loading 1s ease infinite;            
+        }
+        
+        @keyframes loading {
+            /* Safari support */
+            from {
+            transform: rotate(0turn);
+            }
+            
+            to {
+            transform: rotate(1turn);
+            }
+        }      
+    </style>
+</head>
+<body bgcolor="#d9e5ee">
+    <div style="display: flex;">
+        <div class="loading"></div>
+    </div>
+    {% if dest == "login" %}
+    <script>
+        setTimeout(function(){
+            window.location.href = 'login';
+         }, 2000);
+    </script>
+    {% elif dest == "home" %}
+    <script>
+        setTimeout(function(){
+            window.location.href = '/';
+         }, 2000);
+    </script>
+    {% elif dest == "dashboard" %}
+    <script>
+        setTimeout(function(){
+            window.location.href = 'dashboard';
+         }, 2000);
+    </script>
+    {% elif dest == "wo_api" %}
+    <script>
+        setTimeout(function(){
+            window.location.href = 'wo_api';
+         }, 2000);
+    </script>
+    {% elif dest == "wo_disp" %}
+    <script>
+        setTimeout(function(){
+            window.location.href = 'view_workout';
+         }, 2000);
+    </script>
+    {% endif %}
+</body>
+</html>
+
