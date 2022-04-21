@@ -1949,13 +1949,65 @@ def view_diet(request):
 
 
 def regenerate(request):
-    if request.method == "GET":
+    if request.method == "POST":
         import pandas as pd
         user_diet = Diet.objects.get(uid = request.user)
         user_lunch = Lunch.objects.get(uid=request.user)
         user_snack = Snacks.objects.get(uid = request.user)
         user_bf = Breakfast.objects.get(uid = request.user)
         user_dinner = Dinner.objects.get(uid = request.user)
+        meal = ""
+        if "bf_m" in request.POST:
+            print("Monday BF")
+            meal = request.POST["bf_m"]
+        elif "bf_t" in request.POST:
+            meal = request.POST['bf_t']
+        elif "bf_w" in request.POST:
+            meal = request.POST['bf_w']
+        elif "bf_th" in request.POST:
+            meal = request.POST['bf_th']
+        elif "bf_f" in request.POST:
+            meal = request.POST['bf_f']
+        elif "bf_s" in request.POST:
+            meal = request.POST['bf_s']
+        elif "l_m" in request.POST:
+            meal = request.POST['l_m']
+        elif "l_t" in request.POST:
+            meal = request.POST['l_t']
+        elif "l_w" in request.POST:
+            meal = request.POST['l_w']
+        elif "l_th" in request.POST:
+            meal = request.POST['l_th']
+        elif "l_f" in request.POST:
+            meal = request.POST['l_f']
+        elif "l_s" in request.POST:
+            meal = request.POST['l_s']
+        elif "s_m" in request.POST:
+            meal = request.POST['s_m']
+        elif "s_t" in request.POST:
+            meal = request.POST['s_t']
+        elif "s_w" in request.POST:
+            meal = request.POST['s_w']
+        elif "s_th" in request.POST:
+            meal = request.POST['s_th']
+        elif "s_f" in request.POST:
+            meal = request.POST['s_f']
+        elif "s_s" in request.POST:
+            meal = request.POST['s_s']
+        elif "d_m" in request.POST:
+            meal = request.POST['d_m']
+        elif "d_t" in request.POST:
+            meal = request.POST['d_t']
+        elif "d_w" in request.POST:
+            meal = request.POST['d_w']
+        elif "d_th" in request.POST:
+            meal = request.POST['d_th']
+        elif "d_f" in request.POST:
+            meal = request.POST['d_f']
+        elif "d_s" in request.POST:
+            meal = request.POST['d_s']
+        
+        print("MEAAALLLL", meal)
 
         cuisine = ["General"]
         if user_diet.like_north:
@@ -2078,66 +2130,95 @@ def regenerate(request):
                 dbf.append(dd)
             else:
                 dbf.append("None")
-            s += "; " + "Protein Powder: " + str(float("{:.2f}".format(choices3.loc[i, "Protein Powder"])))
+            # s += "; " + "Protein Powder: " + str(float("{:.2f}".format(choices3.loc[i, "Protein Powder"])))
             ee = str(float("{:.2f}".format(choices3.loc[i, "Protein Powder"]))) + " g"
             ebf.append(ee)
             
-
-        user_lunch.l_main_1 = al[0] # Mon, Thur Pair Lunch
-        user_lunch.l_main_2 = al[1] # Tue, Fri Pair Lunch
-        user_lunch.l_main_3 = al[2] # Wed, Sat Pair Lunch
-        user_lunch.l_side_1 = bl[0] # Mon, Thur Pair Lunch
-        user_lunch.l_side_2 = bl[1] # Tue, Fri Pair Lunch
-        user_lunch.l_side_3 = bl[2] # Wed, Sat Pair Lunch
-        user_lunch.l_salad_1 = cl[0] # Mon, Thur Pair Lunch
-        user_lunch.l_salad_2 = cl[1] # Tue, Fri Pair Lunch
-        user_lunch.l_salad_3 = cl[2] # Wed, Sat Pair Lunch
-        user_lunch.l_pp_1 = dl[0] # Mon, Thur Pair Lunch
-        user_lunch.l_pp_2 = dl[1] # Tue, Fri Pair Lunch
-        user_lunch.l_pp_3 = dl[2] # Wed, Sat Pair Lunch
-        user_lunch.save()
-
-        user_dinner.d_main_1 = al2[0] # Mon, Thur Pair Dinner
-        user_dinner.d_main_2 = al2[1] # Tue, Fri Pair Dinner
-        user_dinner.d_main_3 = al2[2] # Wed, Sat Pair Dinner
-        user_dinner.d_side_1 = bl2[0] # Mon, Thur Pair Dinner
-        user_dinner.d_side_2 = bl2[1] # Tue, Fri Pair Dinner
-        user_dinner.d_side_3 = bl2[2] # Wed, Sat Pair Dinner
-        user_dinner.d_salad_1 = cl2[0] # Mon, Thur Pair Dinner
-        user_dinner.d_salad_2 = cl2[1] # Tue, Fri Pair Dinner
-        user_dinner.d_salad_3 = cl2[2] # Wed, Sat Pair Dinner
-        user_dinner.d_pp_1 = dl2[0] # Mon, Thur Pair Dinner
-        user_dinner.d_pp_2 = dl2[1] # Tue, Fri Pair Dinner
-        user_dinner.d_pp_3 = dl2[2] # Wed, Sat Pair Dinner
-        user_dinner.save()
+        if meal == "bf_m" or meal == "bf_th":
+            user_bf.bf_main_1 = abf[0] # Mon, Thur Pair Bf
+            user_bf.bf_milk_1 = bbf[0] # Mon, Thur Pair Bf
+            user_bf.bf_fruits_1 = cbf[0] # Mon, Thur Pair Bf
+            user_bf.bf_nuts_1 = dbf[0] # Mon, Thur Pair Bf
+            user_bf.bf_pp_1 = dl2[0] # Mon, Thur Pair 
+            user_bf.save()
         
-        user_bf.bf_main_1 = abf[0] # Mon, Thur Pair Bf
-        user_bf.bf_main_2 = abf[1] # Tue, Fri Pair Bf
-        user_bf.bf_main_3 = abf[2] # Wed, Sat Pair Bf
-        user_bf.bf_milk_1 = bbf[0] # Mon, Thur Pair Bf
-        user_bf.bf_milk_2 = bbf[1] # Tue, Fri Pair Bf
-        user_bf.bf_milk_3 = bbf[2] # Wed, Sat Pair Bf
-        user_bf.bf_fruits_1 = cbf[0] # Mon, Thur Pair Bf
-        user_bf.bf_fruits_2 = cbf[1] # Tue, Fri Pair Bf
-        user_bf.bf_fruits_3 = cbf[2] # Wed, Sat Pair Bf
-        user_bf.bf_nuts_1 = dbf[0] # Mon, Thur Pair Bf
-        user_bf.bf_nuts_2 = dbf[1] # Tue, Fri Pair Bf
-        user_bf.bf_nuts_3 = dbf[2] # Wed, Sat Pair Bf
-        user_bf.bf_pp_1 = ebf[0] # Mon, Thur Pair Bf
-        user_bf.bf_pp_2 = ebf[1] # Tue, Fri Pair Bf
-        user_bf.bf_pp_3 = ebf[2] # Wed, Sat Pair Bf
-        user_bf.save()
+        if meal == "bf_t" or meal =="bf_f":
+            user_bf.bf_main_2 = abf[1] # Mon, Thur Pair Bf
+            user_bf.bf_milk_2 = bbf[1] # Mon, Thur Pair Bf
+            user_bf.bf_fruits_2 = cbf[1] # Mon, Thur Pair Bf
+            user_bf.bf_nuts_2 = dbf[1] # Mon, Thur Pair Bf
+            user_dinner.bf_pp_2 = dl2[1] # Mon, Thur Pair 
+            user_bf.save()
 
-        user_snack.s_main_1 = asn[0] # Mon, Thur Pair Snack
-        user_snack.s_main_2 = asn[1] # Tue, Fri Pair Snack
-        user_snack.s_main_3 = asn[2] # Wed, Sat Pair Snack
-        user_snack.s_fruit_1 = bsn[0] # Mon, Thur Pair Snack
-        user_snack.s_fruit_2 = bsn[1] # Tue, Fri Pair Snack
-        user_snack.s_fruit_3 = bsn[2] # Wed, Sat Pair Snack
-        user_snack.s_sweet_1 = csn[0] # Mon, Thur Pair Snack
-        user_snack.s_sweet_2 = csn[1] # Tue, Fri Pair Snack
-        user_snack.s_sweet_3 = csn[2] # Wed, Sat Pair Snack
-        user_snack.save()
+        if meal == "bf_w" or meal == "bf_s":
+            user_bf.bf_main_3 = abf[2] # Mon, Thur Pair Bf
+            user_bf.bf_milk_3 = bbf[2] # Mon, Thur Pair Bf
+            user_bf.bf_fruits_3 = cbf[2] # Mon, Thur Pair Bf
+            user_bf.bf_nuts_3 = dbf[2] # Mon, Thur Pair Bf
+            user_bf.bf_pp_3 = dl2[2] # Mon, Thur Pair 
+            user_bf.save()
+
+        if meal=="l_m" or meal=="l_th":
+            user_lunch.l_main_1 = al[0] # Mon, Thur Pair Lunch
+            user_lunch.l_side_1 = bl[0] # Mon, Thur Pair Lunch
+            user_lunch.l_salad_1 = cl[0] # Mon, Thur Pair Lunch
+            user_lunch.l_pp_1 = dl[0] # Mon, Thur Pair Lunch
+            user_lunch.save()
+
+        if meal=="l_t" or meal=="l_f":        
+            user_lunch.l_main_2 = al[1] # Tue, Fri Pair Lunch
+            user_lunch.l_side_2 = bl[1] # Tue, Fri Pair Lunch
+            user_lunch.l_salad_2 = cl[1] # Tue, Fri Pair Lunch
+            user_lunch.l_pp_2 = dl[1] # Tue, Fri Pair Lunch
+            user_lunch.save()
+        
+        if meal=="l_w" or meal=="l_s":
+            user_lunch.l_main_3 = al[2] # Wed, Sat Pair Lunch
+            user_lunch.l_side_3 = bl[2] # Wed, Sat Pair Lunch
+            user_lunch.l_salad_3 = cl[2] # Wed, Sat Pair Lunch
+            user_lunch.l_pp_3 = dl[2] # Wed, Sat Pair Lunch
+            user_lunch.save()
+
+        if meal=="d_m" or meal=="d_th":
+            user_dinner.d_main_1 = al2[0] # Mon, Thur Pair Dinner
+            user_dinner.d_side_1 = bl2[0] # Mon, Thur Pair Dinner
+            user_dinner.d_salad_1 = cl2[0] # Mon, Thur Pair Dinner
+            user_dinner.d_pp_1 = dl2[0] # Tue, Fri Pair Dinner
+            user_dinner.save()
+
+        if meal=="d_t" or meal == "d_f":
+            user_dinner.d_main_2 = al2[1] # Tue, Fri Pair Dinner
+            user_dinner.d_side_2 = bl2[1] # Tue, Fri Pair Dinner
+            user_dinner.d_salad_2 = cl2[1] # Tue, Fri Pair Dinner
+            user_dinner.d_pp_2 = dl2[1] # Tue, Fri Pair Dinner
+            user_dinner.save()
+
+        if meal=="d_w" or meal == "d_s":
+            user_dinner.d_main_3 = al2[2] # Wed, Sat Pair Dinner
+            user_dinner.d_side_3 = bl2[2] # Wed, Sat Pair Dinner
+            user_dinner.d_salad_3 = cl2[2] # Wed, Sat Pair Dinner
+            user_dinner.d_pp_3 = dl2[2] # Wed, Sat Pair Dinner
+            user_dinner.save()
+
+        if meal=="s_m" or meal =="s_th":
+            user_snack.s_main_1 = asn[0] # Mon, Thur Pair Snack
+            user_snack.s_fruit_1 = bsn[0] # Mon, Thur Pair Snack
+            user_snack.s_sweet_1 = csn[0] # Mon, Thur Pair Snack
+            user_snack.save()
+        
+        if meal=="s_t" or meal=="s_f":
+            user_snack.s_main_2 = asn[1] # Tue, Fri Pair Snack
+            user_snack.s_fruit_2 = bsn[1] # Tue, Fri Pair Snack
+            user_snack.s_sweet_2 = csn[1] # Tue, Fri Pair Snack
+            user_snack.save()
+
+        if meal=="s_t" or meal=="s_s":
+            user_snack.s_main_3 = asn[2] # Wed, Sat Pair Snack
+            user_snack.s_fruit_3 = bsn[2] # Wed, Sat Pair Snack        
+            user_snack.s_sweet_3 = csn[2] # Wed, Sat Pair Snack
+            user_snack.save()
+        
+        
 
     context = {'dest': "view_diet"}
     return render(request, "loading_diet.html",context)
