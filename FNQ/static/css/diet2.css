@@ -104,3 +104,11 @@ header{
   width: 100px;
   border-radius: 10px;
 }
+
+.regenerate{
+  border: none;
+  background-color: transparent;
+  width:95%; 
+  text-align:right; 
+  margin-bottom: 0px;
+}

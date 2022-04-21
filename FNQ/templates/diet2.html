@@ -55,7 +55,7 @@
         <!-- -->
         <header>
             <h3 class="subheading">Eat Healthy, Feel Healthy</h3>
-            <p>Here is a customized plan for your week, you may click on the regenerate button next to the days of the week if you are not satisfied with the current recommendation.</p>
+            <p>Here is a customized plan for your week, you may click on the regenerate button next to the meal if you are not satisfied with the current recommendation.</p>
         </header>
         <!-- Table -->
         <div class="diet-chart">
@@ -63,13 +63,13 @@
                 <tbody>
                   <tr class="table-primary">
                     <th>Meal</th>
-                    <th>Monday </th>
+                    <th>Monday</th>
                     <th>Tuesday</th>
                     <th>Wednesday</th>
                     <th>Thursday </th>
                     <th>Friday</th>
                     <th>Saturday</th>
-                    <!-- <th>Sunday &nbsp;<i class='fa fa-refresh' style='font-size: 12px;'></i></th> -->
+                    <!-- <th>Sunday &nbsp;<i class="fas fa-redo"></i></th> -->
                   </tr>
                   <tr>
                     <td>Breakfast</td>
@@ -78,42 +78,67 @@
                         <strong>Milk:</strong> {{ user_bf.bf_milk_1 }}<br>
                         <strong>Fruit:</strong> {{ user_bf.bf_fruits_1 }} <br>
                         <strong>Nut: </strong> {{ user_bf.bf_nuts_1 }} <br>
-                        <strong>Protein: </strong> {{ user_bf.bf_pp_1 }} <br>
+                        <strong>Protein: </strong> {{ user_bf.bf_pp_1 }} 
+                        <form action="regenerate" method="POST">
+                            {% csrf_token %}
+                            <button class="regenerate" name="bf_m" value="bf_m"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
+                        </form>
                     </td>
                     <td style="background-color: #f6f7f8;">
                         <strong>Main:</strong> {{ user_bf.bf_main_2 }}<br>
                         <strong>Milk:</strong> {{ user_bf.bf_milk_2 }}<br>
                         <strong>Fruit:</strong> {{ user_bf.bf_fruits_2 }}<br>
                         <strong>Nut: </strong> {{ user_bf.bf_nuts_2 }}<br>
-                        <strong>Protein: </strong> {{ user_bf.bf_pp_2 }}<br>
+                        <strong>Protein: </strong> {{ user_bf.bf_pp_2 }}
+                        <form action="regenerate" method="POST">
+                            {% csrf_token %}
+                            <button class="regenerate" name="bf_t" value="bf_t"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
+                        </form>
                     </td>
                     <td style="background-color: #EBF5FB;">
                         <strong>Main:</strong> {{ user_bf.bf_main_3 }}<br>
                         <strong>Milk:</strong> {{ user_bf.bf_milk_3 }}<br>
                         <strong>Fruit:</strong> {{ user_bf.bf_fruits_3 }}<br>
                         <strong>Nut: </strong> {{ user_bf.bf_nuts_3 }}<br>
-                        <strong>Protein: </strong> {{ user_bf.bf_pp_3 }}<br>
+                        <strong>Protein: </strong> {{ user_bf.bf_pp_3 }}
+                        <form action="regenerate" method="POST">
+                            {% csrf_token %}
+                            <button class="regenerate" name = "bf_w" value="bf_w"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
+                        </form>
+                        
                     </td>
                     <td>
                         <strong>Main:</strong> {{ user_bf.bf_main_1 }}<br>
                         <strong>Milk:</strong> {{ user_bf.bf_milk_1 }}<br>
                         <strong>Fruit:</strong> {{ user_bf.bf_fruits_1 }}<br>
                         <strong>Nut: </strong> {{ user_bf.bf_nuts_1 }}<br>
-                        <strong>Protein: </strong> {{ user_bf.bf_pp_1 }}<br>
+                        <strong>Protein: </strong> {{ user_bf.bf_pp_1 }}
+                        <form action="regenerate" method="POST">
+                            {% csrf_token %}
+                            <button class="regenerate" name="bf_th" value="bf_m"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
+                        </form>
                     </td>
                     <td style="background-color: #f6f7f8;">
                         <strong>Main:</strong> {{ user_bf.bf_main_2 }}<br>
                         <strong>Milk:</strong> {{ user_bf.bf_milk_2 }}<br>
                         <strong>Fruit:</strong>{{ user_bf.bf_fruits_2 }}<br>
                         <strong>Nut: </strong> {{ user_bf.bf_nuts_2 }}<br>
-                        <strong>Protein: </strong> {{ user_bf.bf_pp_2 }}<br>
+                        <strong>Protein: </strong> {{ user_bf.bf_pp_2 }}
+                        <form action="regenerate" method="POST">
+                            {% csrf_token %}
+                            <button class="regenerate" name="bf_f" value="bf_t"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
+                        </form>
                     </td>
                     <td style="background-color: #EBF5FB;">
                         <strong>Main:</strong> {{ user_bf.bf_main_3 }}<br>
                         <strong>Milk:</strong> {{ user_bf.bf_milk_3 }}<br>
                         <strong>Fruit:</strong> {{ user_bf.bf_fruits_3 }}<br>
                         <strong>Nut: </strong> {{ user_bf.bf_nuts_3 }}<br>
-                        <strong>Protein: </strong>{{ user_bf.bf_pp_3 }}<br>
+                        <strong>Protein: </strong>{{ user_bf.bf_pp_3 }}
+                        <form action="regenerate" method="POST">
+                            {% csrf_token %}
+                            <button class="regenerate" name="bf_s" value="bf_w"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
+                        </form>
                     </td>
                     <!-- <td style="background-color: #f6f7f8;">
                         <strong>Main:</strong> Kala Chana (Raw) (77.5g)<br>
@@ -130,35 +155,59 @@
                         <strong>Side:</strong> {{ user_lunch.l_side_1 }} <br>
                         <strong>Salads:</strong> {{ user_lunch.l_salad_1 }}<br>
                         <strong>Protein: </strong>{{ user_lunch.l_pp_1 }}<br>
+                        <form action="regenerate" method="POST">
+                            {% csrf_token %}
+                            <button class="regenerate" name="l_m" value="l_m"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
+                        </form>
                     </td>
                     <td style="background-color: #f6f7f8;">
                         <strong>Main:</strong> {{ user_lunch.l_main_2 }}<br>
                         <strong>Side:</strong> {{ user_lunch.l_side_2 }} <br>
                         <strong>Salads:</strong> {{ user_lunch.l_salad_2 }}<br>
                         <strong>Protein: </strong> {{ user_lunch.l_pp_2 }}<br>
+                        <form action="regenerate" method="POST">
+                            {% csrf_token %}
+                            <button class="regenerate" name="l_t" value="l_t"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
+                        </form>
                     </td>
                     <td style="background-color: #EBF5FB;">
                         <strong>Main:</strong> {{ user_lunch.l_main_3 }}<br>
                         <strong>Side:</strong> {{ user_lunch.l_side_3 }}<br>
                         <strong>Salads:</strong> {{ user_lunch.l_salad_3 }}<br>
                         <strong>Protein: </strong> {{ user_lunch.l_pp_3 }}<br>
+                        <form action="regenerate" method="POST">
+                            {% csrf_token %}
+                            <button class="regenerate" name="l_w" value="l_w"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
+                        </form>
                     </td>
                     <td><strong>Main:</strong> {{ user_lunch.l_main_1 }}<br>
                         <strong>Side:</strong> {{ user_lunch.l_side_1 }}<br>
                         <strong>Salads:</strong>{{ user_lunch.l_salad_1 }}<br>
                         <strong>Protein: </strong> {{ user_lunch.l_pp_1 }}<br>
+                        <form action="regenerate" method="POST">
+                            {% csrf_token %}
+                            <button class="regenerate" name="l_th" value="l_m"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
+                        </form>
                     </td>
                     <td style="background-color: #f6f7f8;">
                         <strong>Main:</strong> {{ user_lunch.l_main_2 }}<br>
                         <strong>Side:</strong> {{ user_lunch.l_side_2 }}<br>
                         <strong>Salads:</strong> {{ user_lunch.l_salad_2 }}<br>
                         <strong>Protein: </strong> {{ user_lunch.l_pp_2 }}<br>
+                        <form action="regenerate" method="POST">
+                            {% csrf_token %}
+                            <button class="regenerate" name="l_f" value="l_t"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
+                        </form>
                     </td>
                     <td style="background-color: #EBF5FB;">
                         <strong>Main:</strong> {{ user_lunch.l_main_3 }}<br>
                         <strong>Side:</strong> {{ user_lunch.l_side_3 }}<br>
                         <strong>Salads:</strong> {{ user_lunch.l_salad_3 }}<br>
                         <strong>Protein: </strong> {{ user_lunch.l_pp_3 }}<br>
+                        <form action="regenerate" method="POST">
+                            {% csrf_token %}
+                            <button class="regenerate" name="l_s" value="l_w"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
+                        </form>
                     </td>
                     <!-- <td style="background-color: #f6f7f8;">
                         <strong>Main:</strong> Turkey (130g)<br>
@@ -173,31 +222,55 @@
                         <strong>Main:</strong> {{ user_snacks.s_main_1 }}<br>
                         <strong>Fruit:</strong>{{ user_snacks.s_fruit_1 }}<br>
                         <strong>Sweet:</strong> {{ user_snacks.s_sweet_1 }}<br>
+                        <form action="regenerate" method="POST">
+                            {% csrf_token %}
+                            <button class="regenerate" name="s_m" value="s_m"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
+                        </form>
                     </td>
                     <td style="background-color: #f6f7f8;">
                         <strong>Main:</strong> {{ user_snacks.s_main_2 }}<br>
                         <strong>Fruit:</strong> {{ user_snacks.s_fruit_2 }}<br>
                         <strong>Sweet:</strong> {{ user_snacks.s_sweet_2 }}<br>
+                        <form action="regenerate" method="POST">
+                            {% csrf_token %}
+                            <button class="regenerate" name="s_t" value="s_t"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
+                        </form>
                     </td>
                     <td style="background-color: #EBF5FB;">
                         <strong>Main:</strong> {{ user_snacks.s_main_3 }}<br>
                         <strong>Fruit:</strong> {{ user_snacks.s_fruit_3 }}<br>
                         <strong>Sweet:</strong> {{ user_snacks.s_sweet_3 }}<br>
+                        <form action="regenerate" method="POST">
+                            {% csrf_token %}
+                            <button class="regenerate" name="s_w" value="s_w"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
+                        </form>
                     </td>
                     <td>
                         <strong>Main:</strong> {{ user_snacks.s_main_1 }}<br>
                         <strong>Fruit:</strong> {{ user_snacks.s_fruit_1 }}<br>
                         <strong>Sweet:</strong> {{ user_snacks.s_sweet_1 }}<br>
+                        <form action="regenerate" method="POST">
+                            {% csrf_token %}
+                            <button class="regenerate" name="s_th" value="s_m"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
+                        </form>
                     </td>
                     <td style="background-color: #f6f7f8;">
                         <strong>Main:</strong> {{ user_snacks.s_main_2 }}<br>
                         <strong>Fruit:</strong> {{ user_snacks.s_fruit_2 }}<br>
                         <strong>Sweet:</strong> {{ user_snacks.s_sweet_2 }}<br>
+                        <form action="regenerate" method="POST">
+                            {% csrf_token %}
+                            <button class="regenerate" name="s_f" value="s_t"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
+                        </form>
                     </td>
                     <td style="background-color: #EBF5FB;">
                         <strong>Main:</strong> {{ user_snacks.s_main_3 }}<br>
                         <strong>Fruit:</strong> {{ user_snacks.s_fruit_3 }}<br>
                         <strong>Sweet:</strong> {{ user_snacks.s_sweet_3 }}<br>
+                        <form action="regenerate" method="POST">
+                            {% csrf_token %}
+                            <button class="regenerate" name="s_s" value="l_w"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
+                        </form>
                     </td>
                     <!-- <td style="background-color: #f6f7f8;">
                         <strong>Main:</strong> Sweet Corn (65g)<br>
@@ -212,35 +285,59 @@
                         <strong>Side:</strong> {{ user_dinner.d_side_1 }} <br>
                         <strong>Salads:</strong> {{ user_dinner.d_salad_1 }}<br>
                         <strong>Protein: </strong>{{ user_dinner.d_pp_1 }}<br>
+                        <form action="regenerate" method="POST">
+                            {% csrf_token %}
+                            <button class="regenerate" name="d_m" value="d_m"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
+                        </form>
                     </td>
                     <td style="background-color: #f6f7f8;">
                         <strong>Main:</strong> {{ user_dinner.d_main_2 }}<br>
                         <strong>Side:</strong> {{ user_dinner.d_side_2 }} <br>
                         <strong>Salads:</strong> {{ user_dinner.d_salad_2 }}<br>
                         <strong>Protein: </strong> {{ user_dinner.d_pp_2 }}<br>
+                        <form action="regenerate" method="POST">
+                            {% csrf_token %}
+                            <button class="regenerate" name="d_t" value="d_t"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
+                        </form>
                     </td>
                     <td style="background-color: #EBF5FB;">
                         <strong>Main:</strong> {{ user_dinner.d_main_3 }}<br>
                         <strong>Side:</strong> {{ user_dinner.d_side_3 }}<br>
                         <strong>Salads:</strong> {{ user_dinner.d_salad_3 }}<br>
                         <strong>Protein: </strong> {{ user_dinner.d_pp_3 }}<br>
+                        <form action="regenerate" method="POST">
+                            {% csrf_token %}
+                            <button class="regenerate" name="d_w" value="d_w"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
+                        </form>
                     </td>
                     <td><strong>Main:</strong> {{ user_dinner.d_main_1 }}<br>
                         <strong>Side:</strong> {{ user_dinner.d_side_1 }}<br>
                         <strong>Salads:</strong>{{ user_dinner.d_salad_1 }}<br>
                         <strong>Protein: </strong> {{ user_dinner.d_pp_1 }}<br>
+                        <form action="regenerate" method="POST">
+                            {% csrf_token %}
+                            <button class="regenerate" name="d_th" value="d_m"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
+                        </form>
                     </td>
                     <td style="background-color: #f6f7f8;">
                         <strong>Main:</strong> {{ user_dinner.d_main_2 }}<br>
                         <strong>Side:</strong> {{ user_dinner.d_side_2 }}<br>
                         <strong>Salads:</strong> {{ user_dinner.d_salad_2 }}<br>
                         <strong>Protein: </strong> {{ user_dinner.d_pp_2 }}<br>
+                        <form action="regenerate" method="POST">
+                            {% csrf_token %}
+                            <button class="regenerate" name="d_f" value="d_t"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
+                        </form>
                     </td>
                     <td style="background-color: #EBF5FB;">
                         <strong>Main:</strong> {{ user_dinner.d_main_3 }}<br>
                         <strong>Side:</strong> {{ user_dinner.d_side_3 }}<br>
                         <strong>Salads:</strong> {{ user_dinner.d_salad_3 }}<br>
                         <strong>Protein: </strong> {{ user_dinner.d_pp_3 }}<br>
+                        <form action="regenerate" method="POST">
+                            {% csrf_token %}
+                            <button class="regenerate" name="d_s" value="d_w"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
+                        </form>
                     </td>
                     <!-- <td style="background-color: #f6f7f8;">
                         <strong>Main:</strong> Chicken Leg (Raw) (125g)<br>
