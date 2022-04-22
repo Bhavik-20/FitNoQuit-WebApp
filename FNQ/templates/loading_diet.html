@@ -37,14 +37,52 @@
             to {
             transform: rotate(1turn);
             }
-        }      
+        }    
+        
+        .some_text{
+            color: grey;
+            font-weight: 700;
+            font-family: "Monaco", monospace;
+            position: absolute;
+            top: 60%;
+            left: 35%;
+        }
+
+        .heading{
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: 800;
+            position: absolute;
+            top: 35%;
+            left: 48.5%;
+        }
+
+        @media(max-width:400px){
+            .some_text{
+            color: grey;
+            font-weight: 700;
+            font-family: "Monaco", monospace;
+            position: absolute;
+            top: 53%;
+            left: 35%;
+            }
+
+        .heading{
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: 800;
+            position: absolute;
+            top: 45%;
+            left: 48.5%;
+        }
+        }
     </style>
 </head>
 <body bgcolor="#d9e5ee">
     <div style="display: flex;">
         <div class="loading"></div>
+        <h4 class="heading">LOADING</h4>
+        <p class="some_text">Your diet is being prepared, please wait patiently...</p>
     </div>
-    <h1>This may take a moment. Please wait!</h1>
+    
     {% if dest == "bf_api" %}
     <script>
         setTimeout(function(){

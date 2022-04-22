@@ -64,13 +64,13 @@
         </header>
         <form action="view_blog_list" method="POST">
             {% csrf_token %}
+            <center>
             <div class="row position">
             
                 <div class="col-sm-6 col-lg-4">
                     <center><button type="submit" class ="box" name="weight-loss" value="Weight Loss">
                     <h4 class="cat_head">Weight Loss</h4>
                     <img src="{% static 'images/blogcategories/weight_loss.png'%}" width="100%"/>
-                    <p class="cat_description">Sample small text. Lorem ipsum dolor sit amet.</p>
                     </button></center>
                 </div>
 
@@ -78,7 +78,6 @@
                     <center><button type="submit" class ="box" name="weight-gain" value="Weight Gain">
                     <h4 class="cat_head">Weight Gain</h4>
                     <img src="{% static 'images/blogcategories/weight_gain.png'%}" width="100%"/>
-                    <p class="cat_description">Sample small text. Lorem ipsum dolor sit amet.</p>
                     </button></center>
                 </div>
 
@@ -86,7 +85,6 @@
                     <center><button type="submit" class ="box" name="healthy-lifestyle" value="Healthy Lifestyle">
                     <h4 class="cat_head">Healthy Lifestyle</h4>
                     <img src="{% static 'images/blogcategories/healthy_lifestyle.png'%}" width="100%"/>
-                    <p class="cat_description">Sample small text. Lorem ipsum dolor sit amet.</p>
                     </button></center>
                 </div>
 
@@ -94,7 +92,6 @@
                         <center><button type="submit" class ="box" name="recipes" value="Recipes">
                         <h4 class="cat_head">Recipes</h4>
                         <img src="{% static 'images/blogcategories/recipes.png'%}" width="100%"/>
-                        <p class="cat_description">Sample small text. Lorem ipsum dolor sit amet.</p>
                         </button></center>
                     </div>
     
@@ -102,7 +99,6 @@
                         <center><button type="submit" class ="box" name="workout" value="Workout">
                         <h4 class="cat_head">Workout</h4>
                         <img src="{% static 'images/blogcategories/workout.png'%}" width="100%"/>
-                        <p class="cat_description">Sample small text. Lorem ipsum dolor sit amet.</p>
                         </button></center>
                     </div>
     
@@ -110,10 +106,10 @@
                         <center><button type="submit" class ="box" name="nutrition" value="Nutrition">
                         <h4 class="cat_head">Nutrition</h4>
                         <img src="{% static 'images/blogcategories/nutrition.png'%}" width="100%"/>
-                        <p class="cat_description">Sample small text. Lorem ipsum dolor sit amet.</p>
                         </button></center>
                     </div>
                 </div>
+                </center>
     </form>
         <!-- <center><button class="submit-btn">Regenerate</button></center> -->
         
