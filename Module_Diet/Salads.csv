@@ -1,8 +1,0 @@
-Salads Name,Salads Protein,Salads Carbs,Salads Fats,Salads Fibre,Type (Veg/ Non Veg),Salads Quantity,Diabetes,Thyroid,PCOS,Kidney,Lactose Intolerant,Vegan
-Tomato,0.5,1.8,0.1,0.52,Veg,50,General,Y,Y,Y,Y,Y
-Onion,0.47,4.22,0.04,0.65,Veg,50,General,Y,Y,Y,Y,N
-Capsicum,0.47,2.42,0.09,0.62,Veg,50,General,Y,Y,Y,Y,Y
-Beetroot,0.8,4.8,0.08,1.4,Veg,50,General,Y,Y,Y,Y,Y
-Carrot,0.46,4.8,0.12,1.4,Veg,50,General,Y,Y,Y,Y,Y
-Radish,0.55,1.31,0.05,0.7,Veg,50,General,Y,Y,Y,Y,Y
-Broccoli,1.5,2.53,0.17,1.15,Veg,50,General,Y,Y,Y,Y,Y
