@@ -9,7 +9,7 @@ from django.test import tag
 import re
 import math
 from multiprocessing import Process
-import sys
+import threading
 
 from numpy import uint
 from .models import Breakfast, Profile, Diet, Snacks, Workout, Lunch, Dinner
@@ -490,7 +490,7 @@ def all_apis(request):
     import random
 
 
-    def bf_api(request):
+    def bf_api():
         
 
         allBreakfast = pd.read_csv('accounts/Breakfast-Datasets/Breakfast.csv')
@@ -975,7 +975,7 @@ def all_apis(request):
         # context = {"dest":"ld_api"}
         # return render(request,"loading_diet.html", context)
 
-    def ld_api(request):
+    def ld_api():
 
         allMainHP = pd.read_csv("accounts/LnD-Datasets/Lunch and Dinner - High Protein.csv")
         allMainHP.dropna(inplace = True)
@@ -1642,7 +1642,7 @@ def all_apis(request):
         # context = {"dest":"snacks_api"}
         # return render(request,"loading_diet.html", context)
 
-    def snacks_api(request):
+    def snacks_api():
 
         user_diet = Diet.objects.get(uid = request.user)
         allSnacks = pd.read_csv('accounts/Snack-Datasets/Snacks.csv')
@@ -1894,12 +1894,23 @@ def all_apis(request):
         # context = {'dest': "view_diet"}
         # return render(request, "loading_diet.html",context)
 
-    p1 = Process(target = bf_api)
-    p1.start()
-    p2 = Process(target = ld_api)
-    p2.start()
-    p3 = Process(target = snacks_api)
-    p3.start()
+    t1 = threading.Thread(target = bf_api)
+    t1.start()
+    t2 = threading.Thread(target = ld_api)
+    t2.start()
+    t3 = threading.Thread(target = snacks_api)
+    t3.start()
+
+    t1.join()
+    t2.join()
+    t3.join()
+
+    # p1 = Process(target = bf_api)
+    # p1.start()
+    # p2 = Process(target = ld_api)
+    # p2.start()
+    # p3 = Process(target = snacks_api)
+    # p3.start()
     context = {'dest': "view_diet"}
     return render(request, "loading_diet.html",context)
 
