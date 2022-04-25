@@ -1541,8 +1541,10 @@ def all_apis(request):
         choices = pd.concat([choicesHP, choicesLP])
 
         while len(choices['Main Name'].unique()) <= 10:
-            choices = choices.append(ldMealHP.iloc[random.randint(0, len(ldMealHP) - 1)], ignore_index = True)
-            choices = choices.append(ldMealLP.iloc[random.randint(0, len(ldMealLP) - 1)], ignore_index = True)
+            if len(ldMealHP) >= 2:
+                choices = choices.append(ldMealHP.iloc[random.randint(0, len(ldMealHP) - 1)], ignore_index = True)
+            if len(ldMealLP) >= 2:
+                choices = choices.append(ldMealLP.iloc[random.randint(0, len(ldMealLP) - 1)], ignore_index = True)
 
         choices.index = np.arange(1, len(choices) + 1)
         choices.index.name = 'Index'
