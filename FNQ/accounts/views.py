@@ -735,8 +735,24 @@ def all_apis(request):
         selected.index.name = 'Index'
 
         selectedLen = len(selected)
-        for i in range(1, selectedLen + 1):
-            print(i)
+       
+        rand_j = []
+        if likeMilk == "Y" and likeFruits == "Y" and likeNuts == "Y" and len(cuisine) == 3 and vegan =="N" and diabetes =="N" and kidney == "N" and pcos == "N" and thyroid == "N" and lactoseIntolerant == "N":
+            print("SATISFIEDDD BF")
+            k = 200 #For optimizing speed
+        else:
+            k = selectedLen
+        
+        for i in range(1, k + 1):
+            if likeMilk == "Y" and likeFruits == "Y" and likeNuts== "Y" and len(cuisine) == 3 and vegan =="N" and diabetes =="N" and kidney == "N" and pcos == "N" and thyroid == "N" and lactoseIntolerant == "N":
+                print("SATISFIEDDD BF2")
+                j = random.randint(1,selectedLen+1)
+                while j in rand_j:
+                    j = random.randint(1,selectedLen+1)
+                rand_j.append(j)
+                print("J BF: ", j)
+
+            print("I BF", i)
             prev = 0
             curr = selected.loc[i]
             counter = 0
@@ -1391,8 +1407,24 @@ def all_apis(request):
         roti = ['Wheat Roti', 'Bajra Roti']
 
         selectedLen = len(selected)
-        for i in range(1, selectedLen + 1):
-            print(i)
+
+        rand_j = []
+        if likeSalads == "Y" and len(cuisine) == 3 and vegan =="N" and diabetes =="N" and kidney == "N" and pcos == "N" and thyroid == "N" and lactoseIntolerant == "N":
+            print("SATISFIEDDD LD")
+            k = 175 #For optimizing speed
+        else:
+            k = selectedLen
+
+        for i in range(1, k + 1):
+            if likeSalads == "Y" and len(cuisine) == 3 and vegan =="N" and diabetes =="N" and kidney == "N" and pcos == "N" and thyroid == "N" and lactoseIntolerant == "N":
+                print("SATISFIEDDD LD2")
+                j = random.randint(1,selectedLen+1)
+                while j in rand_j:
+                    j = random.randint(1,selectedLen+1)
+                rand_j.append(j)
+                print("J LD: ", j)
+
+            print("I LD", i)
             prev = 0
             curr = selected.loc[i]
             counter = 0
@@ -1562,6 +1594,8 @@ def all_apis(request):
         bl = []
         cl = []
         dl = []
+
+        
         for j in range(0, 3):
             i = random.randint(1, len(choices))
             aa = choices.loc[i, "Main Name"] + " (" + str(float("{:.2f}".format(choices.loc[i, "Main Quantity"]))) + " g)"
@@ -1907,12 +1941,7 @@ def all_apis(request):
     t2.join()
     t3.join()
 
-    # p1 = Process(target = bf_api)
-    # p1.start()
-    # p2 = Process(target = ld_api)
-    # p2.start()
-    # p3 = Process(target = snacks_api)
-    # p3.start()
+
     context = {'dest': "view_diet"}
     return render(request, "loading_diet.html",context)
 
