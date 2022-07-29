@@ -112,3 +112,7 @@ header{
   text-align:right; 
   margin-bottom: 0px;
 }
+
+.hidden-btn{
+  display: none;
+}

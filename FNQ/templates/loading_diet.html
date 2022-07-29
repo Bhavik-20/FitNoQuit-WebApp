@@ -45,7 +45,7 @@
             font-family: "Monaco", monospace;
             position: absolute;
             top: 60%;
-            left: 35%;
+            left: 30%;
         }
 
         .heading{
@@ -80,38 +80,44 @@
     <div style="display: flex;">
         <div class="loading"></div>
         <h4 class="heading">LOADING</h4>
-        <p class="some_text">Your diet is being prepared, please wait patiently...</p>
+        {% if dest == "bf_api" %}
+            <p class="some_text">Please wait patiently. Your breakfast meal plan is being generated. </p>
+        {% elif dest == "ld_api" %}
+            <p class="some_text">Please wait patiently. Your lunch and dinner meal plans are being generated. </p>
+        {% elif dest == "snacks_api" %}
+            <p class="some_text">Please wait patiently. Your snack meal plan is being generated. </p>  
+        {% endif %}
     </div>
     
     {% if dest == "bf_api" %}
     <script>
         setTimeout(function(){
             window.location.href = 'bf_api';
-         }, 2000);         
+         });         
     </script>
     {% elif dest == "ld_api" %}
     <script>
         setTimeout(function(){
             window.location.href = 'ld_api';
-         }, 2000);
+         });
     </script>
     {% elif dest == "snacks_api" %}
     <script>
         setTimeout(function(){
             window.location.href = 'snacks_api';
-         }, 2000);
+         });
     </script>
      {% elif dest == "view_diet" %}
      <script>
          setTimeout(function(){
              window.location.href = 'view_diet';
-          }, 2000);
+          });
      </script>
      {% elif dest == "all_apis" %}
      <script>
          setTimeout(function(){
              window.location.href = 'all_apis';
-          }, 2000);
+          });
      </script>
     {% endif %}
 </body>

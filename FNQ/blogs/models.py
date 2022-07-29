@@ -11,5 +11,5 @@ class Blogs(models.Model):
     author = models.CharField(max_length=20)
     publish_date = models.DateField()
     content = models.TextField()
-    img = models.ImageField(upload_to='blog_images')
+    img = models.ImageField(upload_to='blog_images/')
     excerpt = models.TextField()

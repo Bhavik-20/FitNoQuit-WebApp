@@ -148,6 +148,7 @@
                         <strong>Protein: </strong> Protein Powder (10.7g)<br>
                     </td> -->
                   </tr>
+                  {% if show_lunch %}
                   <tr class="active">
                     <td>Lunch</td>
                     <td >
@@ -214,68 +215,6 @@
                         <strong>Side:</strong> Brown Rice(Cooked) (294g)<br>
                         <strong>Salads:</strong> Tomato (75g)<br>
                         <strong>Protein: </strong> Protein Powder (0g)<br>
-                    </td> -->
-                  </tr>
-                  <tr>
-                    <td>Snacks</td>
-                    <td>
-                        <strong>Main:</strong> {{ user_snacks.s_main_1 }}<br>
-                        <strong>Fruit:</strong>{{ user_snacks.s_fruit_1 }}<br>
-                        <strong>Sweet:</strong> {{ user_snacks.s_sweet_1 }}<br>
-                        <form action="regenerate" method="POST">
-                            {% csrf_token %}
-                            <button class="regenerate" name="s_m" value="s_m"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
-                        </form>
-                    </td>
-                    <td style="background-color: #f6f7f8;">
-                        <strong>Main:</strong> {{ user_snacks.s_main_2 }}<br>
-                        <strong>Fruit:</strong> {{ user_snacks.s_fruit_2 }}<br>
-                        <strong>Sweet:</strong> {{ user_snacks.s_sweet_2 }}<br>
-                        <form action="regenerate" method="POST">
-                            {% csrf_token %}
-                            <button class="regenerate" name="s_t" value="s_t"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
-                        </form>
-                    </td>
-                    <td style="background-color: #EBF5FB;">
-                        <strong>Main:</strong> {{ user_snacks.s_main_3 }}<br>
-                        <strong>Fruit:</strong> {{ user_snacks.s_fruit_3 }}<br>
-                        <strong>Sweet:</strong> {{ user_snacks.s_sweet_3 }}<br>
-                        <form action="regenerate" method="POST">
-                            {% csrf_token %}
-                            <button class="regenerate" name="s_w" value="s_w"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
-                        </form>
-                    </td>
-                    <td>
-                        <strong>Main:</strong> {{ user_snacks.s_main_1 }}<br>
-                        <strong>Fruit:</strong> {{ user_snacks.s_fruit_1 }}<br>
-                        <strong>Sweet:</strong> {{ user_snacks.s_sweet_1 }}<br>
-                        <form action="regenerate" method="POST">
-                            {% csrf_token %}
-                            <button class="regenerate" name="s_th" value="s_m"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
-                        </form>
-                    </td>
-                    <td style="background-color: #f6f7f8;">
-                        <strong>Main:</strong> {{ user_snacks.s_main_2 }}<br>
-                        <strong>Fruit:</strong> {{ user_snacks.s_fruit_2 }}<br>
-                        <strong>Sweet:</strong> {{ user_snacks.s_sweet_2 }}<br>
-                        <form action="regenerate" method="POST">
-                            {% csrf_token %}
-                            <button class="regenerate" name="s_f" value="s_t"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
-                        </form>
-                    </td>
-                    <td style="background-color: #EBF5FB;">
-                        <strong>Main:</strong> {{ user_snacks.s_main_3 }}<br>
-                        <strong>Fruit:</strong> {{ user_snacks.s_fruit_3 }}<br>
-                        <strong>Sweet:</strong> {{ user_snacks.s_sweet_3 }}<br>
-                        <form action="regenerate" method="POST">
-                            {% csrf_token %}
-                            <button class="regenerate" name="s_s" value="l_w"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
-                        </form>
-                    </td>
-                    <!-- <td style="background-color: #f6f7f8;">
-                        <strong>Main:</strong> Sweet Corn (65g)<br>
-                        <strong>Fruit:</strong> Papaya (79g)<br>
-                        <strong>Sweet:</strong> Dark Chocolate (8.6g)<br>
                     </td> -->
                   </tr>
                   <tr>
@@ -346,6 +285,85 @@
                         <strong>Protein: </strong> Protein Powder (0g)<br>
                     </td> -->
                   </tr>
+                  {% else %}            
+                  <form action="diet_show" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="hidden-btn" id="gen_lunch_dinner" name="gen_lunch_dinner">Generate Lunch and Dinner</button>
+                  </form>
+                  <p style="color: red;"><em>Please do not exit the page, your Lunch and Dinner Meals are being Generated.</em></p>
+                  {% endif %}
+
+                  {% if show_snacks %}
+                  <tr>
+                    <td>Snacks</td>
+                    <td>
+                        <strong>Main:</strong> {{ user_snacks.s_main_1 }}<br>
+                        <strong>Fruit:</strong>{{ user_snacks.s_fruit_1 }}<br>
+                        <strong>Sweet:</strong> {{ user_snacks.s_sweet_1 }}<br>
+                        <form action="regenerate" method="POST">
+                            {% csrf_token %}
+                            <button class="regenerate" name="s_m" value="s_m"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
+                        </form>
+                    </td>
+                    <td style="background-color: #f6f7f8;">
+                        <strong>Main:</strong> {{ user_snacks.s_main_2 }}<br>
+                        <strong>Fruit:</strong> {{ user_snacks.s_fruit_2 }}<br>
+                        <strong>Sweet:</strong> {{ user_snacks.s_sweet_2 }}<br>
+                        <form action="regenerate" method="POST">
+                            {% csrf_token %}
+                            <button class="regenerate" name="s_t" value="s_t"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
+                        </form>
+                    </td>
+                    <td style="background-color: #EBF5FB;">
+                        <strong>Main:</strong> {{ user_snacks.s_main_3 }}<br>
+                        <strong>Fruit:</strong> {{ user_snacks.s_fruit_3 }}<br>
+                        <strong>Sweet:</strong> {{ user_snacks.s_sweet_3 }}<br>
+                        <form action="regenerate" method="POST">
+                            {% csrf_token %}
+                            <button class="regenerate" name="s_w" value="s_w"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
+                        </form>
+                    </td>
+                    <td>
+                        <strong>Main:</strong> {{ user_snacks.s_main_1 }}<br>
+                        <strong>Fruit:</strong> {{ user_snacks.s_fruit_1 }}<br>
+                        <strong>Sweet:</strong> {{ user_snacks.s_sweet_1 }}<br>
+                        <form action="regenerate" method="POST">
+                            {% csrf_token %}
+                            <button class="regenerate" name="s_th" value="s_m"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
+                        </form>
+                    </td>
+                    <td style="background-color: #f6f7f8;">
+                        <strong>Main:</strong> {{ user_snacks.s_main_2 }}<br>
+                        <strong>Fruit:</strong> {{ user_snacks.s_fruit_2 }}<br>
+                        <strong>Sweet:</strong> {{ user_snacks.s_sweet_2 }}<br>
+                        <form action="regenerate" method="POST">
+                            {% csrf_token %}
+                            <button class="regenerate" name="s_f" value="s_t"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
+                        </form>
+                    </td>
+                    <td style="background-color: #EBF5FB;">
+                        <strong>Main:</strong> {{ user_snacks.s_main_3 }}<br>
+                        <strong>Fruit:</strong> {{ user_snacks.s_fruit_3 }}<br>
+                        <strong>Sweet:</strong> {{ user_snacks.s_sweet_3 }}<br>
+                        <form action="regenerate" method="POST">
+                            {% csrf_token %}
+                            <button class="regenerate" name="s_s" value="l_w"><i class="fas fa-sync" style="font-size: 12px; "></i></button>
+                        </form>
+                    </td>
+                    <!-- <td style="background-color: #f6f7f8;">
+                        <strong>Main:</strong> Sweet Corn (65g)<br>
+                        <strong>Fruit:</strong> Papaya (79g)<br>
+                        <strong>Sweet:</strong> Dark Chocolate (8.6g)<br>
+                    </td> -->
+                  </tr>
+                  {% endif %}
+                  {% if not show_snacks and show_lunch %}
+                  <form action="diet_show" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="hidden-btn" id="gen_snacks" name="gen_snacks">Generate Snacks</button>
+                  </form>
+                  <p style="color: red;"><em>Please do not exit the page, your Snacks are being Generated.</em></p>
+                  {% endif %}
                 </tbody>
               </table>
         </div>
@@ -362,10 +380,22 @@
                 </div>
             </div>
         </footer>
-        <!-- Bootstrap core JS-->
-        <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> -->
-        <!-- Core theme JS-->
-        <!-- <script src="js/scripts.js"></script> -->
-        <!-- <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script> -->
+
+    <!-- Not needed was added for showing bf, ld and snacks one after other -->
+        {% if dest == "ld_api" %}
+        <script>
+          /*  setTimeout(function(){
+                document.getElementById("gen_lunch_dinner").click();
+                // window.location.href = 'all_apis';
+            }, 2000);*/
+        </script>
+        {% elif dest == "snacks_api" %}
+        <script>
+            /*setTimeout(function(){
+                document.getElementById("gen_snacks").click();
+                // window.location.href = 'all_apis';
+            }, 2000);*/
+        </script>
+        {% endif %}
     </body>
 </html>
