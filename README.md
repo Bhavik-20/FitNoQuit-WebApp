@@ -18,7 +18,7 @@ Steps to access the website:
 * Once diet recommendations are made, the user can access their workout recommendations and track their progress.
 
 <!-- ![Steps](/readme-contents/Steps.png =20x) -->
-<img src="./readme-contents/Steps.png " width="600">
+<img src="readme-contents/Steps.png " width="600">
 
 # Tools and Database
 * Django Framework
