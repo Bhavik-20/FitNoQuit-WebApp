@@ -32,8 +32,8 @@ Follow the steps for project installation:
 ```
 https://github.com/Bhavik-20/FitNoQuit-WebApp.git
 ```
-2. Download & Install Visual Studio Code on the machine
-3. Download & Install Python on the machine and add it to environment variables.
+2. Download & Install Visual Studio Code on the machine. [Windows](https://www.youtube.com/watch?v=JPZsB_6yHVo), [Mac](https://www.youtube.com/watch?v=8CJXB4Nu1wo)
+3. Download & Install Python on the machine and add it to environment variables. [Windows](https://www.youtube.com/watch?v=RAFZleZYxsc), [Mac](https://www.youtube.com/watch?v=5AOkxqFaYEE)
 4. Download & Install Django on the machine using “pip install django” command.
 5. Download & Install PostgreSQL and PgAdmin for database connectivity.
 6. Create and configure a new database with the following credentials (available in 
