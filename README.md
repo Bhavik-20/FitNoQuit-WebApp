@@ -1,4 +1,4 @@
-# FitNoQuit-WebApp
+# [FitNoQuit-WebApp](https://fit-no-quit.herokuapp.com/)
 BTech Final Year Project
 
 In today’s fast-paced world, it is not uncommon for people to experience mental and physical illness. Various scientific studies have shown that a wholesome diet and any form of physical activity helps in relieving health issues and progress towards a healthy lifestyle both physically and mentally. However, not everyone has the appropriate knowledge to help them reach their fitness goal. Thus we developed a Diet and Workout recommendation system named  “FitNoQuit”, that is developed using Machine Learning. FitNoQuit takes into account various parameters like height, weight, age and then calculates the current BMI & BMR of the user, food preferences like vegetarian/Non-vegetarian/Vegan, and chronic health conditions like diabetes, PCOS, thyroid, etc. Based on these user inputs the system provides a nutritional diet and workout plan which enables the user to reach his/her end fitness goal.
